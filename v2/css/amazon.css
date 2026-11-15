@@ -1,0 +1,69 @@
+/* Amazon story (preview). Built on the Knurów zoom-story styles in v2.css: .zoom-to, .zoom-panel, .kn-part,
+   .zoom-body, .zoom-fig, .zoom-cmp, .zoom-info, .kn-end, .kn-refs-part. Only what's new lives here. */
+
+/* entry: the pin card is a button */
+button.region { width: 100%; text-align: left; font: inherit; color: inherit; background: none; cursor: pointer; }
+.region .name { font: 400 clamp(15px, 1.4vw, 20px)/1.15 var(--display); text-transform: uppercase; }
+
+/* radar compares: plain images (original radar colours), same frame and seam as the NISAR slider */
+.am-cmp img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+.am-cmp img + img { clip-path: inset(0 0 0 var(--cut, 50%)); }
+
+/* hotspot markers on the radar: a white ring with its name */
+.am-mk { position: absolute; z-index: 3; width: 0; height: 0; pointer-events: none; }
+.am-mk i { position: absolute; left: -11px; top: -11px; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(7,4,13,.7), inset 0 0 0 1px rgba(7,4,13,.7); }
+.am-mk b { position: absolute; left: 16px; top: -9px; font: 700 10px var(--data); letter-spacing: .04em; color: #fff; background: rgba(7,4,13,.85);
+  padding: 3px 6px; white-space: nowrap; border-radius: var(--r-sm); }
+.am-mk.l b { left: auto; right: 16px; }
+.am-mk.d b { top: 12px; }
+
+/* part 1: four cloudy Sentinel-2 looks in a 2×2 grid */
+.am-s2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; aspect-ratio: 1.078;
+  width: min(calc(100vw - 560px), calc((100svh - 230px) * 1.078)); }
+.am-s2 > div { position: relative; min-height: 0; overflow: hidden; border-radius: var(--r-sm); }
+.am-s2 img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.am-s2 b { position: absolute; left: 8px; bottom: 8px; font: 700 10px var(--data); letter-spacing: .08em; text-transform: uppercase; color: #fff;
+  background: rgba(7,4,13,.8); padding: 3px 6px; border-radius: var(--r-sm); }
+
+/* charts */
+.am-chart-fig { margin: 0; display: grid; gap: 12px; min-width: 0; width: min(calc(100vw - 560px), calc((100svh - 260px) * 1.55), 860px); }
+.am-chart-fig figcaption { font: 8.5px/1.55 var(--data); letter-spacing: .04em; color: var(--muted); }
+.am-legend { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 18px; font: 10px var(--data); letter-spacing: .06em; color: var(--cream); }
+.am-legend li { display: flex; align-items: center; gap: 7px; }
+.am-legend i { width: 18px; height: 0; border-top: 2px solid currentColor; }
+.am-legend i.dash { border-top-style: dashed; }
+.am-chart { position: relative; }
+.am-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.am-chart text { font-family: var(--data); }
+.am-ct { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; fill: var(--cream); }
+.am-ax { font-size: 10px; fill: var(--muted); }
+.am-lb { font-size: 11px; fill: var(--cream); }
+.am-grid { stroke: var(--line); stroke-width: 1; }
+.am-x { stroke: var(--line-strong); stroke-width: 1; }
+.am-ln { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.am-dot { stroke: var(--void); stroke-width: 2; }
+.am-cross { stroke: var(--cream); stroke-width: 1; stroke-dasharray: 2 3; opacity: 0; }
+.am-cross.on { opacity: .7; }
+.am-hit { fill: transparent; cursor: crosshair; }
+.am-tip { position: absolute; top: 6px; z-index: 2; pointer-events: none; transform: translateX(14px); min-width: 150px;
+  font: 11px/1.5 var(--data); color: var(--cream); background: rgba(7,4,13,.94); border: 1px solid var(--line-strong); border-radius: var(--r-sm); padding: 8px 10px; }
+.am-tip.flip { transform: translateX(calc(-100% - 14px)); }
+.am-tip b { display: block; font-weight: 400; color: var(--hi); letter-spacing: .08em; margin-bottom: 2px; }
+.am-tip span { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+.am-tip span i { width: 12px; height: 0; border-top: 2px solid currentColor; flex: none; }
+.am-tip span i.dash { border-top-style: dashed; }
+.am-tip em { font-style: normal; color: var(--muted); }
+/* the numbers behind each chart */
+.am-table summary { font: 10px var(--data); letter-spacing: .14em; text-transform: uppercase; color: var(--peri); cursor: pointer; width: max-content; }
+.am-table table { margin-top: 8px; border-collapse: collapse; font: 10.5px var(--data); color: #b4b4bb; }
+.am-table th, .am-table td { padding: 3px 12px 3px 0; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.am-table th { color: var(--cream); font-weight: 400; }
+.am-table th:first-child, .am-table td:first-child { text-align: left; }
+
+/* aside: a bit more room for the longer story text */
+.am-part .zoom-info { max-width: 400px; }
+.kn-end .kn-caveat { font: 10px/1.5 var(--data); color: var(--muted); letter-spacing: .04em; }
+
+@media (max-width: 860px) {
+  .am-s2, .am-chart-fig { width: 100%; }
+}

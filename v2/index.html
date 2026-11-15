@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Through NISAR’s Lens</title>
+<meta name="description" content="See how the NASA–ISRO NISAR radar satellite watches Earth's surface move, from the whole planet down to the shrinking lakes of Konin.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/v2.css?v=4">
+<link rel="stylesheet" href="css/amazon.css?v=1">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<header class="top wrap">
+  <a class="brand" href="#top" aria-label="Through NISAR’s Lens, back to top"><img class="logo" src="img/logo.svg" alt="" width="156" height="127"></a>
+  <nav class="topnav" aria-label="Pages">
+    <a href="index.html" aria-current="page">Main</a>
+    <a href="orbit.html">Orbit</a>
+    <a href="explorer.html">Explorer</a>
+  </nav>
+  <a class="sat-now" id="sat-now" href="orbit.html#now" title="The point under NISAR right now. Opens the live orbit view."><span class="sat-now-tag"><i aria-hidden="true"></i>NISAR</span><span class="lat">--.--°N</span><span class="lon">---.--°E</span></a>
+</header>
+
+<!-- section index: ticks on the left edge, labels slide out on hover/focus -->
+<nav class="secnav" aria-label="Sections on this page">
+  <a href="#top"><i></i><span>Home</span></a>
+  <a href="#slogan"><i></i><span>Radar</span></a>
+  <a href="#build"><i></i><span><b>01</b>Build it</span></a>
+  <a href="#how"><i></i><span><b>02</b>How it sees</span></a>
+  <a href="#read"><i></i><span><b>03</b>Read it</span></a>
+  <a href="#amazon"><i></i><span><b>04</b>Amazon Rainforest</span></a>
+  <a href="#poland"><i></i><span><b>05</b>Poland</span></a>
+</nav>
+
+<main>
+  <!-- HERO: centred title over the NISAR illustration, which sits a little below the text -->
+  <section class="hero" id="top">
+    <div class="hero-photo" aria-hidden="true">
+      <img src="img/satellite-scan.jpg" alt="">
+      <svg class="spark s1" viewBox="0 0 100 100"><path d="M50 0C53 38 62 47 100 50C62 53 53 62 50 100C47 62 38 53 0 50C38 47 47 38 50 0Z"/></svg>
+      <svg class="spark s2" viewBox="0 0 100 100"><path d="M50 0C53 38 62 47 100 50C62 53 53 62 50 100C47 62 38 53 0 50C38 47 47 38 50 0Z"/></svg>
+    </div>
+    <div class="hero-head wrap">
+      <h1><span class="row">Through</span><span class="row">NISAR’s Lens</span></h1>
+    </div>
+    <!-- RADAR, NOT A CAMERA: centred on the hero, near the bottom of the photo -->
+    <div class="slogan hero-slogan-c wrap" id="slogan">
+      <div class="tag-pair"><span class="tag-hi">L-band · 23.85 cm</span><span class="tag-hi">S-band · 9.37 cm</span></div>
+      <h2>Radar, not a camera</h2>
+      <p>NISAR maps Earth <b>every 12 days</b>, through clouds and darkness. We make its signal readable.</p>
+    </div>
+  </section>
+
+  <!-- 2 · ANATOMY -->
+  <section class="pass wrap fit" id="build">
+    <div class="pass-head">
+      <h2>Take NISAR <span class="gt">apart</span></h2>
+      <p class="lede">Click any part to see what it does. Take it apart, then put it back together.</p>
+    </div>
+    <div class="anatomy fit-body">
+      <div class="ana-stage hud" id="ana-stage">
+        <div class="ana-bp" aria-hidden="true">
+          <div class="ana-bp-block">
+            <div class="t"><b>NISAR</b><span>L + S band SAR</span></div>
+            <div><span>Units</span>m</div><div><span>Scale</span>NTS</div>
+          </div>
+        </div>
+        <canvas id="ana" aria-label="3D model of NISAR that can be taken apart"></canvas>
+        <div class="ana-labels" id="ana-labels" aria-hidden="true"></div>
+        <div class="ana-tools">
+          <div class="ana-ctl">
+            <button class="btn hot" id="ana-explode">Take apart</button>
+            <button class="btn" id="ana-reset">Snap together</button>
+          </div>
+          <div class="ana-progress" id="ana-progress" aria-live="polite"></div>
+        </div>
+        <div class="ana-hint data" id="ana-hint">Drag to spin · click a part</div>
+        <div class="ana-done" id="ana-done" hidden>All parts attached. NISAR is ready for launch.</div>
+        <article class="ana-card" id="ana-card" aria-live="polite">
+          <button class="ana-close" id="ana-close" aria-label="Close">×</button>
+          <div class="ana-card-body" id="ana-body"></div>
+        </article>
+      </div>
+      <div class="ana-right">
+        <a class="btn hot" href="orbit.html">See it in full scale</a>
+        <div class="hero-globe ana-globe"><canvas id="hero-globe" aria-label="Globe with the NISAR satellite circling it"></canvas><span class="hud data" aria-hidden="true" id="hud-pos">LAT --.-- LON --.--</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION CONTROL PHOTO -->
+  <section class="photo right" id="control">
+    <img src="img/mission-control-scan.jpg" alt="Engineers at NASA JPL mission control watching NISAR telemetry, with a 3D view of the satellite and its reflector on the big screen; grainy black-and-white scan" loading="lazy">
+    <div class="photo-copy wrap">
+      <span class="tag-hi">Mission control · NASA JPL</span>
+      <h2>Unfolding the reflector</h2>
+      <p>Engineers follow the 12 m dish as it opens: tension and rotation counts on one screen, NISAR in 3D on the other.</p>
+    </div>
+    <span class="photo-cap">Image: NASA/JPL-Caltech · PIA26612</span>
+  </section>
+
+  <!-- 3 · HOW NISAR SEES -->
+  <section class="pass wrap" id="how">
+    <!-- radar sees through clouds (the text of step 1 of the old animation) -->
+    <article class="see-through">
+      <img src="img/clouds-scan.jpg" alt="NISAR above a cloud layer, grainy scan style: its radar beam (cyan) passes straight through the clouds and reaches the forest and ground below" loading="lazy">
+      <div class="see-through-copy">
+        <span class="tag-hi">Day, night, storm</span>
+        <h3>It brings its <span class="gt">own light</span></h3>
+        <p>A normal satellite camera needs sunlight and a clear sky. NISAR shines its own microwave pulse at the ground and listens for the echo, so it works at night and straight through clouds.</p>
+      </div>
+    </article>
+    <h2>Every surface echoes <span class="gt">differently</span></h2>
+    <p class="lede">NISAR shines its own microwave pulse at the ground and listens for the echo. What comes back depends on what the pulse hits.</p>
+    <div class="surfaces">
+      <article class="surface">
+        <h3>Lake</h3>
+        <img class="surface-graphic" src="img/lake-scan.jpg" alt="Lake shore with a heron and reeds, grainy scan style: the radar pulse (red) hits the calm water and bounces away like off a mirror (green), so almost nothing returns to the satellite">
+        <p>Calm water bounces the pulse away like a mirror, so almost nothing comes back. Lakes look dark on radar.</p>
+        <span class="surface-note">Mirror bounce · almost no echo · dark</span>
+      </article>
+      <article class="surface">
+        <h3>Bare field</h3>
+        <img class="surface-graphic" src="img/field-scan.jpg" alt="Rough ground with grasses and a heron, grainy scan style: the radar pulse (red) hits the soil and scatters in several directions (green), with a little of it heading back up">
+        <p>Rough soil scatters the pulse in many directions and sends a little of it back.</p>
+        <span class="surface-note">Rough surface · some echo · brown</span>
+      </article>
+      <article class="surface">
+        <h3>Forest</h3>
+        <img class="surface-graphic" src="img/forest-scan.jpg" alt="Forest in silhouette, grainy scan style: the radar pulse (red) comes in from the sky and zig-zags between trunks and branches; part of it bounces back up toward the satellite (cyan)">
+        <p>Trees scatter the pulse around inside their leaves and branches before part of it comes back.</p>
+        <span class="surface-note">Volume scattering · echo changes polarisation · green</span>
+      </article>
+      <article class="surface">
+        <h3>City</h3>
+        <img class="surface-graphic" src="img/city-scan.jpg" alt="Street section with a building, grainy scan style: the radar pulse (red) comes down, bounces off the ground into the building wall and straight back up toward the satellite (cyan)">
+        <p>Walls and streets bounce the pulse straight back toward the satellite.</p>
+        <span class="surface-note">Double bounce off walls · strong echo · yellow</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- 3 · READ THE RADAR -->
+  <section class="pass wrap fit" id="read">
+    <div class="pass-head">
+      <h2>Radar colours, <span class="gt">translated</span></h2>
+      <p class="lede">A radar image of the flooded Amazon in Peru, the kind of picture NISAR makes. Drag the seam to see what each colour means.</p>
+    </div>
+    <div class="reader fit-body">
+      <div class="media-cell">
+        <div class="compare hud" id="compare" aria-label="Before/after slider: radar image of flooding in Pacaya-Samaria, Peru, and a plain-language map of it">
+          <canvas id="rad"></canvas><canvas id="lab"></canvas>
+          <div class="seam" aria-hidden="true"></div>
+          <div class="tip" id="tip" hidden></div>
+          <div class="loading" id="read-loading">Loading the radar image…</div>
+        </div>
+      </div>
+      <div class="reader-side">
+        <ul class="key" id="key">
+          <li><span class="sw" style="background:#341662"></span><span><b>Open water</b><small>Black on radar: calm water bounces the pulse away. The river and the lakes.</small></span><span class="pct" data-k="water">–</span></li>
+          <li><span class="sw" style="background:#5676b2"></span><span><b>Tropical forest</b><small>Grey-green: leaves and branches scatter the pulse around.</small></span><span class="pct" data-k="forest">–</span></li>
+          <li><span class="sw" style="background:#b0a0cd"></span><span><b>Low or floating plants</b><small>Dark green: grasses and plants on the water send back a weak echo.</small></span><span class="pct" data-k="floating">–</span></li>
+          <li><span class="sw" style="background:#b52c5c"></span><span><b>Flooded forest</b><small>Red and pink: water under the trees bounces the pulse back up the trunks, a strong echo.</small></span><span class="pct" data-k="flooded">–</span></li>
+        </ul>
+        <p class="data muted" style="margin-top:16px">Pacaya-Samaria National Reserve, Peru, 2013. UAVSAR airborne radar, an example of NISAR-style imagery. Image: NASA/JPL-Caltech · PIA26112. A teaching aid, not a land-cover map.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · AMAZON: a dot map of Brazil; the pin (or the card) zooms into the sideways story (amazon.js) -->
+  <section class="pass wrap fit" id="amazon">
+    <div class="pass-head">
+      <h2>Through the clouds</h2>
+      <p class="lede">In the Amazon, NISAR sees what cameras can't: forest cleared, riverbanks dug up for gold, and a flood draining from under the trees.</p>
+    </div>
+    <div class="poland fit-body">
+      <div class="media-cell"><div class="pl-map am-map" id="am-map"><canvas id="am" aria-label="Shaded relief map of Brazil with the Amazon story"></canvas></div><p class="data muted pl-credit">Relief: Miguel Valenzuela (@mappdoutofficial), from GMTED2010 elevation data</p></div>
+      <div class="regions">
+        <button class="region live am-open" type="button" id="am-open">
+          <span class="name">Amazon Rainforest</span><span class="badge">Story</span>
+          <span class="metric">Novo Progresso · Rio Crepori · Mamirauá · Jun–Oct 2026</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · POLAND -->
+  <section class="pass wrap fit" id="poland">
+    <div class="pass-head">
+      <h2>Now, closer to <span class="gt">home</span></h2>
+      <p class="lede">Places in Poland where the land is changing.</p>
+    </div>
+    <div class="poland fit-body">
+      <div class="media-cell"><div class="pl-map" id="pl-map"><canvas id="pl" aria-label="Shaded relief map of Poland with study areas"></canvas></div><p class="data muted pl-credit">Relief: Miguel Valenzuela (@mappdoutofficial), from SRTM elevation data</p></div>
+      <div class="regions" id="regions"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div><h3>Through NISAR’s <span class="gt">Lens</span></h3><p>NASA Space Apps Challenge 2026 · Poznań</p></div>
+  <p class="data">Data: NISAR (NASA/JPL-Caltech, ISRO) via ASF DAAC and NASA GIBS · NISAR observation plans (NASA, ArcGIS Online) · coastlines: Natural Earth via world-atlas. Products are provisional.</p>
+  <p class="team-prompt"><span>team holy@hack:~$</span><i aria-hidden="true"></i></p>
+</footer>
+
+<script src="js/nisar-now.js?v=2"></script>
+<script src="js/nasa-gis.js"></script>
+<script src="js/sky.js?v=3"></script>
+<script src="js/banded.js"></script>
+<script type="module" src="js/hero.js"></script>
+<script type="module" src="js/anatomy.js"></script>
+<!-- animation for How it sees, not used for now: <script src="js/explainer.js"></script> -->
+<script src="js/reader.js"></script>
+<script type="module" src="js/amazon.js?v=7"></script>
+<script type="module" src="js/poland.js"></script>
+</body>
+</html>

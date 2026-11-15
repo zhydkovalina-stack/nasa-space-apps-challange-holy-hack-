@@ -1,0 +1,1346 @@
+{
+ "name": "powidzkie",
+ "bbox": [
+  17.88,
+  52.38,
+  17.99,
+  52.44
+ ],
+ "method": "Landsat C2 L2 SR, May-Sep, MNDWI>0.0, QA clear, mask=JRC occurrence>0 dilated 2px, clear>=0.9, per-year median",
+ "mask_ha": 1272.2,
+ "years": [
+  {
+   "year": 1984,
+   "area_ha": 1027.7,
+   "n_scenes": 3,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_190023_19840805_02_T2",
+     "date": "1984-08-05",
+     "area_ha": 411.0,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190024_19840805_02_T1",
+     "date": "1984-08-05",
+     "area_ha": 1027.7,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190024_19840602_02_T1",
+     "date": "1984-06-02",
+     "area_ha": 1075.0,
+     "clear_frac": 0.906
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 1985,
+   "area_ha": 1043.3,
+   "n_scenes": 2,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_190024_19850605_02_T1",
+     "date": "1985-06-05",
+     "area_ha": 1047.4,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_189024_19850716_02_T1",
+     "date": "1985-07-16",
+     "area_ha": 1039.2,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 1986,
+   "area_ha": 1059.2,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_190023_19860928_02_T1",
+     "date": "1986-09-28",
+     "area_ha": 1040.2,
+     "clear_frac": 0.992
+    },
+    {
+     "id": "LT05_L2SP_189024_19860804_02_T1",
+     "date": "1986-08-04",
+     "area_ha": 1059.2,
+     "clear_frac": 0.967
+    },
+    {
+     "id": "LT05_L2SP_190024_19860507_02_T1",
+     "date": "1986-05-07",
+     "area_ha": 1064.4,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_19860507_02_T1",
+     "date": "1986-05-07",
+     "area_ha": 1068.8,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_189024_19860703_02_T1",
+     "date": "1986-07-03",
+     "area_ha": 1055.0,
+     "clear_frac": 0.997
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 1987,
+   "area_ha": 1061.9,
+   "n_scenes": 4,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_190023_19870526_02_T1",
+     "date": "1987-05-26",
+     "area_ha": 1063.1,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190024_19870526_02_T1",
+     "date": "1987-05-26",
+     "area_ha": 1060.7,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_19870915_02_T1",
+     "date": "1987-09-15",
+     "area_ha": 1039.2,
+     "clear_frac": 0.942
+    },
+    {
+     "id": "LT05_L2SP_190024_19870510_02_T1",
+     "date": "1987-05-10",
+     "area_ha": 1066.4,
+     "clear_frac": 0.96
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 1988,
+   "area_ha": 1055.9,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_190023_19880528_02_T1",
+     "date": "1988-05-28",
+     "area_ha": 1059.8,
+     "clear_frac": 0.998
+    },
+    {
+     "id": "LT05_L2SP_190023_19880512_02_T1",
+     "date": "1988-05-12",
+     "area_ha": 1068.9,
+     "clear_frac": 0.993
+    },
+    {
+     "id": "LT05_L2SP_190024_19880528_02_T1",
+     "date": "1988-05-28",
+     "area_ha": 1055.9,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_19880901_02_T1",
+     "date": "1988-09-01",
+     "area_ha": 1055.9,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_19880917_02_T1",
+     "date": "1988-09-17",
+     "area_ha": 1033.5,
+     "clear_frac": 0.917
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 1989,
+   "area_ha": 1049.0,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_189024_19890913_02_T1",
+     "date": "1989-09-13",
+     "area_ha": 1021.7,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_19890819_02_T1",
+     "date": "1989-08-19",
+     "area_ha": 1049.0,
+     "clear_frac": 0.998
+    },
+    {
+     "id": "LT05_L2SP_190023_19890515_02_T1",
+     "date": "1989-05-15",
+     "area_ha": 1063.7,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190024_19890515_02_T2",
+     "date": "1989-05-15",
+     "area_ha": 1059.8,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190024_19890819_02_T1",
+     "date": "1989-08-19",
+     "area_ha": 1047.3,
+     "clear_frac": 0.998
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 1990,
+   "area_ha": 1034.1,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_190023_19900502_02_T1",
+     "date": "1990-05-02",
+     "area_ha": 1050.8,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_19900705_02_T1",
+     "date": "1990-07-05",
+     "area_ha": 1034.1,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_19900721_02_T1",
+     "date": "1990-07-21",
+     "area_ha": 1033.2,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190024_19900619_02_T1",
+     "date": "1990-06-19",
+     "area_ha": 1069.4,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190024_19900721_02_T1",
+     "date": "1990-07-21",
+     "area_ha": 1029.3,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 1991,
+   "area_ha": 1024.7,
+   "n_scenes": 3,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_190023_19910926_02_T1",
+     "date": "1991-09-26",
+     "area_ha": 1011.6,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_19910708_02_T1",
+     "date": "1991-07-08",
+     "area_ha": 1026.9,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_19910724_02_T1",
+     "date": "1991-07-24",
+     "area_ha": 1024.7,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 1992,
+   "area_ha": 1042.3,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_189024_19920516_02_T1",
+     "date": "1992-05-16",
+     "area_ha": 1042.3,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190024_19920523_02_T2",
+     "date": "1992-05-23",
+     "area_ha": 1045.0,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190024_19920710_02_T1",
+     "date": "1992-07-10",
+     "area_ha": 1005.3,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_19920523_02_T1",
+     "date": "1992-05-23",
+     "area_ha": 1044.4,
+     "clear_frac": 0.981
+    },
+    {
+     "id": "LT05_L2SP_190023_19920811_02_T2",
+     "date": "1992-08-11",
+     "area_ha": 127.9,
+     "clear_frac": 0.999
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 1993,
+   "area_ha": 979.2,
+   "n_scenes": 2,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_190024_19930814_02_T1",
+     "date": "1993-08-14",
+     "area_ha": 980.9,
+     "clear_frac": 0.98
+    },
+    {
+     "id": "LT05_L2SP_190023_19930814_02_T1",
+     "date": "1993-08-14",
+     "area_ha": 977.5,
+     "clear_frac": 0.999
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 1994,
+   "area_ha": 62.7,
+   "n_scenes": 3,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_189024_19940725_02_T1",
+     "date": "1994-07-25",
+     "area_ha": 1007.2,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_19940513_02_T2",
+     "date": "1994-05-13",
+     "area_ha": 45.7,
+     "clear_frac": 0.965
+    },
+    {
+     "id": "LT05_L2SP_190024_19940513_02_T2",
+     "date": "1994-05-13",
+     "area_ha": 62.7,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": true
+  },
+  {
+   "year": 1995,
+   "area_ha": 1004.3,
+   "n_scenes": 3,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_189024_19950813_02_T1",
+     "date": "1995-08-13",
+     "area_ha": 1004.3,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_189024_19950728_02_T1",
+     "date": "1995-07-28",
+     "area_ha": 1003.5,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_19950804_02_T1",
+     "date": "1995-08-04",
+     "area_ha": 1020.0,
+     "clear_frac": 0.9
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 1996,
+   "area_ha": 1035.0,
+   "n_scenes": 1,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_190023_19960518_02_T1",
+     "date": "1996-05-18",
+     "area_ha": 1035.0,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 1997,
+   "area_ha": 1000.3,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_190024_19970825_02_T1",
+     "date": "1997-08-25",
+     "area_ha": 1000.3,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_19970825_02_T1",
+     "date": "1997-08-25",
+     "area_ha": 1002.5,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_19970809_02_T1",
+     "date": "1997-08-09",
+     "area_ha": 998.5,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190024_19970809_02_T1",
+     "date": "1997-08-09",
+     "area_ha": 993.6,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_19970606_02_T1",
+     "date": "1997-06-06",
+     "area_ha": 1026.4,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 1998,
+   "area_ha": 987.8,
+   "n_scenes": 2,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_190023_19980812_02_T1",
+     "date": "1998-08-12",
+     "area_ha": 988.8,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190024_19980812_02_T1",
+     "date": "1998-08-12",
+     "area_ha": 986.9,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 1999,
+   "area_ha": 993.5,
+   "n_scenes": 3,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_190024_19990527_02_T2",
+     "date": "1999-05-27",
+     "area_ha": 80.5,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_190023_19990908_02_T1",
+     "date": "1999-09-08",
+     "area_ha": 995.5,
+     "clear_frac": 0.945
+    },
+    {
+     "id": "LE07_L2SP_190024_19990908_02_T1",
+     "date": "1999-09-08",
+     "area_ha": 993.5,
+     "clear_frac": 0.948
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2000,
+   "area_ha": 1021.7,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LE07_L2SP_189024_20000802_02_T1",
+     "date": "2000-08-02",
+     "area_ha": 983.0,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_189024_20000514_02_T1",
+     "date": "2000-05-14",
+     "area_ha": 1007.7,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190024_20000513_02_T1",
+     "date": "2000-05-13",
+     "area_ha": 1021.7,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_20000513_02_T1",
+     "date": "2000-05-13",
+     "area_ha": 1025.3,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_190024_20000505_02_T1",
+     "date": "2000-05-05",
+     "area_ha": 1025.3,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2001,
+   "area_ha": 1021.9,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LE07_L2SP_190024_20010524_02_T1",
+     "date": "2001-05-24",
+     "area_ha": 1021.0,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_190023_20010524_02_T1",
+     "date": "2001-05-24",
+     "area_ha": 1023.2,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_190023_20010508_02_T1",
+     "date": "2001-05-08",
+     "area_ha": 1031.9,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_189024_20010728_02_T1",
+     "date": "2001-07-28",
+     "area_ha": 984.7,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_189024_20010501_02_T1",
+     "date": "2001-05-01",
+     "area_ha": 1021.9,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2002,
+   "area_ha": 995.0,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LE07_L2SP_189024_20020504_02_T1",
+     "date": "2002-05-04",
+     "area_ha": 1013.0,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_189024_20020824_02_T1",
+     "date": "2002-08-24",
+     "area_ha": 980.0,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_190023_20020511_02_T1",
+     "date": "2002-05-11",
+     "area_ha": 1029.0,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_189024_20020605_02_T1",
+     "date": "2002-06-05",
+     "area_ha": 995.0,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_189024_20020909_02_T1",
+     "date": "2002-09-09",
+     "area_ha": 984.0,
+     "clear_frac": 0.981
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2003,
+   "area_ha": 1019.4,
+   "n_scenes": 3,
+   "scenes": [
+    {
+     "id": "LE07_L2SP_190023_20030530_02_T1",
+     "date": "2003-05-30",
+     "area_ha": 1019.9,
+     "clear_frac": 0.941
+    },
+    {
+     "id": "LT05_L2SP_190023_20030623_02_T1",
+     "date": "2003-06-23",
+     "area_ha": 994.9,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_190024_20030530_02_T1",
+     "date": "2003-05-30",
+     "area_ha": 1019.4,
+     "clear_frac": 0.938
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2004,
+   "area_ha": 1013.0,
+   "n_scenes": 1,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_190024_20040524_02_T1",
+     "date": "2004-05-24",
+     "area_ha": 1013.0,
+     "clear_frac": 0.907
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2005,
+   "area_ha": 961.9,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LE07_L2SP_190024_20050924_02_T1",
+     "date": "2005-09-24",
+     "area_ha": 961.9,
+     "clear_frac": 0.904
+    },
+    {
+     "id": "LE07_L2SP_190023_20050924_02_T1",
+     "date": "2005-09-24",
+     "area_ha": 962.5,
+     "clear_frac": 0.906
+    },
+    {
+     "id": "LE07_L2SP_190024_20050908_02_T1",
+     "date": "2005-09-08",
+     "area_ha": 962.9,
+     "clear_frac": 0.915
+    },
+    {
+     "id": "LE07_L2SP_190023_20050908_02_T1",
+     "date": "2005-09-08",
+     "area_ha": 956.7,
+     "clear_frac": 0.915
+    },
+    {
+     "id": "LT05_L2SP_190023_20050831_02_T2",
+     "date": "2005-08-31",
+     "area_ha": 777.5,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2006,
+   "area_ha": 953.6,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_189024_20060912_02_T1",
+     "date": "2006-09-12",
+     "area_ha": 950.0,
+     "clear_frac": 0.989
+    },
+    {
+     "id": "LE07_L2SP_190024_20060911_02_T1",
+     "date": "2006-09-11",
+     "area_ha": 953.6,
+     "clear_frac": 0.908
+    },
+    {
+     "id": "LE07_L2SP_190024_20060725_02_T1",
+     "date": "2006-07-25",
+     "area_ha": 955.9,
+     "clear_frac": 0.924
+    },
+    {
+     "id": "LT05_L2SP_190023_20060717_02_T1",
+     "date": "2006-07-17",
+     "area_ha": 953.6,
+     "clear_frac": 0.946
+    },
+    {
+     "id": "LE07_L2SP_190024_20060522_02_T1",
+     "date": "2006-05-22",
+     "area_ha": 988.8,
+     "clear_frac": 0.902
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2007,
+   "area_ha": 974.3,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LE07_L2SP_190024_20070610_02_T1",
+     "date": "2007-06-10",
+     "area_ha": 974.3,
+     "clear_frac": 0.938
+    },
+    {
+     "id": "LE07_L2SP_190024_20070525_02_T1",
+     "date": "2007-05-25",
+     "area_ha": 982.9,
+     "clear_frac": 0.931
+    },
+    {
+     "id": "LE07_L2SP_190023_20070525_02_T1",
+     "date": "2007-05-25",
+     "area_ha": 984.3,
+     "clear_frac": 0.931
+    },
+    {
+     "id": "LT05_L2SP_189024_20070611_02_T1",
+     "date": "2007-06-11",
+     "area_ha": 968.8,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_190023_20070610_02_T1",
+     "date": "2007-06-10",
+     "area_ha": 973.5,
+     "clear_frac": 0.935
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2008,
+   "area_ha": 968.7,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_189024_20080512_02_T1",
+     "date": "2008-05-12",
+     "area_ha": 998.4,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_189024_20080528_02_T1",
+     "date": "2008-05-28",
+     "area_ha": 978.3,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_190024_20080831_02_T1",
+     "date": "2008-08-31",
+     "area_ha": 954.6,
+     "clear_frac": 0.907
+    },
+    {
+     "id": "LT05_L2SP_189024_20080731_02_T1",
+     "date": "2008-07-31",
+     "area_ha": 968.7,
+     "clear_frac": 0.936
+    },
+    {
+     "id": "LE07_L2SP_190023_20080831_02_T1",
+     "date": "2008-08-31",
+     "area_ha": 952.7,
+     "clear_frac": 0.91
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2009,
+   "area_ha": 938.1,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_190023_20090927_02_T2",
+     "date": "2009-09-27",
+     "area_ha": 0.8,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_189024_20090920_02_T1",
+     "date": "2009-09-20",
+     "area_ha": 946.1,
+     "clear_frac": 0.989
+    },
+    {
+     "id": "LE07_L2SP_190023_20090919_02_T1",
+     "date": "2009-09-19",
+     "area_ha": 938.1,
+     "clear_frac": 0.931
+    },
+    {
+     "id": "LE07_L2SP_190024_20090802_02_T1",
+     "date": "2009-08-02",
+     "area_ha": 958.2,
+     "clear_frac": 0.943
+    },
+    {
+     "id": "LE07_L2SP_190024_20090919_02_T1",
+     "date": "2009-09-19",
+     "area_ha": 919.4,
+     "clear_frac": 0.931
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2010,
+   "area_ha": 952.2,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LT05_L2SP_189024_20100923_02_T1",
+     "date": "2010-09-23",
+     "area_ha": 952.2,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_189024_20100822_02_T1",
+     "date": "2010-08-22",
+     "area_ha": 948.4,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_190024_20100821_02_T1",
+     "date": "2010-08-21",
+     "area_ha": 879.6,
+     "clear_frac": 0.949
+    },
+    {
+     "id": "LE07_L2SP_190023_20100618_02_T1",
+     "date": "2010-06-18",
+     "area_ha": 965.9,
+     "clear_frac": 0.971
+    },
+    {
+     "id": "LT05_L2SP_190023_20100712_02_T1",
+     "date": "2010-07-12",
+     "area_ha": 966.2,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2011,
+   "area_ha": 964.9,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LE07_L2SP_190024_20110605_02_T1",
+     "date": "2011-06-05",
+     "area_ha": 963.3,
+     "clear_frac": 0.943
+    },
+    {
+     "id": "LT05_L2SP_189024_20110926_02_T1",
+     "date": "2011-09-26",
+     "area_ha": 953.5,
+     "clear_frac": 0.94
+    },
+    {
+     "id": "LT05_L2SP_190024_20110629_02_T1",
+     "date": "2011-06-29",
+     "area_ha": 964.9,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_190023_20110629_02_T1",
+     "date": "2011-06-29",
+     "area_ha": 966.0,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LT05_L2SP_189024_20110606_02_T1",
+     "date": "2011-06-06",
+     "area_ha": 980.3,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2012,
+   "area_ha": 949.0,
+   "n_scenes": 4,
+   "scenes": [
+    {
+     "id": "LE07_L2SP_190023_20120911_02_T1",
+     "date": "2012-09-11",
+     "area_ha": 950.1,
+     "clear_frac": 0.994
+    },
+    {
+     "id": "LE07_L2SP_190023_20120725_02_T1",
+     "date": "2012-07-25",
+     "area_ha": 948.0,
+     "clear_frac": 0.972
+    },
+    {
+     "id": "LE07_L2SP_190023_20120522_02_T1",
+     "date": "2012-05-22",
+     "area_ha": 998.1,
+     "clear_frac": 0.903
+    },
+    {
+     "id": "LE07_L2SP_190024_20120911_02_T1",
+     "date": "2012-09-11",
+     "area_ha": 936.5,
+     "clear_frac": 0.986
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2013,
+   "area_ha": 954.6,
+   "n_scenes": 4,
+   "scenes": [
+    {
+     "id": "LC08_L2SP_190023_20130906_02_T1",
+     "date": "2013-09-06",
+     "area_ha": 950.2,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LC08_L2SP_190024_20130906_02_T1",
+     "date": "2013-09-06",
+     "area_ha": 949.2,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LC08_L2SP_190024_20130704_02_T1",
+     "date": "2013-07-04",
+     "area_ha": 959.0,
+     "clear_frac": 0.982
+    },
+    {
+     "id": "LE07_L2SP_190024_20130509_02_T1",
+     "date": "2013-05-09",
+     "area_ha": 977.7,
+     "clear_frac": 0.916
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2014,
+   "area_ha": 986.4,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LE07_L2SP_190024_20140917_02_T1",
+     "date": "2014-09-17",
+     "area_ha": 937.2,
+     "clear_frac": 0.988
+    },
+    {
+     "id": "LC08_L2SP_190024_20140520_02_T1",
+     "date": "2014-05-20",
+     "area_ha": 1005.1,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_190023_20140917_02_T1",
+     "date": "2014-09-17",
+     "area_ha": 950.5,
+     "clear_frac": 0.988
+    },
+    {
+     "id": "LC08_L2SP_190023_20140605_02_T1",
+     "date": "2014-06-05",
+     "area_ha": 986.4,
+     "clear_frac": 0.998
+    },
+    {
+     "id": "LC08_L2SP_190023_20140520_02_T1",
+     "date": "2014-05-20",
+     "area_ha": 1006.0,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2015,
+   "area_ha": 963.4,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LE07_L2SP_190024_20150803_02_T1",
+     "date": "2015-08-03",
+     "area_ha": 958.8,
+     "clear_frac": 0.982
+    },
+    {
+     "id": "LE07_L2SP_190023_20150803_02_T1",
+     "date": "2015-08-03",
+     "area_ha": 963.4,
+     "clear_frac": 0.982
+    },
+    {
+     "id": "LC08_L2SP_190024_20150811_02_T1",
+     "date": "2015-08-11",
+     "area_ha": 973.2,
+     "clear_frac": 0.997
+    },
+    {
+     "id": "LC08_L2SP_190023_20150811_02_T1",
+     "date": "2015-08-11",
+     "area_ha": 971.2,
+     "clear_frac": 0.998
+    },
+    {
+     "id": "LE07_L2SP_190023_20150819_02_T1",
+     "date": "2015-08-19",
+     "area_ha": 957.4,
+     "clear_frac": 0.977
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2016,
+   "area_ha": 970.8,
+   "n_scenes": 4,
+   "scenes": [
+    {
+     "id": "LC08_L2SP_190024_20160914_02_T1",
+     "date": "2016-09-14",
+     "area_ha": 953.9,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LC08_L2SP_190024_20160509_02_T1",
+     "date": "2016-05-09",
+     "area_ha": 987.8,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LC08_L2SP_190023_20160914_02_T1",
+     "date": "2016-09-14",
+     "area_ha": 953.1,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LC08_L2SP_190023_20160509_02_T1",
+     "date": "2016-05-09",
+     "area_ha": 988.3,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2017,
+   "area_ha": 980.4,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LE07_L2SP_190024_20170808_02_T1",
+     "date": "2017-08-08",
+     "area_ha": 890.8,
+     "clear_frac": 0.951
+    },
+    {
+     "id": "LC08_L2SP_190024_20170528_02_T1",
+     "date": "2017-05-28",
+     "area_ha": 980.4,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LC08_L2SP_190023_20170528_02_T1",
+     "date": "2017-05-28",
+     "area_ha": 982.4,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LC08_L2SP_190023_20170512_02_T1",
+     "date": "2017-05-12",
+     "area_ha": 984.8,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_190023_20170808_02_T1",
+     "date": "2017-08-08",
+     "area_ha": 928.2,
+     "clear_frac": 0.952
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2018,
+   "area_ha": 965.0,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LE07_L2SP_190024_20180912_02_T1",
+     "date": "2018-09-12",
+     "area_ha": 926.4,
+     "clear_frac": 0.924
+    },
+    {
+     "id": "LE07_L2SP_190023_20180608_02_T1",
+     "date": "2018-06-08",
+     "area_ha": 961.8,
+     "clear_frac": 0.93
+    },
+    {
+     "id": "LE07_L2SP_190024_20180507_02_T1",
+     "date": "2018-05-07",
+     "area_ha": 981.7,
+     "clear_frac": 0.929
+    },
+    {
+     "id": "LE07_L2SP_190023_20180507_02_T1",
+     "date": "2018-05-07",
+     "area_ha": 995.7,
+     "clear_frac": 0.93
+    },
+    {
+     "id": "LC08_L2SP_190023_20180803_02_T1",
+     "date": "2018-08-03",
+     "area_ha": 965.0,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2019,
+   "area_ha": 986.7,
+   "n_scenes": 2,
+   "scenes": [
+    {
+     "id": "LC08_L2SP_190024_20190603_02_T1",
+     "date": "2019-06-03",
+     "area_ha": 986.0,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LC08_L2SP_190023_20190603_02_T1",
+     "date": "2019-06-03",
+     "area_ha": 987.4,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2020,
+   "area_ha": 956.2,
+   "n_scenes": 2,
+   "scenes": [
+    {
+     "id": "LC08_L2SP_190024_20200808_02_T1",
+     "date": "2020-08-08",
+     "area_ha": 956.7,
+     "clear_frac": 0.996
+    },
+    {
+     "id": "LC08_L2SP_190023_20200808_02_T1",
+     "date": "2020-08-08",
+     "area_ha": 955.8,
+     "clear_frac": 0.997
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2021,
+   "area_ha": 970.6,
+   "n_scenes": 2,
+   "scenes": [
+    {
+     "id": "LC08_L2SP_190024_20210608_02_T1",
+     "date": "2021-06-08",
+     "area_ha": 969.6,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LC08_L2SP_190023_20210608_02_T1",
+     "date": "2021-06-08",
+     "area_ha": 971.6,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2022,
+   "area_ha": 967.7,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LC09_L2SP_190023_20220518_02_T1",
+     "date": "2022-05-18",
+     "area_ha": 969.5,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LC08_L2SP_190024_20220510_02_T1",
+     "date": "2022-05-10",
+     "area_ha": 967.7,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LC09_L2SP_190023_20220619_02_T1",
+     "date": "2022-06-19",
+     "area_ha": 812.6,
+     "clear_frac": 0.902
+    },
+    {
+     "id": "LC09_L2SP_190024_20220518_02_T1",
+     "date": "2022-05-18",
+     "area_ha": 969.5,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LC09_L2SP_190023_20220721_02_T1",
+     "date": "2022-07-21",
+     "area_ha": 952.7,
+     "clear_frac": 0.999
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2023,
+   "area_ha": 938.2,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LE07_L2SP_190024_20230527_02_T1",
+     "date": "2023-05-27",
+     "area_ha": 952.9,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LE07_L2SP_190023_20230527_02_T1",
+     "date": "2023-05-27",
+     "area_ha": 955.8,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LC09_L2SP_190023_20230910_02_T1",
+     "date": "2023-09-10",
+     "area_ha": 929.5,
+     "clear_frac": 0.998
+    },
+    {
+     "id": "LC09_L2SP_190024_20230910_02_T1",
+     "date": "2023-09-10",
+     "area_ha": 927.4,
+     "clear_frac": 0.998
+    },
+    {
+     "id": "LC09_L2SP_190024_20230708_02_T1",
+     "date": "2023-07-08",
+     "area_ha": 938.2,
+     "clear_frac": 1.0
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2024,
+   "area_ha": 929.7,
+   "n_scenes": 5,
+   "scenes": [
+    {
+     "id": "LC08_L2SP_190024_20240920_02_T1",
+     "date": "2024-09-20",
+     "area_ha": 928.0,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LC08_L2SP_190023_20240920_02_T1",
+     "date": "2024-09-20",
+     "area_ha": 929.7,
+     "clear_frac": 0.998
+    },
+    {
+     "id": "LC08_L2SP_190024_20240515_02_T1",
+     "date": "2024-05-15",
+     "area_ha": 948.5,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LC08_L2SP_190023_20240515_02_T1",
+     "date": "2024-05-15",
+     "area_ha": 950.0,
+     "clear_frac": 1.0
+    },
+    {
+     "id": "LC08_L2SP_190023_20240904_02_T1",
+     "date": "2024-09-04",
+     "area_ha": 725.7,
+     "clear_frac": 0.902
+    }
+   ],
+   "outlier": false
+  },
+  {
+   "year": 2025,
+   "area_ha": 919.2,
+   "n_scenes": 3,
+   "scenes": [
+    {
+     "id": "LC09_L2SP_190024_20250814_02_T1",
+     "date": "2025-08-14",
+     "area_ha": 919.5,
+     "clear_frac": 0.998
+    },
+    {
+     "id": "LC09_L2SP_190023_20250814_02_T1",
+     "date": "2025-08-14",
+     "area_ha": 919.2,
+     "clear_frac": 0.997
+    },
+    {
+     "id": "LC08_L2SP_190024_20250705_02_T1",
+     "date": "2025-07-05",
+     "area_ha": 916.7,
+     "clear_frac": 0.998
+    }
+   ],
+   "outlier": false
+  }
+ ],
+ "qc": "outlier=true if >25% from the median of up to 3 neighbouring years on each side (bad scenes); exclude from charts"
+}

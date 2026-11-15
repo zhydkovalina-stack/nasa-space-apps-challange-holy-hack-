@@ -1,0 +1,857 @@
+/* Through NISAR’s Lens — v2
+   Layout: a mission-console page. A fixed left rail (section index + live readouts) and an
+   asymmetric 12-column canvas; every section is a "pass" with its own coordinates.
+   Palette sampled from a real NISAR interferogram (plum, indigo, periwinkle,
+   ice, rust, peach). Gradients are never flat: they are dithered dots or grain. */
+@font-face { font-family: "Nasalization"; src: url("../../fonts/Nasalization.otf") format("opentype"); font-weight: 100 900; font-display: swap; }
+
+:root {
+  /* colour */
+  /* the original palette, sampled from a NISAR interferogram (plum, indigo, periwinkle, ice, rust, peach),
+     with one highlight: a warm golden yellow that leans to the peach/rust side (CTAs, labels, active states) */
+  --void: #07040d;         /* page */
+  --plum: #150a24;         /* raised surface */
+  --violet: #3a1d6e;       /* deep accent */
+  --indigo: #5a45c2;
+  --peri: #8f9cf2;         /* primary line colour */
+  --ice: #d6defc;          /* text */
+  --rust: #c4573a;
+  --peach: #ffbb82;
+  --cream: #f6ebe1;
+  --hi: #eeff1a;           /* highlight: very bright, almost neon yellow */
+  --hi-rgb: 238, 255, 26;
+  --muted: #8a84a8;        /* plum-biased grey */
+  --line: rgba(143, 156, 242, .18);
+  --line-strong: rgba(143, 156, 242, .42);
+  /* type */
+  --display: "Krona One", sans-serif;   /* main font (Google Fonts, full Polish) */
+  --text: "Nasalization", sans-serif;      /* secondary font: body text */
+  --data: "Nasalization", sans-serif;      /* labels, numbers, buttons: also the secondary font */
+  /* scale */
+  --s-hero: clamp(40px, 7.4vw, 124px);
+  --s-h2: clamp(28px, 4vw, 58px);
+  --s-h3: clamp(17px, 1.6vw, 22px);
+  --s-body: 15px;
+  --s-small: 12px;
+  --rail: 76px;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+button, input, select, textarea { font-family: inherit; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--void); color: var(--ice);
+  font: 400 var(--s-body)/1.65 var(--text); letter-spacing: .01em;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+a { color: inherit; }
+::selection { background: var(--hi); color: var(--void); }
+:focus-visible { outline: 2px solid var(--hi); outline-offset: 3px; }
+
+/* grain over everything (very low) */
+body::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .09; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+#sky { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+
+/* ---------- top bar (main page) ---------- */
+/* equal outer columns, so the page links sit at the true centre whatever the logo and readout widths are */
+.top { position: fixed; top: 0; left: 0; right: 0; z-index: 30; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;
+  height: 52px; padding-block: 0; background: rgba(7,4,13,.94); }   /* exactly 52px: the sticky section lines start right at its bottom edge (top: 52px), no overlap */   /* same fill as the sticky section lines below it, so the two read as one band */
+.brand { justify-self: start; display: inline-flex; align-items: center; gap: 10px; font: 700 12px var(--data); letter-spacing: .2em; text-decoration: none; }
+.brand .dot { width: 10px; height: 10px; background: var(--hi); }
+.topnav { display: flex; justify-content: center; gap: clamp(14px, 3vw, 44px); }
+.topnav a { font: 11px var(--data); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-decoration: none; padding-bottom: 4px; border-bottom: 1px solid transparent; }
+.topnav a b { font-weight: 400; color: var(--ice); margin-right: 8px; }
+.topnav a:hover, .topnav a.on, .topnav a[aria-current="page"] { color: var(--ice); border-bottom-color: var(--hi); }
+.topnav a.ext { color: var(--ice); } .topnav a.ext b, .topnav a[aria-current] b { color: var(--hi); }
+.top .clock { font: 11px var(--data); color: var(--muted); letter-spacing: .1em; }
+/* live point under NISAR (js/nisar-now.js); links to the orbit page's Now view */
+.sat-now { justify-self: end; display: inline-flex; align-items: center; gap: 12px; font: 11px var(--data); letter-spacing: .1em; color: var(--muted);
+  text-decoration: none; white-space: nowrap; padding-bottom: 4px; border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
+/* Nasalization has no tabular figures, so every digit and N/S/E/W sits in its own fixed-width cell
+   (cells built by js/nisar-now.js): the readout keeps one width and the numbers don't jitter */
+.sat-now .lat, .sat-now .lon { display: inline-flex; }
+.sat-now .d, .sat-now .h { display: inline-block; text-align: center; letter-spacing: 0; }
+.sat-now .d { width: .9em; }
+.sat-now .h { width: 1.2em; }
+.sat-now-tag { display: inline-flex; align-items: center; gap: 7px; color: var(--hi); }
+.sat-now-tag i { width: 6px; height: 6px; border-radius: 50%; background: var(--hi); box-shadow: 0 0 8px var(--hi); animation: sat-blink 2s ease-in-out infinite; }
+@keyframes sat-blink { 50% { opacity: .3; } }
+.sat-now:hover { color: var(--ice); border-bottom-color: var(--hi); }
+/* the page links (Home · Orbit · Explorer) are short enough to stay on phones */
+@media (max-width: 860px) { .top { grid-template-columns: auto 1fr auto; gap: 16px; } .topnav { justify-content: flex-end; gap: 18px; } }
+
+/* ---------- section index (main page, konin chapters): ticks on the left edge; hovering or tabbing in opens a panel with the labels ---------- */
+.secnav { position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 25; display: flex; flex-direction: column; padding: 8px 0;
+  border: 1px solid transparent; border-left: 0; transition: background .2s, border-color .2s, padding .2s; }
+.secnav a { display: flex; align-items: center; height: 30px; padding-right: 4px; text-decoration: none; color: var(--muted);
+  font: 10px var(--data); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+.secnav i { flex: none; width: 12px; height: 1px; background: var(--line-strong); transition: width .25s, background .25s; }
+.secnav span { max-width: 0; overflow: hidden; opacity: 0; transition: max-width .25s, opacity .2s, margin .25s; }
+.secnav b { color: var(--hi); font-weight: 400; margin-right: 8px; }
+.secnav a:hover i, .secnav a:focus-visible i { background: var(--ice); }
+.secnav a:hover, .secnav a:focus-visible { color: var(--ice); }
+/* current section: a longer, thicker yellow tick with a soft glow; its label stays yellow when the panel is open */
+.secnav a.on { color: var(--hi); }
+.secnav a.on i, .secnav:hover a.on i, .secnav:focus-within a.on i { width: 26px; height: 2px; background: var(--hi); box-shadow: 0 0 8px rgba(var(--hi-rgb),.6); }
+.secnav a:focus-visible { outline-offset: -2px; }
+.secnav:hover, .secnav:focus-within { padding-right: 18px; background: rgba(7,4,13,.94); border-color: var(--line); }
+.secnav:hover span, .secnav:focus-within span { max-width: 180px; opacity: 1; margin-left: 14px; }
+.secnav:hover i, .secnav:focus-within i { width: 22px; }
+
+/* ---------- rail ---------- */
+.rail {
+  position: fixed; left: 0; top: 0; bottom: 0; width: var(--rail); z-index: 20;
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+  padding-block: 22px; border-right: 1px solid var(--line); background: linear-gradient(90deg, rgba(7,4,13,.9), rgba(7,4,13,.55));
+  backdrop-filter: blur(6px);
+}
+.rail .mark { width: 34px; height: 34px; border: 1px solid var(--peri); border-radius: 50%; display: grid; place-items: center; text-decoration: none; }
+.rail .mark span { width: 8px; height: 8px; background: var(--hi); border-radius: 50%; box-shadow: 0 0 12px var(--hi); }
+.rail nav { display: flex; flex-direction: column; gap: 18px; }
+.rail nav a {
+  font: 700 10px var(--data); letter-spacing: .14em; color: var(--muted); text-decoration: none;
+  writing-mode: vertical-rl; transform: rotate(180deg); padding: 6px 0; border-left: 1px solid transparent;
+}
+.rail nav a:hover, .rail nav a.on { color: var(--ice); border-left-color: var(--hi); }
+.rail .clock { font: 10px var(--data); color: var(--muted); writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: .1em; }
+
+main { position: relative; z-index: 1; margin-left: var(--rail); }
+.wrap { padding-left: max(28px, env(safe-area-inset-left, 0px)); padding-right: max(28px, env(safe-area-inset-right, 0px)); }
+.pass { position: relative; padding-block: clamp(80px, 12vw, 160px); }
+.pass-tag { display: flex; gap: 16px; align-items: center; font: 11px var(--data); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.pass-tag b { color: var(--hi); font-weight: 400; }
+.pass-tag i { flex: 1; height: 1px; background: repeating-linear-gradient(90deg, var(--line-strong) 0 2px, transparent 2px 6px); }
+h2 { font: 400 var(--s-h2)/1 var(--display); margin: 18px 0 0; text-wrap: balance; letter-spacing: -.01em; }
+h3 { font: 400 var(--s-h3)/1.25 var(--text); margin: 0; letter-spacing: .03em; }
+.lede { max-width: 58ch; color: #c3c5ea; }
+.data { font-family: var(--data); font-size: var(--s-small); letter-spacing: .06em; font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+
+/* banded gradients (painted by js/banded.js): hard colour steps or fading columns, with grain */
+[data-band] { position: relative; isolation: isolate; }
+[data-band] > canvas.band { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; display: block; }
+/* small reusable grain layer for CSS-only bands */
+:root { --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+
+/* buttons */
+.btn {
+  font: 700 11px var(--data); letter-spacing: .14em; text-transform: uppercase; color: var(--ice);
+  background: transparent; border: 1px solid var(--line-strong); padding: 11px 16px; cursor: pointer;
+  display: inline-flex; gap: 10px; align-items: center; text-decoration: none; transition: border-color .2s, background .2s, color .2s;
+}
+.btn:hover { border-color: var(--ice); }
+.btn[aria-pressed="true"] { background: var(--ice); color: var(--void); border-color: var(--ice); }
+.btn.hot { border: 0; color: #07040d; background: var(--hi); }
+.btn.hot:hover { filter: brightness(1.1); }
+.chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* frame with corner ticks (HUD) */
+.hud { position: relative; border: 1px solid var(--line); }
+.hud::before, .hud::after { content: ""; position: absolute; width: 14px; height: 14px; border: 1px solid var(--hi); pointer-events: none; }
+.hud::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+.hud::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+
+/* ================= HERO ================= */
+/* centred title on top, the globe big and cut off by the bottom edge (like a moon rising) */
+.hero { position: relative; min-height: 100svh; overflow-x: clip; overflow-y: visible; text-align: center; display: flex; flex-direction: column; align-items: center; padding-bottom: 64px; }
+.hero-head { position: relative; z-index: 2; padding-top: clamp(84px, 11vh, 120px); display: flex; flex-direction: column; align-items: center; }
+/* the whole globe, centred under the title, with its stepped radar echo (the original look) */
+.hero-globe { position: relative; z-index: 1; width: min(max(340px, calc(100svh - 440px)), 760px, 92vw); aspect-ratio: 1; margin-top: clamp(16px, 3vh, 36px); }
+.hero-globe canvas { width: 100%; height: 100%; display: block; }
+.hero h1 { font: 400 clamp(30px, 4.4vw, 70px)/.92 var(--display); margin: 16px 0 0; letter-spacing: -.02em; }
+.hero h1 .row { display: block; }
+/* "SARs": a highlighter-pen stroke behind the word (slightly skewed, uneven ends), dark text on top */
+.hero h1 .sars, .kn-hero h1 .sars { position: relative; isolation: isolate; display: inline-block; color: var(--void); padding: 0 .1em; }
+.hero h1 .sars::before, .kn-hero h1 .sars::before { content: ""; position: absolute; z-index: -1; inset: .1em -.06em .02em -.08em; background: var(--hi);
+  transform: skewX(-8deg) rotate(-1.2deg); border-radius: .06em .22em .08em .26em; }
+/* stepped "radar echo" behind the hero globe */
+.hero-echo { position: absolute; inset: -24%; border-radius: 50%; overflow: hidden; opacity: .55; pointer-events: none;
+  -webkit-mask-image: radial-gradient(circle, #000 52%, transparent 71%); mask-image: radial-gradient(circle, #000 52%, transparent 71%); }
+.hero-globe canvas#hero-globe { position: relative; z-index: 1; }
+.hero .kicker { font: 11px var(--data); letter-spacing: .3em; color: var(--muted); text-transform: uppercase; }
+.hero .intro { max-width: 54ch; margin: 16px auto 0; font-size: 14px; color: #cfd2f4; }
+.hero .intro b { color: var(--hi); font-weight: 400; }
+.hero-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: clamp(18px, 2.4vh, 28px); }
+.hero-foot { position: absolute; z-index: 2; left: 0; right: 0; bottom: 22px; display: flex; justify-content: space-between; gap: 16px; text-align: left; pointer-events: none; }
+.hero-foot .hud { border: 0; font: 10px var(--data); letter-spacing: .14em; color: var(--muted); }
+.hero-foot .hud::before, .hero-foot .hud::after { display: none; }
+
+/* ================= MISSION PHOTO ================= */
+/* full-bleed photos that melt into the page: the image fades out on all four sides (no hard edges) */
+.photo { position: relative; z-index: 1; min-height: min(92vh, 880px); display: flex; align-items: flex-end; overflow: hidden; margin-top: clamp(48px, 10vh, 120px); }
+.photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 40%;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 64%, transparent 100%), linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  -webkit-mask-composite: source-in; mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 64%, transparent 100%), linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  mask-composite: intersect; }
+.photo::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 55%, transparent 40%, rgba(7,4,13,.55) 100%); pointer-events: none; }
+.photo.right { justify-content: flex-end; }
+.photo.right .photo-copy { text-align: right; display: flex; flex-direction: column; align-items: flex-end; }
+.photo.right .photo-cap { right: auto; left: 28px; }
+.photo-copy { position: relative; z-index: 2; padding-block: 0 56px; max-width: 760px; }
+.photo-copy h2 { margin-top: 14px; }
+.photo-copy p { color: #cfd2f4; max-width: 46ch; }
+.tag-hi { display: inline-block; font: 700 11px var(--data); letter-spacing: .14em; text-transform: uppercase; color: #07040d; background: var(--hi); padding: 5px 9px; }
+/* two tags side by side (NISAR's L-band and S-band radars), wrapping onto two lines on narrow screens */
+.tag-pair { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.photo-cap { position: absolute; z-index: 2; right: 28px; bottom: 22px; font: 10px var(--data); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.spark { position: absolute; z-index: 2; fill: var(--hi); filter: drop-shadow(0 0 10px rgba(var(--hi-rgb),.55)); pointer-events: none; }
+.spark.s1 { width: clamp(38px, 5vw, 72px); left: 58%; top: 18%; }
+.spark.s2 { width: clamp(18px, 2.2vw, 30px); left: 66%; top: 30%; }
+.telemetry { display: grid; grid-template-columns: repeat(4, auto); gap: 22px 34px; margin-top: 44px; justify-content: start; }
+.telemetry div { border-top: 1px solid var(--line-strong); padding-top: 10px; }
+.telemetry dt { font: 10px var(--data); letter-spacing: .16em; color: var(--muted); text-transform: uppercase; }
+.telemetry dd { margin: 4px 0 0; font: 400 20px var(--display); }
+.telemetry dd small { font: 11px var(--data); color: var(--peri); margin-left: 4px; }
+.next-pass { margin-top: 18px; font: 11px var(--data); letter-spacing: .08em; color: var(--muted); }
+.next-pass b { color: var(--ice); font-weight: 400; }
+
+/* ================= EXPLAINER ================= */
+.explain { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 4vw, 64px); margin-top: 48px; }
+.steps { display: flex; flex-direction: column; gap: 40vh; padding-bottom: 20vh; }
+.step { border-left: 1px solid var(--line); padding: 4px 0 4px 22px; transition: border-color .3s, opacity .3s; opacity: .45; }
+.step.on { border-left-color: var(--hi); opacity: 1; }
+.step .num { font: 11px var(--data); color: var(--hi); letter-spacing: .14em; }
+.step h3 { font: 400 clamp(20px, 2.1vw, 28px)/1.15 var(--display); margin: 8px 0 12px; }
+.step p { margin: 0 0 14px; color: #c3c5ea; max-width: 46ch; }
+.stage-wrap { position: sticky; top: 8vh; height: 84vh; min-height: 520px; }
+.stage { width: 100%; height: 100%; background: radial-gradient(ellipse at 50% 0%, rgba(58,29,110,.4), transparent 70%), var(--plum); }
+.stage canvas { width: 100%; height: 100%; display: block; }
+.stage-ctl { position: absolute; left: 16px; right: 16px; bottom: 16px; display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.stage-ctl label { font: 11px var(--data); letter-spacing: .08em; display: flex; gap: 10px; align-items: center; color: var(--ice); }
+.stage-ctl input[type=range] { width: 200px; accent-color: var(--hi); }
+.stage-read { position: absolute; top: 16px; right: 16px; text-align: right; font: 11px var(--data); letter-spacing: .08em; color: var(--muted); line-height: 1.7; }
+.stage-read b { display: block; font: 400 26px var(--display); color: var(--ice); letter-spacing: 0; }
+
+/* ================= READER ================= */
+.reader { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: clamp(24px, 3vw, 48px); margin-top: 48px; align-items: start; }
+.compare { position: relative; aspect-ratio: 4 / 3; max-width: 100%; overflow: hidden; background: var(--plum); cursor: crosshair; user-select: none; touch-action: none; }
+.compare canvas { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: auto; }
+.compare #lab { clip-path: inset(0 0 0 var(--cut, 50%)); }
+.compare .seam { position: absolute; top: 0; bottom: 0; left: var(--cut, 50%); width: 1px; background: var(--cream); box-shadow: 0 0 12px var(--hi); }
+.compare .seam::after { content: "RADAR  |  MEANING"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); white-space: nowrap;
+  font: 700 10px var(--data); letter-spacing: .14em; background: var(--cream); color: var(--void); padding: 7px 10px; }
+.compare .tip { position: absolute; pointer-events: none; font: 11px var(--data); background: var(--void); border: 1px solid var(--hi); padding: 6px 9px; transform: translate(14px, 14px); white-space: nowrap; }
+.compare .loading { position: absolute; inset: 0; display: grid; place-items: center; font: 11px var(--data); color: var(--peri); letter-spacing: .14em; }
+.key { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.key li { display: grid; grid-template-columns: 34px 1fr auto; gap: 14px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.key .sw { width: 34px; height: 22px; }
+.key b { font-weight: 400; display: block; }
+.key small { color: var(--muted); font-size: 12px; line-height: 1.4; display: block; }
+.key .pct { font: 12px var(--data); color: var(--peri); }
+
+/* ================= ORBIT PAGE (orbit.html) ================= */
+.orbit-page { overflow: hidden; }
+.orbit-page .top ~ main { margin-left: 0; }
+.orbit-stage { position: fixed; inset: 0; z-index: 1; }
+#orbit-canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: grab; touch-action: none; filter: saturate(.85); }
+#orbit-canvas:active { cursor: grabbing; }
+.orbit-title { position: absolute; left: max(28px, env(safe-area-inset-left, 0px)); top: 84px; max-width: 360px; pointer-events: none; }
+.orbit-title .kicker { font: 11px var(--data); letter-spacing: .3em; color: var(--muted); text-transform: uppercase; }
+.orbit-title h1 { font: 400 clamp(28px, 3.4vw, 52px)/1 var(--display); text-transform: uppercase; margin: 12px 0 10px; }
+.orbit-title p { font-size: 13px; color: #b9bbe2; margin: 0; }
+.orbit-panel { position: absolute; right: max(28px, env(safe-area-inset-right, 0px)); bottom: 28px; width: min(330px, calc(100% - 56px)); padding: 18px; border: 1px solid var(--line-strong);
+  background: rgba(7,4,13,.82); backdrop-filter: blur(8px); }
+.orbit-panel.sim { border-top: 1px solid var(--line-strong); }
+.orbit-key { list-style: none; margin: 0; padding: 12px 0 0; border-top: 1px solid var(--line); display: grid; gap: 6px; font: 10px var(--data); letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+.orbit-key i { display: inline-block; width: 18px; height: 6px; margin-right: 10px; vertical-align: 1px; }
+.orbit-foot { position: absolute; left: max(28px, env(safe-area-inset-left, 0px)); bottom: 28px; display: flex; flex-direction: column; gap: 6px; font: 10px var(--data); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); pointer-events: none; }
+#orbit-read { color: var(--hi); }
+@media (max-width: 640px) {
+  .orbit-title { top: 70px; right: 28px; }
+  .orbit-title p { display: none; }
+  .orbit-panel { left: 16px; right: 16px; width: auto; bottom: 16px; padding: 14px; }
+  .orbit-panel .orbit-key, .orbit-panel .sim-grid .wide { display: none; }
+  .orbit-foot { display: none; }
+}
+
+.toggle { width: 100%; display: grid; grid-template-columns: 16px 1fr auto; gap: 12px; align-items: center; text-align: left; font: inherit; color: var(--ice);
+  background: transparent; border: 1px solid var(--line); padding: 12px; cursor: pointer; }
+.toggle + .toggle { margin-top: 6px; }
+.toggle[aria-pressed="true"] { border-color: var(--ice); background: rgba(214,222,252,.05); }
+.toggle small { display: block; font: 10px var(--data); color: var(--muted); letter-spacing: .06em; }
+.toggle .st { font: 10px var(--data); color: var(--muted); }
+.toggle[aria-pressed="true"] .st { color: var(--hi); }
+.toggle .sw { width: 14px; height: 14px; }
+/* orbit simulation readout (orbit-sim.js) */
+.sim { display: flex; flex-direction: column; gap: 14px; padding-top: 18px; border-top: 1px dashed var(--line-strong); }
+.sim-clock { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; font-family: var(--data); }
+.sim-clock span { font-size: 11px; color: var(--muted); letter-spacing: .06em; }
+.sim-clock b { font-weight: 400; font-size: 22px; line-height: 1; color: var(--ice); font-variant-numeric: tabular-nums; }
+.sim-clock b::after { content: " UTC"; font-size: 10px; color: var(--muted); letter-spacing: .1em; }
+.sim-clock .live-chip { font-size: 10px; letter-spacing: .14em; color: var(--void); background: var(--hi); padding: 2px 6px; }
+.sim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; margin: 0; }
+.sim-grid .wide { grid-column: 1 / -1; }
+.sim-grid dt { font: 10px var(--data); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.sim-grid dd { margin: 2px 0 0; font: 13px var(--data); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sim .dir { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; padding: 2px 5px; color: var(--void); background: var(--peri); }
+.sim .dir.a { background: var(--hi); }
+.sim .radar { display: inline-flex; align-items: center; gap: 6px; }
+.sim .radar i { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
+.sim .radar.on i { background: var(--hi); box-shadow: 0 0 8px var(--hi); }
+.btn.sm { padding: 7px 9px; font-size: 10px; letter-spacing: .1em; }
+#sim-now { gap: 6px; }
+#sim-now .rec { width: 7px; height: 7px; border-radius: 50%; background: #ff3b30; flex: none; }
+
+/* ================= POLAND ================= */
+.poland { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 64px); margin-top: 48px; align-items: center; }
+.pl-map { position: relative; aspect-ratio: 1 / .94; max-width: 100%; }
+.pl-map canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.pin { position: absolute; transform: translate(-50%, -50%); background: none; border: 0; padding: 0; cursor: pointer; color: var(--ice); }
+.pin .ring { display: block; width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; position: relative; }
+.pin .ring::after { content: ""; position: absolute; inset: 4px; border-radius: 50%; background: currentColor; }
+.pin.live { color: var(--hi); }
+.pin.live .ring::before { content: ""; position: absolute; inset: -8px; border-radius: 50%; border: 1px solid var(--hi); animation: ping 2.4s ease-out infinite; }
+.pin.dot { cursor: default; color: var(--cream); }
+.pin.dot .ring { width: 10px; height: 10px; border: 0; background: currentColor; box-shadow: 0 0 0 2px var(--void); }
+.pin.dot .ring::after { display: none; }
+.pin.dot .lbl { left: 16px; }
+.pin.dot.circles .ring::before, .pin.dot.circles .ring::after { content: ""; display: block; position: absolute; border-radius: 50%; border: 1px solid currentColor; background: none; }
+.pin.dot.circles .ring::before { inset: -6px; }
+.pin.dot.circles .ring::after { inset: -13px; opacity: .55; }
+.pin.dot.circles .lbl { left: 26px; }
+.pin.dot.zoomable { cursor: pointer; }
+.pin.dot.zoomable:hover .lbl, .pin.dot.zoomable:focus-visible .lbl { color: var(--hi); border-color: var(--hi); }
+.pin .lbl { position: absolute; left: 24px; top: 50%; transform: translateY(-50%); white-space: nowrap; background: rgba(7,4,13,.88); padding: 3px 6px; border: 1px solid var(--line); font: 10px var(--data); letter-spacing: .14em; text-transform: uppercase; }
+.pin:hover .lbl, .pin.sel .lbl { color: var(--cream); }
+@keyframes ping { from { transform: scale(.6); opacity: 1; } to { transform: scale(1.8); opacity: 0; } }
+.regions { display: grid; gap: 10px; }
+.region { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; padding: 18px; border: 1px solid var(--line); text-decoration: none; transition: border-color .2s, background .2s; }
+.region:hover, .region.sel { border-color: var(--hi); background: rgba(255,187,130,.04); }
+.region h3 { font: 400 17px var(--display); }
+.region p { grid-column: 1 / -1; margin: 0; font-size: 13px; color: #b9bbe2; }
+.region .badge { font: 10px var(--data); letter-spacing: .12em; padding: 4px 8px; border: 1px solid var(--line-strong); color: var(--muted); align-self: start; }
+.region.live .badge { border-color: var(--hi); color: var(--hi); }
+.region .metric { grid-column: 1 / -1; font: 11px var(--data); color: var(--peri); letter-spacing: .06em; }
+
+footer { position: relative; z-index: 1; margin-left: var(--rail); border-top: 1px solid var(--line); padding-block: 40px; display: grid; grid-template-columns: 2fr 3fr; gap: 24px; font-size: 13px; color: var(--muted); }
+footer h3 { font: 400 22px var(--display); color: var(--ice); }
+footer .data a { color: var(--peri); }
+
+@media (max-width: 960px) {
+  :root { --rail: 0px; }
+  .rail { display: none; }
+  .hero { grid-template-columns: 1fr; min-height: 0; padding-top: 32px; }
+  .hero-hud { display: none; }
+  .telemetry { grid-template-columns: repeat(2, auto); }
+  .explain, .reader, .poland, footer { grid-template-columns: 1fr; }
+  .steps { gap: 28px; padding-bottom: 0; }
+  .step { opacity: 1; }
+  .stage-wrap { position: relative; top: 0; height: 70vh; min-height: 440px; order: -1; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+
+/* grid children may shrink below their content; long display words wrap instead of overflowing */
+.hero > *, .explain > *, .reader > *, .poland > *, footer > * { min-width: 0; }
+h1, h2, h3 { overflow-wrap: anywhere; }
+@media (max-width: 960px) { .step h3 { font-size: clamp(16px, 4.6vw, 22px); } h2 { font-size: clamp(24px, 7vw, 40px); } }
+
+/* ================= ONE-SCREEN SECTIONS (from Zeyad's b775cbb, adapted) =================
+   On desktop, sections marked .fit are exactly one screen tall: the pass line, a header row (title and lede side
+   by side), and a .fit-body that takes whatever height is left. Images and maps inside a .media-cell size
+   themselves from that leftover box with container query units, so they keep their aspect ratio and never spill.
+   Narrow screens keep the normal flowing layout. */
+@media (min-width: 961px) {
+  /* one gap between every pair of sections: each section pads half of it above and half below its content */
+  :root { --sec-gap: clamp(96px, 15vh, 160px); }
+  .pass { padding-block: calc(var(--sec-gap) / 2); }
+  .fit { height: clamp(600px, 100svh, 1100px); display: flex; flex-direction: column; }
+  .fit > .fit-body { flex: 1; min-height: 0; margin-top: clamp(14px, 2.6vh, 28px); }
+  .pass-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 40px; margin-top: 14px; }
+  .pass-head h2 { margin: 0; flex: 1 1 480px; font-size: clamp(28px, min(4vw, 6.4vh), 58px); }
+  .pass-head .lede { margin: 0; flex: 0 1 46ch; min-width: 300px; font-size: 14px; line-height: 1.6; }
+  .media-cell { container-type: size; min-height: 0; min-width: 0; }
+
+  /* read: the 4:3 image is as large as the height allows (leaving the key at least 300px), and the key sits
+     right beside it, so any spare width ends up past the key instead of between the two. */
+  .reader.fit-body { --g: clamp(24px, 2.6vw, 44px); container-type: size; display: flex; gap: var(--g); align-items: stretch; margin-top: clamp(14px, 2.6vh, 28px); }
+  .reader .media-cell { container-type: normal; flex: none; }
+  .reader .compare { width: min(133.33cqh, 100cqw - 300px - var(--g)); }
+  .reader-side { flex: 0 1 440px; min-width: 300px; min-height: 0; overflow-y: auto; }
+
+  /* poland: the map is as large as the box allows, the region cards sit beside it */
+  .poland.fit-body { align-items: stretch; margin-top: clamp(14px, 2.6vh, 28px); }
+  .poland .media-cell { display: grid; place-items: center; }
+  .poland .pl-map { width: min(100cqw, 106.4cqh); }
+  .poland .regions { min-height: 0; overflow-y: auto; align-content: center; gap: 8px; }
+  .poland .region { padding: 14px 16px; }
+}
+/* the main page's section lines stick just under the fixed top bar while their section is on screen */
+.top ~ main .pass > .pass-tag {
+  position: sticky; top: 52px; z-index: 5;
+  margin-inline: calc(-1 * max(28px, env(safe-area-inset-left, 0px))); padding: 14px max(28px, env(safe-area-inset-right, 0px)) 18px;
+  margin-block: -14px -18px;
+  background: linear-gradient(180deg, rgba(7,4,13,.94) 0 72%, rgba(7,4,13,0));
+}
+
+/* ================= ANATOMY (take NISAR apart) =================
+   One screen (see .fit): the model and the side column share the body.
+   Controls sit on the model; the card scrolls inside itself, so the parts index below it never moves. */
+.anatomy { display: grid; grid-template-columns: minmax(0, 1080px); justify-content: center; margin-top: 48px; }   /* the model stage is at most 1080px wide, centred */
+.anatomy > * { min-width: 0; min-height: 0; }
+.ana-stage { position: relative; background: radial-gradient(circle at 50% 45%, rgba(58,29,110,.18), transparent 70%), rgba(21,10,36,.18); overflow: hidden; }   /* mostly see-through: the sky shows behind the model */
+/* blueprint backdrop behind the (transparent) model canvas: drafting grid in the model's periwinkle, fading out
+   toward the edges, ruler ticks along the top and left edges, and a small drawing title block top right
+   (the hint and "done" messages own the bottom edge; the part card simply covers the block when it opens) */
+.ana-bp { --bp: 143, 156, 242; position: absolute; inset: 0; pointer-events: none; }
+.ana-bp::before { content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(var(--bp), .09) 1px, transparent 1px) 0 0 / 80px 80px,
+    linear-gradient(0deg, rgba(var(--bp), .09) 1px, transparent 1px) 0 0 / 80px 80px,
+    linear-gradient(90deg, rgba(var(--bp), .04) 1px, transparent 1px) 0 0 / 16px 16px,
+    linear-gradient(0deg, rgba(var(--bp), .04) 1px, transparent 1px) 0 0 / 16px 16px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 48%, #000 35%, rgba(0,0,0,.25) 100%);
+  mask-image: radial-gradient(ellipse 75% 70% at 50% 48%, #000 35%, rgba(0,0,0,.25) 100%); }
+.ana-bp::after { content: ""; position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(90deg, rgba(var(--bp), .4) 0 1px, transparent 1px 80px) 0 0 / 100% 9px no-repeat,
+    repeating-linear-gradient(90deg, rgba(var(--bp), .22) 0 1px, transparent 1px 16px) 0 0 / 100% 4px no-repeat,
+    repeating-linear-gradient(180deg, rgba(var(--bp), .4) 0 1px, transparent 1px 80px) 0 0 / 9px 100% no-repeat,
+    repeating-linear-gradient(180deg, rgba(var(--bp), .22) 0 1px, transparent 1px 16px) 0 0 / 4px 100% no-repeat; }
+.ana-stage { container-type: inline-size; }
+.ana-bp-block { position: absolute; right: 14px; top: 14px; display: grid; grid-template-columns: repeat(2, auto);
+  border: 1px solid rgba(var(--bp), .2); font: 9px/1 var(--data); letter-spacing: .14em; text-transform: uppercase; color: rgba(var(--bp), .55); }
+.ana-bp-block > div { padding: 6px 9px; border-left: 1px solid rgba(var(--bp), .2); }
+.ana-bp-block > div:nth-child(2) { border-left: 0; }
+.ana-bp-block .t { grid-column: 1 / -1; border-left: 0; border-bottom: 1px solid rgba(var(--bp), .2); display: flex; gap: 10px; align-items: baseline; }
+.ana-bp-block .t b { font: 400 11px/1 var(--display); letter-spacing: .08em; color: rgba(var(--bp), .75); }
+.ana-bp-block span { color: rgba(var(--bp), .35); margin-right: 6px; }
+@container (max-width: 540px) { .ana-bp-block { display: none; } }   /* too narrow: it would run into the buttons */
+.ana-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; touch-action: none; }
+.ana-stage canvas.drag { cursor: grabbing; }
+.ana-labels { position: absolute; inset: 0; pointer-events: none; }
+.ana-label { position: absolute; transform: translate(-50%, -100%); font: 10px var(--data); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap;
+  color: var(--ice); padding: 3px 7px; background: rgba(7,4,13,.8); border: 1px solid var(--line); transition: border-color .2s, color .2s; }
+.ana-label.sel { border-color: var(--hi); color: var(--cream); }
+.ana-label.loose { color: var(--muted); }
+.ana-hint { position: absolute; left: 16px; bottom: 14px; color: var(--muted); pointer-events: none; }
+.ana-done { position: absolute; left: 14px; bottom: 12px; font: 11px var(--data); letter-spacing: .12em; text-transform: uppercase;
+  color: #07040d; padding: 9px 14px; background: var(--hi); }
+/* controls float over the model, top left */
+.ana-tools { position: absolute; left: 14px; top: 14px; display: grid; gap: 10px; justify-items: start; }
+.ana-ctl { display: flex; gap: 6px; flex-wrap: wrap; }
+.ana-ctl .btn { padding: 10px 14px; }
+.ana-ctl .btn:not(.hot) { background: rgba(7,4,13,.7); }
+.ana-progress { display: flex; gap: 5px; align-items: center; font: 10px var(--data); color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+.ana-progress i { width: 18px; height: 5px; border: 1px solid var(--line-strong); }
+.ana-progress i.on { background: var(--hi); border-color: var(--hi); }
+/* info card: hidden until you click a part, then it unfolds from its top edge over the model (top right) */
+.ana-card { position: absolute; right: 14px; top: 14px; width: min(320px, calc(100% - 28px)); max-height: calc(100% - 28px); overflow-y: auto; z-index: 3;
+  padding: 16px 18px 18px; border: 1px solid var(--line-strong); background: rgba(7,4,13,.86); backdrop-filter: blur(6px);
+  clip-path: inset(0 0 100% 0); opacity: 0; visibility: hidden; transform: translateY(-6px);
+  transition: clip-path .45s cubic-bezier(.2,.8,.2,1), opacity .25s, transform .45s cubic-bezier(.2,.8,.2,1), visibility 0s .45s; }
+.ana-card.open { clip-path: inset(0 0 0 0); opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.ana-card::before { content: ""; position: absolute; left: 0; top: 0; width: 36px; height: 2px; background: var(--hi); }
+.ana-close { position: absolute; right: 8px; top: 6px; width: 26px; height: 26px; padding: 0; border: 0; background: none; color: var(--muted); font-size: 16px; cursor: pointer; }
+.ana-close:hover { color: var(--hi); }
+.ana-card .who { font: 10px var(--data); letter-spacing: .14em; color: var(--muted); text-transform: uppercase; padding-right: 24px; }
+.ana-card h3 { font: 400 17px/1.2 var(--display); margin: 8px 0 0; text-transform: uppercase; }
+.ana-card .big { font: 400 28px/1 var(--display); color: var(--hi); margin: 12px 0 0; text-transform: uppercase; }
+.ana-card .big small { font: 10px var(--data); color: var(--muted); letter-spacing: .1em; margin-left: 8px; text-transform: uppercase; }
+.ana-card p { margin: 10px 0 0; font-size: 13px; line-height: 1.6; color: #c3c5ea; }
+@media (prefers-reduced-motion: reduce) { .ana-card { transition: none; } }
+/* narrow screens: plain stacked fallback, the section grows with its content */
+@media (max-width: 960px) {
+  .anatomy { grid-template-columns: 1fr; }
+  .ana-stage { height: 440px; }
+}
+
+/* display face is always set in capitals */
+h2, .hero h1, .telemetry dd, .step h3, .stage-read b, .region h3, footer h3, .ana-card h3 { text-transform: uppercase; }
+
+/* main page has the top bar instead of the side rail */
+.top ~ main, .top ~ footer { margin-left: 0; }
+@media (max-width: 640px) {
+  .hero-globe { width: 100vw; }
+  .top .clock, .top .sat-now { display: none; }
+}
+
+/* How it sees: four surfaces in a 2 × 2 grid · title, graphic (1200 × 368, shown as is), text */
+.surfaces { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(36px, 5vw, 72px) clamp(24px, 3vw, 48px); margin-top: clamp(32px, 5vh, 56px); }
+.surface h3 { font: 400 clamp(16px, 1.5vw, 20px)/1.2 var(--display); text-transform: uppercase; margin: 0 0 14px; }
+.surface-graphic { display: block; width: 100%; aspect-ratio: 1800 / 539; height: auto; }
+.surface-graphic.placeholder { display: grid; place-items: center; border: 1px dashed var(--line-strong); }
+.surface-graphic.placeholder span { font: 10px var(--data); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.surface p { margin: 14px 0 6px; font-size: 14px; color: #c3c5ea; max-width: 52ch; }
+.surface-note { font: 10px var(--data); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 760px) { .surfaces { grid-template-columns: 1fr; } }
+
+/* ================= HERO PHOTO + GLOBE BESIDE THE MODEL ================= */
+/* hero: the NISAR illustration fills the lower part of the screen, starting a little under the title,
+   and melts into the page on every side */
+/* the picture is full screen width and never cropped (its box keeps the image's own shape, 1800 × 1012). It sits on the
+   bottom of the screen, so on a 16:9 full-screen window it fills exactly one screen with the title over its dark top;
+   if the picture is taller than the screen, the hero grows so it still fits (the slogan sits on its faded lower part) */
+.hero { --ph-h: calc(100vw * 1012 / 1800); --ph-top: max(calc(var(--ph-h) * -0.15), calc(100svh - var(--ph-h))); min-height: max(100svh, calc(var(--ph-top) + var(--ph-h))); }
+/* when the window is shorter than the picture, it slides up behind the top bar (its top 15% is dark, faded sky),
+   so the whole hero, title to slogan, fits the first screen; the title sits right under the top bar */
+.hero .hero-head { padding-top: clamp(64px, 8vh, 96px); }
+.hero-photo { position: absolute; z-index: 0; top: calc(var(--ph-top) + var(--ph-shift, 12vh)); left: 0; width: 100%; aspect-ratio: 1800 / 1012; pointer-events: none; }
+.hero-photo img { width: 100%; height: 100%; object-fit: contain;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 72%, transparent 100%), linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in; mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 72%, transparent 100%), linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-composite: intersect; }
+/* more air under the hero before the first section */
+.hero { margin-bottom: clamp(56px, 12vh, 150px); }
+/* bottom of the hero: slogan on the left, the next pass on the right */
+.hero .hero-foot { bottom: clamp(28px, 6vh, 72px); align-items: flex-end; gap: 32px; }
+.hero-slogan { max-width: 520px; text-align: left; }
+.hero-slogan h2 { font-size: clamp(26px, 3.2vw, 50px); margin-top: 14px; }
+.hero-slogan p { margin: 12px 0 0; font-size: 14px; color: #cfd2f4; max-width: 50ch; }
+.hero-slogan p b { color: var(--hi); font-weight: 400; }
+.hero-foot .next-pass { max-width: 34ch; text-align: right; }
+/* the yellow sparkles sit by the satellite in the hero photo */
+.hero-photo .spark.s1 { left: 70%; top: 24%; }
+.hero-photo .spark.s2 { left: 64.5%; top: 33%; }
+
+/* Take NISAR apart: the model on the left, the globe (with the circling satellite) on the right */
+.anatomy { grid-template-columns: minmax(0, 1fr) auto; gap: clamp(24px, 3vw, 56px); align-items: center; justify-content: stretch; }
+.anatomy .ana-stage { position: relative; z-index: 1; align-self: stretch; }
+#build { overflow-x: clip; }
+.anatomy .ana-globe { position: relative; z-index: 0; width: min(34vw, 62svh); max-width: none; margin: 0; }
+.ana-globe .hud { position: absolute; right: 0; bottom: -4px; z-index: 2; border: 0; font-size: 10px; letter-spacing: .14em; color: var(--muted); }
+.ana-globe .hud::before, .ana-globe .hud::after { display: none; }
+@media (max-width: 960px) {
+  .anatomy { grid-template-columns: 1fr; }
+  .anatomy .ana-globe { width: min(88vw, 460px); justify-self: center; margin-top: 28px; }
+}
+/* Radar, not a camera: its own section between the hero and the model, the slogan on the left and the globe
+   (with the circling satellite, js/hero.js) on the right, pulled in from the edge toward the middle.
+   On desktop the globe sticks in the middle of the screen while the text scrolls past it: the text column is
+   padded taller than the globe, so the section outlasts the globe and the globe stays pinned meanwhile. */
+section.radar { --gw: min(46vw, 72svh, 720px); position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(24px, 4vw, 72px); align-items: start;
+  overflow-x: clip; padding-block: clamp(48px, 11vh, 132px) calc(var(--gw) * .24 + 24px); }   /* the echo rings may reach past the screen edge: cut them there */
+/* the bottom padding is the echo glow's reach (24 % of the globe past its edge, see .hero-echo), so the next
+   section's line never covers it */
+.radar-copy { position: relative; z-index: 2; max-width: 560px; padding-block: calc(var(--gw) * .6) calc(var(--gw) + 15svh); }   /* starts low beside the globe, leaves past its top */
+.radar-copy h2 { font-size: clamp(28px, 4vw, 58px); margin-top: 14px; }
+.radar-copy p { margin: 14px 0 0; font-size: 15px; color: #c9c9ce; max-width: 42ch; }
+.radar-copy .next-pass { display: block; margin-top: 22px; max-width: 46ch; }
+.radar .radar-globe { width: var(--gw); max-width: none; margin: 0 clamp(0px, 7vw, 140px) 0 0;
+  position: sticky; top: max(64px, calc((100svh - var(--gw)) / 2 + 26px)); }   /* centred in the screen under the 52px top bar */
+.radar-globe .hud { position: absolute; right: 0; bottom: -4px; z-index: 2; border: 0; font-size: 10px; letter-spacing: .14em; color: var(--muted); }
+.radar-globe .hud::before, .radar-globe .hud::after { display: none; }
+@media (max-width: 960px) {
+  section.radar { --gw: min(88vw, 520px); grid-template-columns: 1fr; }
+  .radar-copy { padding-block: 0; }
+  .radar .radar-globe { position: relative; top: auto; justify-self: center; margin: 12px 0 0; }
+}
+@media (max-width: 960px) {
+  .hero { min-height: max(100svh, calc(var(--ph-top) + 100vw * 1012 / 1800)); padding-top: 0; }          /* undo the old two-column hero's "min-height: 0" */
+  .hero { --ph-top: 170px; }
+}
+@media (max-width: 640px) {
+  .radar-copy h2 { font-size: clamp(24px, 8vw, 32px); }
+}
+
+/* glow: the hero's sparkle stars (layered halo + slow pulse) and the "SARs" highlighter stroke */
+.hero-photo .spark { filter: drop-shadow(0 0 4px rgba(var(--hi-rgb), .95)) drop-shadow(0 0 14px rgba(var(--hi-rgb), .7)) drop-shadow(0 0 34px rgba(var(--hi-rgb), .45));
+  animation: spark-glow 3.4s ease-in-out infinite alternate; }
+.hero-photo .spark.s2 { animation-duration: 2.6s; animation-delay: -1.2s; }
+@keyframes spark-glow { from { opacity: .8; transform: scale(.92); } to { opacity: 1; transform: scale(1.06); } }
+.hero h1 .sars::before, .kn-hero h1 .sars::before { box-shadow: 0 0 14px rgba(var(--hi-rgb), .6), 0 0 42px rgba(var(--hi-rgb), .35), 0 0 90px rgba(var(--hi-rgb), .18); }
+
+/* the white NISAR wireframe glows blue, like the globe's halo */
+#ana { filter: drop-shadow(0 0 3px rgba(120, 150, 255, .8)) drop-shadow(0 0 12px rgba(95, 120, 255, .5)) drop-shadow(0 0 28px rgba(70, 90, 230, .4)); }
+/* Take NISAR apart: the instructions sit under the title on the left (they belong to the model);
+   the globe on the right gets a "full scale" button that opens the orbit page */
+#build .pass-head { flex-direction: column; align-items: flex-start; gap: 10px; }
+#build .pass-head h2, #build .pass-head .lede { flex: none; }
+#build .pass-head .lede { max-width: 52ch; }
+.ana-right { display: flex; flex-direction: column; align-items: center; gap: clamp(12px, 2vh, 22px); }
+.anatomy .ana-globe { width: min(32vw, 54svh); }
+@media (max-width: 960px) { .ana-right { margin-top: 28px; } .anatomy .ana-globe { margin-top: 0; } }
+/* the whole page name in white (no highlighter on "SARs"), with a soft dark shadow so it reads over the photo */
+.hero h1, .hero h1 .sars { color: #fff; }
+.hero h1 { text-shadow: 0 2px 16px rgba(7, 4, 13, .9), 0 0 40px rgba(7, 4, 13, .7); }
+.hero h1 .sars { padding: 0; }
+.hero h1 .sars::before { display: none; }
+/* map pin → before/after zoom (poland.js) */
+.zoom-to { position: fixed; inset: 0; z-index: 200; background: var(--void, #0b0b0c); overflow: hidden; }
+/* parts side by side; each one a full screen, snapping into place */
+.zoom-track { display: flex; height: 100%; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior: contain; }
+.zoom-track::-webkit-scrollbar { display: none; }
+.zoom-panel { flex: 0 0 100%; height: 100%; display: grid; align-items: center; justify-items: start;
+  padding: 64px clamp(16px, 3vw, 48px) 56px; overflow-y: auto; }
+.zoom-extra { max-width: 60ch; display: grid; gap: 14px; }
+.zoom-extra h3 { margin: 0; font: 400 clamp(20px, 2vw, 28px)/1.1 var(--display); text-transform: uppercase; }
+.zoom-extra p { margin: 0; font-size: 14px; color: #b4b4bb; }
+.zoom-to > .zoom-close { position: fixed; top: 18px; right: clamp(16px, 3vw, 48px); z-index: 3; }
+.zoom-progress { position: fixed; left: 0; right: 0; bottom: 0; height: 3px; z-index: 3; background: rgba(255,255,255,.08); }
+.zoom-progress i { display: block; height: 100%; background: var(--hi); transform-origin: left; transform: scaleX(0); }
+.zoom-hint { position: fixed; right: clamp(16px, 3vw, 48px); bottom: 16px; z-index: 3; font: 10px var(--data); letter-spacing: .2em;
+  text-transform: uppercase; color: var(--muted); transition: opacity .4s; animation: zoom-nudge 1.6s ease-in-out infinite; }
+.zoom-hint.gone { opacity: 0; animation: none; }
+@keyframes zoom-nudge { 50% { transform: translateX(6px); } }
+@media (prefers-reduced-motion: reduce) { .zoom-hint { animation: none; } }
+@media (max-width: 860px) {
+  .zoom-panel { align-items: start; }
+  .zoom-body { grid-template-columns: 1fr; }
+  .zoom-fig, .zoom-cmp { width: 100%; }
+  .zoom-key { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+/* three columns: the map hard left (year labels above it), the colour key right beside it, then the story */
+.zoom-body { width: 100%; max-height: 100%; display: grid; grid-template-columns: minmax(240px, 340px) auto;
+  gap: clamp(16px, 2vw, 32px) clamp(18px, 2.4vw, 40px); align-items: center; justify-content: start; }
+/* the figure: year labels, then the map with its key beside it (sitting on the map's bottom edge), then the references */
+.zoom-fig { margin: 0; display: grid; grid-template-columns: auto auto; grid-template-areas: "tags ." "map key" "src ."; gap: 10px 18px; min-width: 0; }
+.zoom-fig .zoom-tags { grid-area: tags; }
+.zoom-fig .zoom-cmp { grid-area: map; }
+.zoom-fig .zoom-src { grid-area: src; }
+.zoom-fig .zoom-key { grid-area: key; align-self: end; }
+.zoom-tags { display: flex; justify-content: space-between; gap: 12px; font: 400 clamp(12px, 1.1vw, 15px)/1 var(--display); text-transform: uppercase; color: var(--cream); }
+.zoom-tags span:last-child { text-align: right; }
+.zoom-tags span { transition: opacity .25s; }
+.zoom-tags span.gone { opacity: 0; }
+/* "Knurów" sits on the same line as the year labels; the title starts level with the top of the map */
+.zoom-info { display: grid; gap: 14px; align-content: start; align-self: start; min-width: 0; }
+.zoom-info .zoom-head { height: clamp(12px, 1.1vw, 15px); margin-bottom: -4px; align-items: flex-end; }   /* 10 px to the title, like labels to map */
+.zoom-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.zoom-lbl { font: 10px var(--data); letter-spacing: .22em; text-transform: uppercase; color: var(--hi); }
+.zoom-info h3 { margin: 0; font: 400 clamp(15px, 1.4vw, 20px)/1.15 var(--display); text-transform: uppercase; }
+.zoom-info p { margin: 0; font-size: 13px; color: #b4b4bb; }
+.zoom-close { font: 10px var(--data); letter-spacing: .16em; text-transform: uppercase; color: var(--cream); background: rgba(11,11,12,.8);
+  border: 1px solid var(--line-strong); padding: 8px 12px; cursor: pointer; flex: none; }
+.zoom-close:hover, .zoom-close:focus-visible { border-color: var(--hi); color: var(--hi); }
+.zoom-stats { margin: 0; display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 18px; border-top: 1px solid var(--line); padding-top: 14px; }
+.zoom-stats dt { font: 9px var(--data); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.zoom-stats dd { margin: 4px 0 0; font: 400 24px var(--display); color: var(--cream); }
+.zoom-stats dd small { display: block; font: 9px var(--data); letter-spacing: .08em; color: var(--muted); margin-top: 2px; }
+.zoom-stats div:last-child dd { color: var(--hi); }
+.zoom-key { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; white-space: nowrap; }
+.zoom-key li { display: grid; grid-template-columns: 12px 1fr; gap: 8px; align-items: center; font-size: 11px; }
+.zoom-key i { width: 12px; height: 12px; border: 1px solid var(--line-strong); }
+.zoom-key b { font-weight: 400; color: var(--cream); display: block; }
+.zoom-key small { color: var(--muted); display: block; margin-top: 2px; font-size: 9.5px; line-height: 1.4; white-space: normal; max-width: 17ch; }
+.zoom-src { margin: 0; width: 0; min-width: 100%; font: 8.5px/1.55 var(--data); letter-spacing: .04em; color: var(--muted); }   /* wraps to the map's width, never widens its column */
+.zoom-more { font: 10px var(--data); letter-spacing: .16em; text-transform: uppercase; color: var(--hi); text-decoration: none; }
+.zoom-more:hover { text-decoration: underline; }
+.zoom-cmp { position: relative; overflow: hidden; background: repeating-linear-gradient(45deg, #3a3a40 0 2px, var(--plum) 2px 6px); user-select: none; cursor: ew-resize; touch-action: pan-y;
+  width: min(calc((100svh - 240px) * var(--ar, 1.333)), calc(100vw - 620px)); aspect-ratio: var(--ar, 1.333); min-height: 0; }
+.zoom-cmp canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; filter: saturate(.7); }
+.zoom-cmp canvas + canvas { clip-path: inset(0 0 0 var(--cut, 50%)); }
+.zoom-cmp.raw canvas { filter: none; }   /* original radar colours, not toned down */
+.zoom-cmp .seam { position: absolute; top: 0; bottom: 0; left: var(--cut, 50%); width: 1px; background: var(--cream); box-shadow: 0 0 12px var(--hi); pointer-events: none; z-index: 3; }
+.zoom-cmp .seam::after { content: ""; position: absolute; top: 50%; left: 50%; width: 14px; height: 14px; transform: translate(-50%, -50%);
+  border-radius: 50%; background: var(--cream); box-shadow: 0 0 0 3px rgba(11,11,12,.6), 0 0 12px var(--hi); }
+.zoom-cmp input[type=range] { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 4; }
+.zoom-cmp .loading { position: absolute; inset: 0; display: grid; place-items: center; font: 11px var(--data); color: var(--peri); letter-spacing: .14em; }
+@property --cut { syntax: "<percentage>"; inherits: true; initial-value: 50%; }
+@media (max-width: 860px) { .zoom-cmp { width: 100%; } .zoom-fig { grid-template-columns: 1fr; grid-template-areas: "tags" "map" "key" "src"; } .zoom-fig .zoom-key { align-self: start; } }   /* stacked: the map takes the full width (must follow the .zoom-cmp rule above) */
+
+/* Knurów story, parts 1 (1903) and 2 (1933): the 1933 map moves from inverted background to framed original */
+.kn-bgmap { position: absolute; z-index: 0; pointer-events: none; will-change: left, top, width, height, opacity; }
+.kn-bgmap.inv { filter: invert(1) grayscale(1) contrast(1.3); }   /* light lines on charcoal */
+.zoom-to .zoom-track { position: relative; z-index: 1; }
+.kn-part { width: 100%; display: grid; grid-template-columns: auto minmax(240px, 380px); gap: clamp(20px, 3vw, 48px); align-items: center; justify-content: start; }
+.kn-pc { margin: 0; display: grid; gap: 10px; }
+.kn-pc img { display: block; width: min(calc(100vw - 560px), calc((100svh - 220px) * 1.506)); height: auto; }
+.kn-pc figcaption, .kn-map33 figcaption { font: 8.5px/1.55 var(--data); letter-spacing: .04em; color: var(--muted); }
+.kn-hook { color: var(--cream) !important; border-left: 2px solid var(--hi); padding-left: 12px; }
+.kn-map33 { position: relative; margin: 0; height: calc(100svh - 190px); aspect-ratio: 2400 / 2161; max-width: calc(100vw - 560px); }
+.kn-map33 img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.kn-map33 figcaption { position: absolute; left: 0; top: calc(100% + 8px); }
+.kn-pt { position: absolute; z-index: 2; transform: translate(-7px, -7px); display: flex; align-items: center; gap: 8px; opacity: 0; transition: opacity .25s; pointer-events: none; }
+.kn-map33.on .kn-pt { opacity: 1; }
+.kn-pt i { width: 14px; height: 14px; border-radius: 50%; border: 3px solid #ee2a1e; box-shadow: 0 0 0 2px rgba(255,255,255,.85); flex: none; }
+.kn-pt b { font: 700 11px var(--data); letter-spacing: .04em; color: #fff; background: rgba(11,11,12,.85); padding: 4px 7px; white-space: nowrap; }
+@media (max-width: 860px) {
+  .kn-part { grid-template-columns: 1fr; }
+  .kn-pc img { width: 100%; }
+  .kn-map33 { height: auto; width: 100%; max-width: none; }
+}
+
+/* NISAR part: story on the left, map on the right */
+.zoom-body > .zoom-info { order: -1; }
+@media (max-width: 860px) { .zoom-body > .zoom-info { order: 0; } }
+
+/* Knurów story, parts 3 (1933 map vs 1997 photo) and 4 (lakes + Moczury close-up) */
+.kn-fig { margin: 0; display: grid; gap: 10px; min-width: 0; }
+.kn-fig figcaption { font: 8.5px/1.55 var(--data); letter-spacing: .04em; color: var(--muted); width: 0; min-width: 100%; }
+.kn-cmp, .kn-lakemap { position: relative; aspect-ratio: 2400 / 1874; height: calc(100svh - 230px); max-width: calc(100vw - 560px); }
+.kn-cmp { overflow: hidden; user-select: none; cursor: ew-resize; touch-action: pan-y; }
+.kn-cmp img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.kn-cmp img + img { clip-path: inset(0 0 0 var(--cut, 50%)); }
+.kn-cmp .seam { position: absolute; top: 0; bottom: 0; left: var(--cut, 50%); width: 1px; background: var(--cream); box-shadow: 0 0 12px var(--hi); pointer-events: none; z-index: 3; }
+.kn-cmp .seam::after { content: ""; position: absolute; top: 50%; left: 50%; width: 14px; height: 14px; transform: translate(-50%, -50%);
+  border-radius: 50%; background: var(--cream); box-shadow: 0 0 0 3px rgba(11,11,12,.6), 0 0 12px var(--hi); }
+.kn-cmp input[type=range] { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 4; }
+.kn-lakemap > img { display: block; width: 100%; height: 100%; }
+.kn-box { position: absolute; border: 3px solid #ee2a1e; box-shadow: 0 0 0 1px rgba(0,0,0,.6); z-index: 2; }
+/* the close-up grows out of the red box when the part arrives on screen */
+.kn-zoom { position: absolute; z-index: 3; left: 11.2%; top: 30.2%; width: 5.9%; opacity: 0; transform-origin: top left;
+  transition: left .9s cubic-bezier(.6,0,.2,1), top .9s cubic-bezier(.6,0,.2,1), width .9s cubic-bezier(.6,0,.2,1), opacity .4s; }
+.kn-zoom img { display: block; width: 100%; height: auto; border: 3px solid #ee2a1e; box-shadow: 0 10px 30px rgba(0,0,0,.6); }
+.kn-zoom b { position: absolute; left: 8px; bottom: 8px; font: 700 10px var(--data); letter-spacing: .08em; text-transform: uppercase; color: #fff; background: rgba(11,11,12,.8); padding: 3px 6px; }
+.kn-panel.on .kn-zoom { left: 40%; top: 40%; width: 56%; opacity: 1; transition-delay: .25s; }
+@media (prefers-reduced-motion: reduce) { .kn-zoom { transition: none; } }
+@media (max-width: 860px) { .kn-cmp, .kn-lakemap { height: auto; width: 100%; max-width: none; } }
+
+/* story parts are as wide as their content, with an even gap; the opening part stays full-screen */
+.zoom-to .zoom-panel { flex: 0 0 auto; padding-inline: clamp(16px, 3vw, 48px) clamp(48px, 7vw, 120px); }
+.zoom-to .zoom-panel:first-child { flex-basis: 100%; }
+.zoom-to .zoom-panel:not(.kn-panel) .zoom-body { width: auto; }
+.zoom-to .zoom-panel:last-child { padding-right: clamp(16px, 3vw, 48px); }
+/* sources & data */
+.kn-refs-part { width: min(1180px, calc(100vw - 96px)); display: grid; gap: 14px; }
+.kn-refs-part h3 { margin: 0; font: 400 clamp(15px, 1.4vw, 20px)/1.15 var(--display); text-transform: uppercase; }
+.kn-refs-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(18px, 2.4vw, 40px); margin-top: 8px; }
+.kn-refs-cols h4 { margin: 0 0 10px; font: 10px var(--data); letter-spacing: .2em; text-transform: uppercase; color: var(--hi); }
+.kn-refs-cols ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.kn-refs-cols li { font-size: 11.5px; line-height: 1.5; color: #b4b4bb; }
+.kn-refs-cols a { color: var(--peri); }
+@media (max-width: 860px) { .kn-refs-cols { grid-template-columns: 1fr; } .zoom-to .zoom-panel { flex-basis: 100%; } }
+.zoom-extra:has(.kn-refs-part) { max-width: none; }   /* the sources part needs its full three-column width */
+
+/* orbit panel, condensed: tighter spacing; speed buttons as a grid: Pause full width, three equal speeds, Now full width */
+.orbit-panel.sim { gap: 10px; padding: 14px 16px; }
+.orbit-panel .sim-grid { gap: 6px 14px; }
+.orbit-panel .orbit-key { padding-top: 10px; gap: 4px; }
+#sim .chip-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+#sim .chip-row .btn { justify-content: center; text-align: center; width: 100%; }
+#sim-play, #sim-now { grid-column: 1 / -1; }
+/* orbit panel: the radar status spans the panel in a see-through box */
+.sim-grid .radar-box { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 10px; background: rgba(143,156,242,.08); border: 1px solid var(--line); }
+.sim-grid .radar-box dd { margin: 0; }
+.sim-grid .radar-box:has(.radar.on) { background: rgba(var(--hi-rgb),.08); border-color: rgba(var(--hi-rgb),.35); }
+@media (max-width: 960px) { .orbit-panel .sim-grid .radar-box { display: flex; } }
+/* orbit panel: date and time centred */
+#sim .sim-clock { justify-content: center; text-align: center; }
+
+/* rounded corners on every box: panels and cards a bit, buttons and tags a little less.
+   Full-width photos and the surface pictures stay square. */
+:root { --r: 8px; --r-sm: 5px; }
+.hud, .orbit-panel, .ana-stage, .ana-card, .region, .compare, .sim-grid .radar-box, .surface-graphic.placeholder,
+.zoom-close, .zoom-cmp, .kn-cmp, .kn-lakemap, .pin .lbl, .compare .tip { border-radius: var(--r); }
+.btn, .btn.sm, .tag-hi, .region .badge, .sim .dir, .sim-clock .live-chip, .ana-progress i, .key .sw, .zoom-key i, .orbit-key i { border-radius: var(--r-sm); }
+.ana-bp { border-radius: inherit; overflow: hidden; }
+/* the golden corner brackets follow the rounded corner */
+.hud::before { border-top-left-radius: var(--r); }
+.hud::after { border-bottom-right-radius: var(--r); }
+
+/* "Radar, not a camera": its own band under the hero, centred and as wide as the page */
+.slogan { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding-block: clamp(40px, 8vh, 96px) clamp(16px, 3vh, 40px); }
+.slogan h2 { width: 100%; margin-top: 16px; font-size: clamp(30px, 6.2vw, 104px); line-height: 1; text-wrap: balance; }
+.slogan p { margin: 18px 0 0; max-width: none; font-size: clamp(14px, 1.3vw, 19px); color: #cfd2f4; }
+.slogan p b { color: var(--hi); font-weight: 400; }
+/* a thin line above and below the slogan, as wide as the page content */
+.slogan::before, .slogan::after { content: ""; align-self: stretch; height: 1px; background: var(--line-strong); }
+.slogan::before { margin-bottom: clamp(28px, 5vh, 56px); }
+.slogan::after { margin-top: clamp(28px, 5vh, 56px); }
+
+/* conclusion: the story in five numbers, then what NISAR changes */
+.kn-end { width: min(1000px, calc(100vw - 96px)); display: grid; gap: 18px; }
+.kn-end h3 { margin: 0; font: 400 clamp(15px, 1.4vw, 20px)/1.15 var(--display); text-transform: uppercase; }
+.kn-end p { margin: 0; max-width: 62ch; font-size: 14px; color: #c4c4ca; }
+.kn-time { list-style: none; margin: 10px 0 14px; padding: 18px 0 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; border-top: 1px solid var(--line-strong); }
+.kn-time li { position: relative; display: grid; gap: 6px; }
+.kn-time li::before { content: ""; position: absolute; top: -23px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--cream); }
+.kn-time b { font: 400 clamp(20px, 2.2vw, 32px)/1 var(--display); color: var(--cream); }
+.kn-time span { font: 10px/1.4 var(--data); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.kn-time li.now b { color: var(--hi); }
+.kn-time li.now::before { background: var(--hi); box-shadow: 0 0 0 4px rgba(var(--hi-rgb),.2); }
+.zoom-extra:has(.kn-end) { max-width: none; }
+@media (max-width: 860px) { .kn-time { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* part 3 chart: coal removed vs ground drop */
+.kn-coal { position: relative; margin: 6px 0 0; display: grid; gap: 6px; max-width: 340px; }
+.kn-coal figcaption { font-size: 12px; color: #c4c4ca; }
+.kn-coal figcaption b { font-weight: 400; color: var(--cream); }
+.kn-coal-key { display: flex; gap: 14px; font: 10px var(--data); letter-spacing: .06em; color: #c4c4ca; }
+.kn-coal-key i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+.kn-coal svg { width: 100%; height: auto; display: block; overflow: visible; }
+.kn-coal svg text { font: 9px var(--data); fill: var(--muted); }
+.kn-coal svg text.val { fill: var(--cream); font-size: 9.5px; }
+.kn-coal svg text.lbl { fill: #c4c4ca; letter-spacing: .1em; text-transform: uppercase; }
+.kn-coal svg .grid { stroke: rgba(255,255,255,.07); stroke-width: 1; }
+.kn-coal svg .surface { stroke: var(--cream); stroke-width: 1.5; }
+.kn-coal svg .hit { fill: transparent; }
+.kn-coal svg .pair.on .hit { fill: rgba(255,255,255,.04); }
+.kn-coal-tip { position: absolute; bottom: -2px; width: 190px; z-index: 5; pointer-events: none; font-size: 11px; line-height: 1.4; color: #c4c4ca;
+  background: rgba(11,11,12,.95); border: 1px solid var(--line-strong); padding: 6px 8px; }
+.kn-coal-tip b { color: var(--cream); font-weight: 400; }
+.kn-coal-src { font: 9px var(--data); color: var(--muted); letter-spacing: .04em; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* "Through" scaled up so the first line is exactly as wide as "NISAR’s Lens" (Krona One width ratio 1.41) */
+.hero h1 .row:first-child { font-size: 1.41em; }
+
+/* "Radar, not a camera" now sits on the hero: centred near the bottom of the photo, smaller, no lines */
+.hero .slogan { position: absolute; z-index: 2; left: 0; right: 0; bottom: clamp(28px, 6vh, 72px); padding-block: 0; pointer-events: none; }
+.hero .slogan::before, .hero .slogan::after { display: none; }
+.hero .slogan h2 { width: auto; margin-top: 12px; font-size: clamp(22px, 2.8vw, 44px); color: #fff; text-shadow: 0 2px 14px rgba(7, 4, 13, .9), 0 0 32px rgba(7, 4, 13, .7); }
+.hero .slogan p { margin-top: 10px; font-size: clamp(13px, 1vw, 15px); text-shadow: 0 1px 10px rgba(7, 4, 13, .95); }
+
+/* How it sees: radar through clouds, the picture as is (grainy scan) with the explanation beside it */
+.see-through { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 48px); align-items: center; margin-bottom: clamp(56px, 9vh, 112px); }
+.see-through img { display: block; width: 100%; height: auto; aspect-ratio: 1800 / 1045; }
+.see-through-copy h3 { margin: 14px 0 0; font: 400 clamp(22px, 2.4vw, 36px)/1.1 var(--display); text-transform: uppercase; }
+.see-through-copy p { margin: 14px 0 0; font-size: 15px; color: #c3c5ea; max-width: 46ch; }
+@media (max-width: 860px) { .see-through { grid-template-columns: 1fr; } }
+
+/* radar reader: the Amazon radar scene (PIA26112) keeps its own shape */
+#compare { aspect-ratio: 900 / 638; }
+
+/* Poland map: credit for the relief texture */
+.pl-credit { margin: 8px 0 0; font-size: 10px; letter-spacing: .06em; }
+
+/* Poland: title and lede centred above the map; the map takes the full page width (not squeezed into one screen) */
+#poland.fit { height: auto; display: block; }
+#poland .pass-head { flex-direction: column; align-items: center; text-align: center; gap: 10px; }
+#poland .pass-head h2, #poland .pass-head .lede { flex: none; min-width: 0; }
+#poland .poland { display: block; margin-top: clamp(24px, 4vh, 48px); }
+#poland .poland .media-cell { display: block; container-type: normal; }   /* size from the map, not the other way round */
+#poland .pl-map { width: min(100%, 860px, calc((100svh - 120px) / .94)); max-width: none; margin-inline: auto; }   /* about one screen tall, centred */
+#poland .regions:empty { display: none; }
+#poland .pl-credit { text-align: center; }
+
+/* end of the page: the team as a terminal prompt, with a blinking cursor */
+.team-prompt { grid-column: 1 / -1; margin: 12px 0 0; display: flex; align-items: center; gap: 6px; font: 14px var(--data); letter-spacing: .04em; color: var(--hi); }
+.team-prompt i { width: .6em; height: 1.1em; background: var(--hi); animation: prompt-blink 1.1s steps(1) infinite; }
+@keyframes prompt-blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .team-prompt i { animation: none; } }
+
+/* the logo (planet, orbit ring and star) in place of the old lettering */
+.brand .logo { display: block; height: 34px; width: auto; }
+
+/* part 3: map | text | chart side by side, so nothing needs scrolling down (the story scrolls sideways anyway) */
+.kn-part.kn-1997 { grid-template-columns: auto minmax(240px, 320px) 280px; }
+.kn-1997 .kn-cmp { max-width: calc(100vw - 800px); }      /* leave room for text + chart on one screen */
+.kn-1997 .kn-coal-col { align-self: center; display: grid; gap: 14px; }
+.kn-1997 .kn-coal { margin: 0; }
+.kn-coal-note { margin: 0; font-size: 13px; line-height: 1.5; color: #c4c4ca; max-width: 300px; }
+@media (max-width: 860px) { .kn-part.kn-1997 { grid-template-columns: 1fr; } }
+
+/* ================= FLOOD 2024 STORY (Kłodzko pin) ================= */
+.fl-photo img { width: min(calc(100vw - 560px), calc((100svh - 220px) * 2.209)); }
+.fl-map img { width: min(calc(100vw - 560px), calc((100svh - 220px) * 1.729)); }
+.fl-map figcaption { width: 0; min-width: 100%; }
+@media (max-width: 860px) { .fl-photo img, .fl-map img { width: 100%; } }
+.fl-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(18px, 3vw, 48px); margin-top: 6px; }
+.fl-cols h4 { margin: 0 0 10px; padding-bottom: 10px; border-bottom: 1px solid var(--line-strong); font: 10px var(--data); letter-spacing: .2em; text-transform: uppercase; color: var(--hi); }
+.fl-cols ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.fl-cols li { font-size: 13px; line-height: 1.55; color: #c4c4ca; }
+.fl-cols li b { color: var(--cream); font-weight: 400; }
+.zoom-extra:has(.fl-next) { max-width: none; }
+@media (max-width: 860px) { .fl-cols { grid-template-columns: 1fr; } }
+
+/* Poland map: places coming soon. Grey dots and grey labels, so they read as not ready yet */
+.pin.dot.soon { cursor: pointer; color: #8b8d96; }
+.pin.dot.soon .ring { width: 8px; height: 8px; box-shadow: 0 0 0 2px var(--void); }
+.pin.dot.soon .lbl { left: 14px; color: #9a9ca5; border-color: rgba(139,141,150,.35); background: rgba(7,4,13,.8); }
+.pin.dot.soon:hover, .pin.dot.soon:focus-visible { color: #c4c6cf; }
+.pin.dot.soon:hover .lbl, .pin.dot.soon:focus-visible .lbl { color: #d4d6de; border-color: rgba(196,198,207,.6); }
+/* the note that opens on click */
+.pin-soon { position: absolute; z-index: 5; transform: translate(14px, 14px); width: 230px; padding: 12px 14px;
+  background: rgba(14,10,22,.96); border: 1px solid rgba(139,141,150,.5); border-radius: var(--r, 8px); box-shadow: 0 10px 28px rgba(0,0,0,.55); pointer-events: auto; }
+.pin-soon.left { transform: translate(calc(-100% - 14px), 14px); }
+.pin-soon[hidden] { display: none; }
+.pin-soon-tag { display: inline-block; font: 9px var(--data); letter-spacing: .18em; text-transform: uppercase; color: #9a9ca5; border: 1px solid rgba(139,141,150,.5); border-radius: var(--r-sm, 5px); padding: 3px 6px; }
+.pin-soon b { display: block; margin-top: 8px; font: 400 15px var(--display); text-transform: uppercase; color: #d4d6de; }
+.pin-soon p { margin: 6px 0 0; font-size: 12px; line-height: 1.5; color: #a9abb4; }
+

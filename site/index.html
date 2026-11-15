@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Thirsty Lakes of Konin — a NISAR radar story</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="kicker">NASA Space Apps 2026 · Dancing with the SARs · Team <code>holy@hack:~$</code></p>
+    <h1>The Thirsty Lakes of Konin</h1>
+    <p class="sub">For 40 years a lake district in central Poland has been drying out. Now the coal mines are closing and water is coming back.
+      Can a radar satellite help us watch the land heal?</p>
+    <p class="note">Prototype · Wielkopolska, Poland · Landsat 1984–2025 · Sentinel-1 2024–2026 · NISAR 2026</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <a href="#intro">The place</a>
+  <a href="#past">1 · The past</a>
+  <a href="#turn">2 · The turning point</a>
+  <a href="#now">3 · Now: NISAR</a>
+  <a href="#soil">Drought</a>
+  <a href="#value">Why NISAR</a>
+  <a href="#refs">References</a>
+</nav>
+
+<main>
+
+<section id="intro">
+  <h2>The place</h2>
+  <p>East of Poznań lies the <b>Gniezno Lake District</b>, a landscape of long, narrow lakes left behind by glaciers. Since the 1950s it has also been
+    one of Poland's <b>lignite (brown coal)</b> regions. Open-pit mines around <b>Konin</b> fed the Pątnów and Konin power plants.</p>
+  <p>To dig coal from a pit, you have to pump groundwater away. This lowers the water table for kilometres around, like sucking on a straw in a juice box.
+    And Wielkopolska is already one of the <b>driest regions in Poland</b>.</p>
+  <div class="cards">
+    <div class="card"><div class="big">−34%</div>water area of the Wilczyńskie–Budzisławskie lake chain, 1986 → 2025 <span class="src">(our Landsat analysis)</span></div>
+    <div class="card"><div class="big">6–8 m</div>drop in water level reported for Lake Wilczyńskie since the 1990s <a href="#r-przeglad">[1]</a><a href="#r-portal">[2]</a></div>
+    <div class="card"><div class="big">−240 mm</div>yearly water balance (rain minus evaporation), the worst in Poland <a href="#r-cdr">[9]</a></div>
+    <div class="card"><div class="big">2024</div>the exhausted Jóźwin IIB pit starts flooding into a new 840 ha lake <a href="#r-niezalezna">[5]</a></div>
+  </div>
+  <figure>
+    <div class="map" data-bbox="17.70,52.15,18.65,52.70" data-markers="region">
+      <img src="img/s2_2024.jpg" alt="Sentinel-2 cloud-free image of the Konin region, 2024">
+    </div>
+    <figcaption>The study area (about 65 × 60 km), Sentinel-2 2024. The bright scars are open-pit mines. The Warta river runs along the bottom through Konin.</figcaption>
+  </figure>
+</section>
+
+<section id="past">
+  <p class="chapter">Chapter 1 · 1984–2024</p>
+  <h2>The past: a lake district running dry</h2>
+  <p>The Landsat satellites have photographed this area since the 1980s. In the images below, the infrared colours make <b>water black</b> and <b>plants green</b>.
+    Drag to compare <b>July 1991</b> with <b>July 2024</b>. The lakes north of the mines get thinner and break apart.</p>
+  <figure>
+    <div class="compare map" data-bbox="17.98,52.43,18.22,52.54" data-markers="lakes">
+      <img src="img/lakes_landsat_2024_fc.jpg" alt="Lakes in 2024 (Landsat 9)">
+      <img class="top" src="img/lakes_landsat_1991_fc.jpg" alt="Lakes in 1991 (Landsat 5)">
+      <span class="tag l">8 Jul 1991 · Landsat 5</span><span class="tag r">10 Jul 2024 · Landsat 9</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare slider">
+    </div>
+    <figcaption>Landsat false colour (SWIR, NIR, red), same stretch for both years. The lake chain north of Kleczew.</figcaption>
+  </figure>
+
+  <p>We measured the water area of this lake chain in every summer with clear skies from 1984 to 2025:</p>
+  <figure>
+    <div class="chart" id="chart-lakes"></div>
+    <figcaption>Water area (hectares) from Landsat 5/7/8/9, May–September, using a water index (MNDWI). Each dot is a summer median.
+      Lake Powidzkie (also in the affected landscape park) is shown for comparison. Years with bad scenes are left out.</figcaption>
+  </figure>
+
+  <p>The JRC <i>Global Surface Water</i> map (1984–2021) shows exactly where the shores moved. <span class="pill red">red</span> means it used to be water and is now dry land.</p>
+  <figure>
+    <div class="map" data-bbox="17.98,52.43,18.22,52.54" data-markers="lakes">
+      <img src="img/lakes_jrc_on_s2_2024.jpg" alt="Water change 1984–2021 over the lakes">
+      <span class="tag l">Water change 1984 → 2021 · JRC</span>
+    </div>
+    <figcaption><span class="jrc-legend">
+      <span><i style="background:#0000dd"></i>permanent water</span>
+      <span><i style="background:#d12d3e"></i>lost permanent water</span>
+      <span><i style="background:#ffc90e"></i>permanent → seasonal</span>
+      <span><i style="background:#e6a1aa"></i>lost seasonal water</span></span></figcaption>
+  </figure>
+
+  <div class="callout">
+    <b>Is the mine to blame?</b> This question is still disputed.
+    A government expert report blamed dewatering of the Jóźwin IIB pit (2003–05) as "practically the only cause" <a href="#r-sejm">[6]</a>.
+    A 2016 study found that mining alone cannot explain the drop, and pointed to drought and evaporation too <a href="#r-2016">[7]</a>.
+    Monitoring in 2024 still found the cone of depression (the dip in the water table around the mines) reaching beyond Wilczyńskie and Suszewskie <a href="#r-pgi2024">[8]</a>.
+    The honest answer is probably <b>both</b>: a dry climate plus pumping.
+  </div>
+</section>
+
+<section id="turn">
+  <p class="chapter">Chapter 2 · 2009–2026</p>
+  <h2>The turning point: the pits fill up</h2>
+  <p>Poland's coal era is ending in Konin. One by one, the open pits have stopped <a href="#r-mine">[10]</a>:</p>
+  <ol class="timeline">
+    <li><b>2009</b> Lubstów</li><li><b>2011</b> Kazimierz North</li><li><b>2021</b> Adamów</li>
+    <li><b>2022</b> Drzewce</li><li><b>2023</b> Jóźwin IIB</li><li><b>2026</b> Tomisławice, the last pit, planned to close</li>
+  </ol>
+  <p>When the pumps stop, groundwater rises and the empty pits become lakes. Drag to compare the whole region in 1991 and 2024.
+    The pink scars of active mines have turned into black pit lakes.</p>
+  <figure>
+    <div class="compare map" data-bbox="17.70,52.15,18.65,52.70" data-markers="region">
+      <img src="img/landsat_2024_fc.jpg" alt="Region 2024">
+      <img class="top" src="img/landsat_1991_fc.jpg" alt="Region 1991">
+      <span class="tag l">1991 · Landsat 5</span><span class="tag r">2024 · Landsat 9</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare slider">
+    </div>
+    <figcaption>Landsat false colour, 1991 vs 2024. Across the region, the JRC record shows ~1,300 ha of <i>new</i> permanent water (mostly pit lakes),
+      while the natural lakes lost water.</figcaption>
+  </figure>
+
+  <p>Mining at <b>Jóźwin IIB</b> ended in June 2023. In late 2024, the pit started filling, on its way to an 840 ha, ~240 million m³ lake <a href="#r-niezalezna">[5]</a>.</p>
+  <figure>
+    <div class="compare map" data-bbox="18.08,52.36,18.26,52.45" data-markers="pit">
+      <img src="img/pit_s2_2024.jpg" alt="2024">
+      <img class="top" src="img/pit_s2_2016.jpg" alt="2016">
+      <span class="tag l">2016 · active mine</span><span class="tag r">2024 · pit lake forming</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare slider">
+    </div>
+    <figcaption>Sentinel-2 cloud-free mosaics (EOX), 2016 vs 2024.</figcaption>
+  </figure>
+  <p>Radar sees the filling through clouds and in winter. Sentinel-1 (since 2024) and NISAR (since mid-2026) both measure how much open water is in the pit:</p>
+  <figure>
+    <div class="chart" id="chart-pit"></div>
+    <figcaption>Open water in the Jóźwin IIB pit (hectares). Sentinel-1 C-band monthly maximum (VV &lt; −18 dB), and NISAR L-band per pass, descending track 80
+      (dark in HH and HV <i>and</i> low InSAR coherence, see Chapter 3). Both show the pit filling. The level differs because the sensors see the steep pit walls
+      differently, and the ascending NISAR track reads lower again. These are rough first estimates.</figcaption>
+  </figure>
+</section>
+
+<section id="now">
+  <p class="chapter">Chapter 3 · 2026 →</p>
+  <h2>Now: watching with NISAR</h2>
+  <p><b>NISAR</b> (the NASA–ISRO Synthetic Aperture Radar, launched July 2025) sends its own microwave pulses and listens for the echo.
+    It sees <b>through clouds, at night, every 12 days</b>. It uses long <b>L-band</b> waves (24 cm) that reach through plants down to the ground and water below.</p>
+  <ul class="legend-list">
+    <li><span class="sw" style="background:#111"></span><b>Black</b>: calm water works like a mirror and bounces the pulse away.</li>
+    <li><span class="sw" style="background:#d9dcd6"></span><b>White/grey</b>: forests. Branches scatter the pulse in all directions, so both channels are bright, especially <i>HV</i>.</li>
+    <li><span class="sw" style="background:#a0479a"></span><b>Magenta</b>: fields and towns. The direct <i>HH</i> echo is stronger than the "depolarised" HV echo.</li>
+  </ul>
+  <figure>
+    <div class="pair">
+      <div class="map" data-bbox="17.98,52.43,18.22,52.54" data-markers="lakes">
+        <img src="img/nisarmt_lakes_mean_t057.jpg" alt="NISAR season mean, 20 m"><span class="tag l">NISAR · 2026 season average</span>
+      </div>
+      <div class="map" data-bbox="17.98,52.43,18.22,52.54" data-markers="lakes">
+        <img src="img/lakes_s2_2024.jpg" alt="Optical"><span class="tag l">Optical · Sentinel-2 2024</span>
+      </div>
+    </div>
+    <figcaption>The lake chain as NISAR sees it: an average of 9 passes (June–October 2026, track 57) at full 20 m resolution, next to an optical image.
+      Colours: red = HH, green = HV, blue = HH.</figcaption>
+  </figure>
+
+  <div class="callout">
+    <b>Why single radar images look grainy and flicker.</b> Every radar image has <i>speckle</i>, a random salt-and-pepper pattern from many echoes
+    interfering inside each pixel. On top of that, wind ripples lakes and rain wets fields from one pass to the next. Because NISAR revisits the same spot
+    on a fixed grid, we can stack all passes and filter them together (a <i>multi-temporal speckle filter</i>). That keeps real changes and removes most
+    of the noise. NISAR's 20 m pixels are the real limit of this data mode, so the sharpest close-ups are about 20 m.
+  </div>
+
+  <p>NISAR measures two "flavours" of echo at once. <b>HH</b> sends and receives horizontal waves. <b>HV</b> receives the part that was twisted by branches and leaves.
+    Drag to compare them: forests light up in HV, while lakes stay black in both.</p>
+  <figure>
+    <div class="compare map" data-bbox="17.98,52.43,18.22,52.54" data-markers="lakes">
+      <img src="img/nisarmt_lakes_meanhv_t057.jpg" alt="NISAR HV"><img class="top" src="img/nisarmt_lakes_meanhh_t057.jpg" alt="NISAR HH">
+      <span class="tag l">HH (direct echo)</span><span class="tag r">HV (twisted echo)</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare slider">
+    </div>
+    <figcaption>NISAR GCOV 20 m, season average of the same 9 passes in both halves.</figcaption>
+  </figure>
+
+  <h3>A whole season in one picture</h3>
+  <p>Instead of flipping through dates, we can paint the season into one image. Each colour channel is a different month of NISAR's HV echo:
+    <span class="pill" style="background:#c0392b">red = June</span> <span class="pill" style="background:#27ae60">green = August</span>
+    <span class="pill" style="background:#2e6fd8">blue = October</span>. Grey or white means "the same all season". Colour shows <i>when</i> a place changed.</p>
+  <figure>
+    <div class="map" data-bbox="17.70,52.15,18.65,52.70" data-markers="region">
+      <img src="img/nisarmt_region_change_t057.jpg" alt="NISAR season change composite"><span class="tag l">NISAR HV · June / August / October 2026</span>
+    </div>
+    <figcaption><b>White</b>: forests, the same all season. <b>Black</b>: lakes and pit lakes, still water. <b>Green</b> fields: crops at their peak in August, then harvested.
+      <b>Red</b> fields: harvested early (bright in June). <b>Blue</b> fields: autumn crops or freshly ploughed soil.</figcaption>
+  </figure>
+
+  <h3>The lakes, pass by pass</h3>
+  <p>Dark in <i>both</i> channels means open water. On every pass, NISAR maps the water of the lake chain. The map below shows on how many of the 16 passes
+    (both tracks, June–October) each spot was water:</p>
+  <figure>
+    <div class="map" data-bbox="17.98,52.43,18.22,52.54" data-markers="lakes">
+      <img src="img/nisarmt_lakes_waterfreq.jpg" alt="NISAR water frequency"><span class="tag l">NISAR · how often water, 16 passes</span>
+    </div>
+    <div class="ramp"><span>never</span><i style="background:linear-gradient(90deg,#333,#2673f2)"></i><span>every pass</span></div>
+    <figcaption>For each pass, the water threshold is calibrated against known permanent lake cores and dry land.</figcaption>
+  </figure>
+  <figure>
+    <div class="chart" id="chart-nisar-lakes"></div>
+    <figcaption>Open water in the lake chain on each NISAR pass (hectares, filtered stack). Landsat measured ~580 ha in 2024–25.
+      <b>Within one season the lakes hardly move</b>: the decline in Chapter 1 took decades. That makes 2026 a precise <b>baseline</b>.
+      With a new reading every 12 days, NISAR can show within a year or two whether restoration is turning the trend around.</figcaption>
+  </figure>
+
+  <p>Want to see the raw season anyway? Here are the filtered NISAR passes one by one. Forests and lakes stay put, while the fields go through harvest and ploughing:</p>
+  <figure>
+    <div class="timelapse map" data-bbox="17.70,52.15,18.65,52.70" data-markers="region" data-source="nisar-region">
+      <img alt="NISAR time-lapse"><span class="tag l date"></span>
+    </div>
+    <div class="tl-controls"><button type="button" class="play">▶ Play</button><input type="range" min="0" max="0" value="0" aria-label="Date"></div>
+    <figcaption>NISAR GCOV, descending track 80, multi-temporal filtered, 20 m data shown at ~47 m.</figcaption>
+  </figure>
+
+  <h3>Is the ground moving?</h3>
+  <p>NISAR can do something no camera can: compare the exact <i>timing</i> of its echoes between two passes. This technique, called <b>InSAR</b>, reveals
+    two things. First, how much the ground moved toward or away from the satellite, down to millimetres. Second, the <b>coherence</b>: how much a place stayed
+    the same between passes.</p>
+  <figure>
+    <div class="pair">
+      <div class="map" data-bbox="18.08,52.36,18.26,52.45" data-markers="pit">
+        <img src="img/nisarmt_pit_mean_t080.jpg" alt="NISAR backscatter, Jóźwin pit"><span class="tag l">Brightness (backscatter)</span>
+      </div>
+      <div class="map" data-bbox="18.08,52.36,18.26,52.45" data-markers="pit">
+        <img src="img/insar_coh_pit_t080.jpg" alt="NISAR coherence, Jóźwin pit"><span class="tag l">Coherence (InSAR)</span>
+      </div>
+    </div>
+    <figcaption>The Jóźwin pit, NISAR June–October 2026 (track 80). In brightness alone, the <b>water</b> and the <b>dry sand</b> on the pit floor both look dark.
+      In coherence, water is <b>black</b> (it moves and changes all the time), while the bare sand and the town are <b>bright</b> (they stay the same).
+      Combining both is how we separate the new lake from the sand around it, and it is what turned the pit measurement in Chapter 2 into a usable series.</figcaption>
+  </figure>
+  <div class="callout warn">
+    <b>Ground movement: a first, honest look.</b> We chained NISAR's 12–36-day interferograms from June to October 2026 (9 pairs on track 57, 5 on track 80)
+    to look for the ground rising as groundwater returns around the closed pits. After 4 months, the signal is not yet clear. Each pair carries
+    <b>5–15 mm of atmospheric noise</b>, fields lose coherence between passes, and the two tracks disagree at the same places.
+    Groundwater-driven movement is slow, a few mm to cm per year. A <b>year or more</b> of NISAR passes and a proper time-series method (for example MintPy)
+    should separate it from the noise. This is exactly what NISAR's regular 12-day schedule is built for.
+  </div>
+</section>
+
+<section id="soil">
+  <h2>Drought: the fields dried out</h2>
+  <p>The lakes are only part of the story. The fields around them depend on the same water. NISAR makes a <b>soil-moisture map</b> from every pass,
+    with one value for every 200 × 200 m square (about 5 football pitches). Comparing early summer with autumn 2026 shows a clear trend:</p>
+  <div class="cards">
+    <div class="card"><div class="big soil-pct">–</div>of farmland was drier in Sep–Oct than in Jun–Jul (track 57)</div>
+    <div class="card"><div class="big soil-med">–</div>median change in soil moisture (m³ of water per m³ of soil)</div>
+  </div>
+  <figure>
+    <div class="map" data-bbox="17.70,52.15,18.65,52.70" data-markers="region">
+      <div class="stack base"><img src="img/s2_2024.jpg" alt=""><img class="sm" src="img/sme2_change_t057.png" alt="Soil moisture change"></div>
+      <span class="tag l">NISAR soil moisture · autumn minus early summer 2026</span>
+    </div>
+    <div class="ramp"><span>drier −0.10</span><i style="background:linear-gradient(90deg,#8c510a,#d8b365,#f6f6f0,#5ab4ac,#01665e)"></i><span>+0.10 wetter</span></div>
+    <figcaption>NISAR L3 SME2 (provisional), track 57: mean of Sep–Oct passes minus mean of Jun–Jul passes, farmland and grassland only.
+      Forests, lakes and towns are transparent. The other track (80) shows the same direction but a weaker drying.</figcaption>
+  </figure>
+  <p>Drag to compare the wettest and driest passes of the season, both from the same NISAR track:</p>
+  <figure>
+    <div class="compare map soil" data-bbox="17.70,52.15,18.65,52.70" data-markers="region" id="soil-compare">
+      <div class="stack base"><img src="img/s2_2024.jpg" alt=""><img class="sm" alt="Soil moisture (wettest)"></div>
+      <div class="top stack"><img src="img/s2_2024.jpg" alt=""><img class="sm" alt="Soil moisture (driest)"></div>
+      <span class="tag l soil-l"></span><span class="tag r soil-r"></span>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare slider">
+    </div>
+    <div class="ramp"><span>dry 0.05</span><i></i><span>0.35 m³/m³ wet</span></div>
+    <figcaption>NISAR L3 SME2 soil moisture (provisional). Lakes and areas without a retrieval are transparent.</figcaption>
+  </figure>
+  <figure>
+    <div class="chart" id="chart-soil"></div>
+    <figcaption>Median soil moisture over the region on each NISAR pass (the line), with the middle 50% of values (the band). Provisional product, not yet fully calibrated.</figcaption>
+  </figure>
+</section>
+
+<section id="value">
+  <h2>What NISAR adds</h2>
+  <div class="cards">
+    <div class="card"><div class="big">12 days</div>a new look at every lake and pit, <b>through clouds</b>, all year, including Polish winters</div>
+    <div class="card"><div class="big">L-band</div>long waves see <b>water under reeds</b>, which is exactly where shrinking lakes lose their edges</div>
+    <div class="card"><div class="big">200 m</div><b>soil-moisture maps</b> on every pass. Each map square is 200 × 200 m (about 5 football pitches), detailed enough to see which fields are drying out.</div>
+    <div class="card"><div class="big">mm–cm</div><b>ground movement</b>: by comparing passes, radar can detect the land sinking or rising by just millimetres to centimetres, for example as groundwater is pumped out or comes back.</div>
+  </div>
+  <p>Satellites like Landsat tell us the <b>past</b>. NISAR is the tool for the <b>future</b>: an independent, free check on whether the
+    100+ million złoty restoration plans are working <a href="#r-portal">[2]</a>.</p>
+  <h3>Next steps</h3>
+  <ul>
+    <li><b>Ground movement</b>: after a full year of passes, run a proper InSAR time series (for example MintPy) to look for uplift around the closed pits as groundwater recovers. Four months were not enough (see Chapter 3).</li>
+    <li><b>Pit filling</b>: combine both NISAR tracks with a terrain model, so that radar shadows on the steep pit walls are not counted as water.</li>
+    <li><b>Lake levels</b>: compare NISAR water area with lake gauge readings and groundwater wells.</li>
+    <li><b>Validated data</b>: re-run when the calibrated (VALIDATED) NISAR soil moisture is released.</li>
+  </ul>
+  <div class="callout warn">
+    <b>Prototype caveats.</b> NISAR products used here are <i>provisional</i>. Our water and soil-moisture numbers use simple thresholds and medians.
+    They are a first exploration, not official measurements. The figures quoted from other sources are cited, and some are disputed.
+  </div>
+</section>
+
+<section id="refs">
+  <h2>References &amp; data</h2>
+  <h3>Data</h3>
+  <ul class="refs">
+    <li>NISAR L2 GCOV and L3 SME2 (provisional/validated), NASA/JPL-Caltech &amp; ISRO, via the <a href="https://search.asf.alaska.edu/">ASF DAAC</a>. <a href="https://nisar-docs.asf.alaska.edu/">NISAR Data User Guide</a>.</li>
+    <li>Landsat 5/7/8/9 Collection 2 Level-2 (USGS), and Sentinel-1 RTC (contains modified Copernicus Sentinel data), via <a href="https://planetarycomputer.microsoft.com/">Microsoft Planetary Computer</a>.</li>
+    <li>Sentinel-2 cloudless by <a href="https://s2maps.eu">EOX IT Services GmbH</a> (contains modified Copernicus Sentinel data 2016 &amp; 2024). 2016: CC BY 4.0. 2024: CC BY-NC-SA 4.0.</li>
+    <li>JRC Global Surface Water, Pekel et al. (2016), <i>Nature</i> 540, 418–422. <a href="https://global-surface-water.appspot.com/">global-surface-water.appspot.com</a>. Source: EC JRC/Google.</li>
+  </ul>
+  <h3>Sources</h3>
+  <ol class="refs">
+    <li id="r-przeglad">Przegląd Koniński (2022). ZE PAK estimate for Wilczyńskie &amp; Suszewskie (~6 m, ~50% area). <a href="https://przegladkoninski.pl/pl/11_wiadomosci/26344_nowe-jeziora-na-ratunek-wielkopolsce-wschodniej.html">link</a></li>
+    <li id="r-portal">Portal Samorządowy (Aug 2026). "Małe Mazury wysychają w oczach". <a href="https://www.portalsamorzadowy.pl/wielkopolskie/inwestycje/male-mazury-wysychaja-w-oczach-poziom-jezior-obnizyl-sie-o-8-metrow,672753.html">link</a></li>
+    <li id="r-pgi2020">PIG-PIB, Przegląd Geologiczny (2020). Environmental effects of lignite mining in the Gniezno Lake District. <a href="https://www.pgi.gov.pl/dokumenty-pig-pib-all/publikacje-2/przeglad-geologiczny/2020/8-sierpien/7934-srodowiskowe-uwarunkowania-skutkow-odkrywkowej-eksploatacji-wegla-brunatnego-na-pojezierzu-gnieznienskim/file.html">link</a></li>
+    <li id="r-climate">Climatic conditions of Wielkopolska and Kujawy. <a href="https://www.researchgate.net/publication/261843063_WARUNKI_KLIMATYCZNE_WIELKOPOLSKI_I_KUJAW">link</a></li>
+    <li id="r-niezalezna">Niezalezna.pl: Jóźwin IIB flooding &amp; lake restoration. <a href="https://niezalezna.pl/polska/wielkopolska-kopalnia-odbudowa-jezior/575905">link</a></li>
+    <li id="r-sejm">Sejm, government reply to MP interpellation. <a href="https://orka2.sejm.gov.pl/IZ5.nsf/main/31C4EC6F">link</a></li>
+    <li id="r-2016">Rocznik Ochrona Środowiska (2016). Lake level changes in the Gniezno Lake District. <a href="https://yadda.icm.edu.pl/baztech/element/bwmeta1.element.baztech-bb7aa7ef-b517-4a4f-88dc-14ea949d82db">link</a></li>
+    <li id="r-pgi2024">PIG-PIB, Przegląd Geologiczny (2024). Restoring water resources around Jóźwin IIB and Kazimierz Północ. <a href="https://www.pgi.gov.pl/dokumenty-pig-pib-all/publikacje-2/przeglad-geologiczny/2024/11-listopad-4/10696-mozliwosci-odbudowy-zasobow-wodnych-w-rejonie-odkrywek-wegla-brunatnego-jozwin-iib-i-kazimierz-polnoc/file.html">link</a></li>
+    <li id="r-cdr">CDR: Climatic water balance (Klimatyczny bilans wodny). <a href="https://woda.cdr.gov.pl/images/aktualnosci/Klimatyczny_bilans_wodny.pdf">link</a></li>
+    <li id="r-mine">Mine closure dates: KWB Konin (Wikipedia, PL). <a href="https://pl.wikipedia.org/wiki/Kopalnia_W%C4%99gla_Brunatnego_%E2%80%9EKonin%E2%80%9D">link</a>. Tomisławice 2026 plan: <a href="https://zielonagospodarka.pl/zakonczenie-wydobycia-na-odkrywce-tomislawice-w-2026-r-20637">link</a></li>
+  </ol>
+  <h3>Learn more</h3>
+  <ul class="refs">
+    <li><a href="https://nisar.jpl.nasa.gov/applications/arcgis-storymaps/">NISAR StoryMaps</a> (inspiration for this page)</li>
+    <li><a href="https://www.earthdata.nasa.gov/learn/earth-observation-data-basics/sar">What is SAR?</a> (NASA Earthdata)</li>
+    <li><a href="https://susza.iung.pulawy.pl">IUNG agricultural drought monitoring</a></li>
+  </ul>
+</section>
+
+</main>
+<footer>Team <code>holy@hack:~$</code> · NASA Space Apps Challenge 2026 · <a href="https://www.spaceappschallenge.org/2026/challenges/dancing-with-the-sars/">Dancing with the SARs</a></footer>
+
+<script src="app.js"></script>
+</body>
+</html>

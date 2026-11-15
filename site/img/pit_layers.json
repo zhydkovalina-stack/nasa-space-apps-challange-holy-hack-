@@ -1,0 +1,19 @@
+{
+ "bbox": [
+  18.08,
+  52.36,
+  18.26,
+  52.45
+ ],
+ "size": [
+  1400,
+  1147
+ ],
+ "layers": {
+  "jrc_occurrence": "https://storage.googleapis.com/global-surface-water/tiles2021/occurrence/{z}/{x}/{y}.png",
+  "jrc_transitions": "https://storage.googleapis.com/global-surface-water/tiles2021/transitions/{z}/{x}/{y}.png",
+  "s2_2016": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless_3857/default/g/{z}/{y}/{x}.jpg",
+  "s2_2024": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2024_3857/default/g/{z}/{y}/{x}.jpg"
+ },
+ "radar": []
+}

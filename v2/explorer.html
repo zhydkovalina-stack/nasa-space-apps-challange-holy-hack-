@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NISAR Explorer · Through NISAR’s Lens</title>
+<meta name="description" content="Search, browse, analyse and compare NISAR radar products on a 3D globe: every track, frame and 12-day cycle, straight from NASA's archive.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cesium@1.146.0/Build/Cesium/Widgets/widgets.css">
+<link rel="stylesheet" href="css/v2.css?v=4">
+<link rel="stylesheet" href="css/explorer.css?v=11">
+</head>
+<body class="explorer-page" data-sheet="search">
+<header class="top wrap">
+  <a class="brand" href="index.html" aria-label="Through NISAR’s Lens, main page"><img class="logo" src="img/logo.svg" alt="" width="156" height="127"></a>
+  <nav class="topnav" aria-label="Pages">
+    <a href="index.html">Main</a>
+    <a href="orbit.html">Orbit</a>
+    <a href="explorer.html" aria-current="page">Explorer</a>
+  </nav>
+  <a class="sat-now" id="sat-now" href="orbit.html#now" title="The point under NISAR right now. Opens the live orbit view."><span class="sat-now-tag"><i aria-hidden="true"></i>NISAR</span><span class="lat">--.--°N</span><span class="lon">---.--°E</span></a>
+</header>
+
+<main class="ex">
+  <div id="globe" class="ex-globe" aria-label="3D globe with NISAR radar products"></div>
+  <div class="ex-split" id="split" hidden><span class="ex-split-tag" id="split-a">A</span><i aria-hidden="true"></i><span class="ex-split-tag" id="split-b">B</span></div>
+  <div class="ex-tip data" id="tip" hidden></div>
+  <button class="btn sm ex-here-btn" id="search-here" hidden>Search this area</button>
+  <!-- next NISAR pass over the place you chose (NASA observation plan) -->
+  <aside class="ex-next hud" id="next-box" aria-live="polite" hidden></aside>
+  <button class="ex-areas-btn" id="areas-btn" aria-pressed="false"><i aria-hidden="true"></i><span>See NISAR image areas</span></button>
+
+  <!-- LEFT: search + layers -->
+  <aside class="ex-panel ex-left hud" id="left" aria-label="Search NISAR products">
+    <div class="ex-tabs" role="tablist">
+      <button role="tab" id="tab-search" aria-selected="true" aria-controls="pane-search">Search</button>
+      <button role="tab" id="tab-layers" aria-selected="false" aria-controls="pane-layers">Layers</button>
+    </div>
+
+    <section class="ex-pane" id="pane-search" role="tabpanel" aria-labelledby="tab-search">
+      <form id="place-form" class="ex-place" autocomplete="off">
+        <label class="ex-lab ex-step" for="place"><b>1</b>Go to a place</label>
+        <div class="ex-row">
+          <input id="place" type="search" placeholder="City, region or lat, lon" aria-label="Place name or coordinates">
+          <button class="btn sm" type="submit">Go</button>
+        </div>
+        <ul class="ex-place-hits" id="place-hits" hidden></ul>
+        <div class="chip-row ex-presets" id="presets"></div>
+      </form>
+
+      <form id="q" class="ex-q">
+        <div class="ex-lab ex-step"><b>2</b>Choose the data</div>
+        <!-- product picker: a menu button (burger) that opens the list of NISAR product types -->
+        <div class="ex-prod">
+          <button type="button" class="ex-burger" id="prod-btn" aria-expanded="false" aria-controls="types">
+            <span class="ex-burger-ico" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="ex-prod-text"><small>Product</small><b id="prod-sel">Backscatter</b></span>
+            <span class="ex-caret" aria-hidden="true">▾</span>
+          </button>
+          <div class="ex-menu" id="types" role="group" aria-label="Product types" hidden></div>
+        </div>
+        <button class="btn hot ex-show" type="submit" id="show">Show NISAR data in view</button>
+        <button type="button" class="ex-adv-btn" id="adv-btn" aria-expanded="false" aria-controls="adv">Advanced search <span aria-hidden="true">▸</span></button>
+
+        <!-- advanced: area, track / frame / pass, dates, full archive search and track plan -->
+        <div class="ex-adv" id="adv" hidden>
+        <fieldset>
+          <legend class="ex-lab">Where</legend>
+          <div class="ex-seg" role="radiogroup" aria-label="Search area" id="where">
+            <button type="button" role="radio" aria-checked="true" data-where="view">In view</button>
+            <button type="button" role="radio" aria-checked="false" data-where="point">At a point</button>
+            <button type="button" role="radio" aria-checked="false" data-where="any">Anywhere</button>
+          </div>
+          <p class="ex-hint" id="where-hint">Products that touch the part of Earth on screen.</p>
+        </fieldset>
+        <div class="ex-grid3">
+          <label class="ex-fld"><span class="ex-lab">Track</span><input id="f-track" type="number" min="1" max="173" inputmode="numeric" placeholder="1–173"></label>
+          <label class="ex-fld"><span class="ex-lab">Frame</span><input id="f-frame" type="number" min="1" max="176" inputmode="numeric" placeholder="any"></label>
+          <label class="ex-fld"><span class="ex-lab">Pass</span>
+            <select id="f-dir"><option value="">Any</option><option value="A">North ↑</option><option value="D">South ↓</option></select></label>
+        </div>
+        <div class="ex-grid3 ex-when">
+          <label class="ex-fld ex-span3"><span class="ex-lab">Cycle (12 days)</span><select id="f-cycle"></select></label>
+          <label class="ex-fld ex-span-date"><span class="ex-lab">From</span><input id="f-from" type="date"></label>
+          <label class="ex-fld ex-span-date"><span class="ex-lab">To</span><input id="f-to" type="date"></label>
+        </div>
+        <div class="ex-row ex-go">
+          <button class="btn hot" type="submit" id="go">Search the archive</button>
+          <button class="btn sm" type="button" id="plan-btn" title="Draw every planned frame of this track (NASA observation plan)">Track plan</button>
+        </div>
+        </div>
+      </form>
+
+      <div class="ex-results" id="results" aria-live="polite">
+        <div class="ex-res-head data" id="res-head">Pick a place and a product, then press “Show NISAR data in view”.</div>
+      </div>
+    </section>
+
+    <section class="ex-pane" id="pane-layers" role="tabpanel" aria-labelledby="tab-layers" hidden>
+      <div class="ex-block">
+        <button class="toggle" id="t-labels" aria-pressed="true"><span class="sw" style="background:var(--ice)"></span><span>Place names &amp; borders<small>Cities, regions, country borders</small></span><span class="st">ON</span></button>
+        <button class="toggle" id="t-foot" aria-pressed="false"><span class="sw" style="background:linear-gradient(90deg,var(--peach) 50%,var(--peri) 50%)"></span><span>NISAR image areas<small>One outline per track &amp; frame</small></span><span class="st">OFF</span></button>
+        <button class="toggle" id="t-ql" aria-pressed="false"><span class="sw ex-sw-ql"></span><span>Quick-look mosaic<small id="ql-sub">Small previews of every frame in the results</small></span><span class="st">OFF</span></button>
+        <label class="ex-fld ex-opacity"><span class="ex-lab">Radar image opacity <b id="op-v">90%</b></span><input id="opacity" type="range" min="10" max="100" value="90"></label>
+      </div>
+      <div class="ex-block">
+        <div class="ex-lab">Our analysis <small class="muted">from the Knurów story</small></div>
+        <div id="team"></div>
+      </div>
+      <details class="ex-block ex-about">
+        <summary class="ex-lab">About this data</summary>
+        <p>Products are found live in NASA's archive at the Alaska Satellite Facility (ASF DAAC). The images on the globe are the official <b>quick-look</b> PNGs: 8-bit, stretched per image, so brightness is relative within one image. Comparisons between dates are a guide, not a measurement.</p>
+        <p>The full products (HDF5, often 2 GB) carry calibrated values and need a free NASA Earthdata login to download. NISAR products are still provisional.</p>
+        <p>Cycle numbers come from the product names. NISAR repeats its ground track every 12 days (173 orbits), so each track and frame is imaged once per cycle.</p>
+      </details>
+    </section>
+  </aside>
+
+  <!-- RIGHT: frame / point details -->
+  <aside class="ex-panel ex-right hud" id="right" aria-label="Details" hidden>
+    <button class="ex-close" id="right-close" aria-label="Close details">×</button>
+    <div id="right-body"></div>
+  </aside>
+
+  <!-- BOTTOM: cycle timeline -->
+  <div class="ex-timeline" id="timeline" aria-label="12-day cycles">
+    <div class="ex-tl-head">
+      <span class="ex-lab">Cycles</span>
+      <span class="data" id="tl-read">All cycles</span>
+      <span class="ex-tl-btns">
+        <button class="btn sm" id="tl-prev" aria-label="Previous cycle">‹</button>
+        <button class="btn sm" id="tl-next" aria-label="Next cycle">›</button>
+        <button class="btn sm" id="tl-all" aria-pressed="true">All</button>
+      </span>
+    </div>
+    <div class="ex-tl-bars" id="tl-bars" role="listbox" aria-label="Pick a cycle"></div>
+  </div>
+
+  <div class="ex-status data" id="status"><span id="st-pos">–</span><span id="st-alt"></span></div>
+
+  <nav class="ex-dock" aria-label="Panels">
+    <button class="btn sm" data-sheet-btn="search">Search</button>
+    <button class="btn sm" data-sheet-btn="details">Details</button>
+    <button class="btn sm" data-sheet-btn="none">Globe</button>
+  </nav>
+</main>
+
+<noscript><p class="ex-noscript">The NISAR Explorer needs JavaScript and WebGL.</p></noscript>
+<script src="https://cdn.jsdelivr.net/npm/cesium@1.146.0/Build/Cesium/Cesium.js"></script>
+<script src="js/nisar-now.js?v=2"></script>
+<script src="js/nasa-gis.js"></script>
+<script type="module" src="js/explorer/main.js?v=11"></script>
+</body>
+</html>

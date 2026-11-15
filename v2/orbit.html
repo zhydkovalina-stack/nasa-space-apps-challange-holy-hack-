@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NISAR Orbit · Through NISAR’s Lens</title>
+<meta name="description" content="A full-screen, interactive 3D model of NISAR's orbit and the radar swath it images as it flies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/v2.css?v=4">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body class="orbit-page">
+<canvas id="sky" aria-hidden="true"></canvas>
+<header class="top wrap">
+  <a class="brand" href="index.html" aria-label="Through NISAR’s Lens, main page"><img class="logo" src="img/logo.svg" alt="" width="156" height="127"></a>
+  <nav class="topnav" aria-label="Pages">
+    <a href="index.html">Main</a>
+    <a href="orbit.html" aria-current="page">Orbit</a>
+    <a href="explorer.html">Explorer</a>
+  </nav>
+  <a class="sat-now" id="sat-now" href="orbit.html#now" title="The point under NISAR right now. Opens the live orbit view."><span class="sat-now-tag"><i aria-hidden="true"></i>NISAR</span><span class="lat">--.--°N</span><span class="lon">---.--°E</span></a>
+</header>
+
+<main class="orbit-stage">
+  <canvas id="orbit-canvas" aria-label="Interactive 3D globe with NISAR's orbit and radar swaths"></canvas>
+
+  <div class="orbit-title">
+    <div class="kicker">NISAR · live orbit model</div>
+    <h1>Orbit &amp; swath</h1>
+    <p>NISAR circles Earth every 100 minutes, looking down and to its left. The strip behind it is what it is imaging right now.</p>
+  </div>
+
+  <aside class="orbit-panel sim" id="sim" aria-label="Simulation controls">
+    <div class="sim-clock"><span id="sim-date">–</span><b id="sim-time">--:--</b><span class="live-chip" id="sim-live" hidden>LIVE</span></div>
+    <dl class="sim-grid">
+      <div><dt>Track</dt><dd><span id="sim-track">–</span> <span class="dir" id="sim-dir">–</span></dd></div>
+      <div><dt>Below NISAR</dt><dd id="sim-nadir">–</dd></div>
+      <div class="wide radar-box"><dt>Radar</dt><dd><span class="radar" id="sim-radar"><i></i><span>–</span></span></dd></div>
+    </dl>
+    <div class="chip-row" role="group" aria-label="Simulation speed">
+      <button class="btn sm" id="sim-play" aria-label="Pause">Pause</button>
+      <button class="btn sm" data-speed="1" aria-pressed="false">1×</button>
+      <button class="btn sm" data-speed="120" aria-pressed="false">2 min/s</button>
+      <button class="btn sm" data-speed="300" aria-pressed="true">5 min/s</button>
+      <button class="btn sm" id="sim-now" aria-pressed="false" title="Jump to now at real speed"><i class="rec" aria-hidden="true"></i>Now</button>
+    </div>
+    <ul class="orbit-key">
+      <li><i style="background:var(--peach)"></i>Northbound pass (dawn)</li>
+      <li><i style="background:var(--peri)"></i>Southbound pass (dusk)</li>
+    </ul>
+  </aside>
+
+  <div class="orbit-foot">
+    <span>Drag to spin · scroll to zoom</span>
+    <span id="orbit-read"></span>
+  </div>
+</main>
+
+<script src="js/nisar-now.js?v=2"></script>
+<script src="js/sky.js?v=3"></script>
+<script type="module" src="js/orbit-page.js?v=2"></script>
+</body>
+</html>

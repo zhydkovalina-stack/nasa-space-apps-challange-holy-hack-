@@ -1,0 +1,248 @@
+{
+ "bbox": [
+  17.7,
+  52.15,
+  18.65,
+  52.7
+ ],
+ "size": [
+  1400,
+  1329
+ ],
+ "layers": {
+  "jrc_occurrence": "https://storage.googleapis.com/global-surface-water/tiles2021/occurrence/{z}/{x}/{y}.png",
+  "jrc_transitions": "https://storage.googleapis.com/global-surface-water/tiles2021/transitions/{z}/{x}/{y}.png",
+  "s2_2016": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless_3857/default/g/{z}/{y}/{x}.jpg",
+  "s2_2024": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2024_3857/default/g/{z}/{y}/{x}.jpg"
+ },
+ "radar": [
+  {
+   "file": "nisar_gcov_2026-06-18_t057.jpg",
+   "date": "2026-06-18",
+   "track": "057",
+   "scene": "NISAR_L2_PR_GCOV_023_057_A_028_2005_DHDH_A_20260618T033052_20260618T033128_P05023_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.096,
+   "coverage": 0.983
+  },
+  {
+   "file": "nisar_gcov_2026-06-30_t057.jpg",
+   "date": "2026-06-30",
+   "track": "057",
+   "scene": "NISAR_L2_PR_GCOV_024_057_A_028_2005_DHDH_A_20260630T033052_20260630T033127_P05023_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.1,
+   "coverage": 0.982
+  },
+  {
+   "file": "nisar_gcov_2026-07-12_t057.jpg",
+   "date": "2026-07-12",
+   "track": "057",
+   "scene": "NISAR_L2_PR_GCOV_025_057_A_028_2005_DHDH_A_20260712T033051_20260712T033126_P05023_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.174,
+   "coverage": 0.991
+  },
+  {
+   "file": "nisar_gcov_2026-07-24_t057.jpg",
+   "date": "2026-07-24",
+   "track": "057",
+   "scene": "NISAR_L2_PR_GCOV_026_057_A_028_2005_DHDH_A_20260724T033050_20260724T033126_P05023_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.149,
+   "coverage": 0.986
+  },
+  {
+   "file": "nisar_gcov_2026-08-17_t057.jpg",
+   "date": "2026-08-17",
+   "track": "057",
+   "scene": "NISAR_L2_PR_GCOV_028_057_A_028_2005_DHDH_A_20260817T033049_20260817T033124_P05023_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.143,
+   "coverage": 0.987
+  },
+  {
+   "file": "nisar_gcov_2026-08-29_t057.jpg",
+   "date": "2026-08-29",
+   "track": "057",
+   "scene": "NISAR_L2_PR_GCOV_029_057_A_028_2005_SHSH_A_20260829T033049_20260829T033124_P05023_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.163,
+   "coverage": 0.985
+  },
+  {
+   "file": "nisar_gcov_2026-09-10_t057.jpg",
+   "date": "2026-09-10",
+   "track": "057",
+   "scene": "NISAR_L2_PR_GCOV_030_057_A_028_2005_DHDH_A_20260910T033049_20260910T033124_P05023_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.153,
+   "coverage": 0.987
+  },
+  {
+   "file": "nisar_gcov_2026-09-22_t057.jpg",
+   "date": "2026-09-22",
+   "track": "057",
+   "scene": "NISAR_L2_PR_GCOV_031_057_A_028_2005_SHSH_M_20260922T033049_20260922T033124_P05023_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.147,
+   "coverage": 0.983
+  },
+  {
+   "file": "nisar_gcov_2026-09-22_t057.jpg",
+   "date": "2026-09-22",
+   "track": "057",
+   "scene": "NISAR_L2_PR_GCOV_031_057_A_028_2005_DHDH_A_20260922T033059_20260922T033119_P05023_N_P_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.131,
+   "coverage": 0.984
+  },
+  {
+   "file": "nisar_gcov_2026-10-04_t057.jpg",
+   "date": "2026-10-04",
+   "track": "057",
+   "scene": "NISAR_L2_PR_GCOV_032_057_A_028_2005_DHDH_A_20261004T033049_20261004T033124_P05023_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.129,
+   "coverage": 0.987
+  },
+  {
+   "file": "nisar_gcov_2026-10-16_t057.jpg",
+   "date": "2026-10-16",
+   "track": "057",
+   "scene": "NISAR_L2_PR_GCOV_033_057_A_028_2005_DHDH_A_20261016T033049_20261016T033124_P05023_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.128,
+   "coverage": 0.986
+  },
+  {
+   "file": "nisar_gcov_2026-10-28_t057.jpg",
+   "date": "2026-10-28",
+   "track": "057",
+   "scene": "NISAR_L2_PR_GCOV_034_057_A_028_2005_DHDH_A_20261028T033049_20261028T033120_P05036_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.145,
+   "coverage": 0.989
+  },
+  {
+   "file": "nisar_gcov_2026-06-19_t080.jpg",
+   "date": "2026-06-19",
+   "track": "080",
+   "scene": "NISAR_L2_PR_GCOV_023_080_D_062_2005_DHDH_A_20260619T180746_20260619T180821_P05023_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.321,
+   "coverage": 0.998
+  },
+  {
+   "file": "nisar_gcov_2026-07-13_t080.jpg",
+   "date": "2026-07-13",
+   "track": "080",
+   "scene": "NISAR_L2_PR_GCOV_025_080_D_062_2005_DHDH_A_20260713T180744_20260713T180820_P05023_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.377,
+   "coverage": 1.0
+  },
+  {
+   "file": "nisar_gcov_2026-08-18_t080.jpg",
+   "date": "2026-08-18",
+   "track": "080",
+   "scene": "NISAR_L2_PR_GCOV_028_080_D_062_2005_DHDH_A_20260818T180742_20260818T180818_P05023_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.419,
+   "coverage": 1.0
+  },
+  {
+   "file": "nisar_gcov_2026-08-30_t080.jpg",
+   "date": "2026-08-30",
+   "track": "080",
+   "scene": "NISAR_L2_PR_GCOV_029_080_D_062_2005_DHDH_A_20260830T180742_20260830T180818_P05023_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.418,
+   "coverage": 1.0
+  },
+  {
+   "file": "nisar_gcov_2026-09-23_t080.jpg",
+   "date": "2026-09-23",
+   "track": "080",
+   "scene": "NISAR_L2_PR_GCOV_031_080_D_062_2005_DHDH_A_20260923T180742_20260923T180820_P05023_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.372,
+   "coverage": 0.999
+  },
+  {
+   "file": "nisar_gcov_2026-10-05_t080.jpg",
+   "date": "2026-10-05",
+   "track": "080",
+   "scene": "NISAR_L2_PR_GCOV_032_080_D_062_2005_DHDH_A_20261005T180742_20261005T180818_P05023_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.403,
+   "coverage": 1.0
+  },
+  {
+   "file": "nisar_gcov_2026-10-29_t080.jpg",
+   "date": "2026-10-29",
+   "track": "080",
+   "scene": "NISAR_L2_PR_GCOV_034_080_D_062_2005_DHDH_A_20261029T180743_20261029T180817_P05036_N_F_J_001",
+   "shift_px": [
+    0,
+    0
+   ],
+   "match": 0.374,
+   "coverage": 1.0
+  }
+ ]
+}

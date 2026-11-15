@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Amazon · Through NISAR’s Lens</title>
+<meta name="description" content="Forest cleared, riverbanks dug up for gold, and a flood draining from under the trees: the Amazon in 2026, seen through the clouds by NISAR radar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/v2.css?v=7">
+<link rel="stylesheet" href="css/amazon.css">
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<header class="top wrap">
+  <a class="brand" href="index.html" aria-label="Back to Through NISAR’s Lens"><img class="logo" src="img/logo.svg" alt="" width="156" height="127"></a>
+  <nav class="topnav" aria-label="Pages">
+    <a href="index.html">Home</a>
+    <a href="orbit.html">Orbit</a>
+    <a href="explorer.html">Explorer</a>
+  </nav>
+  <a class="sat-now" id="sat-now" href="orbit.html#now" title="The point under NISAR right now. Opens the live orbit view."><span class="sat-now-tag"><i aria-hidden="true"></i>NISAR</span><span class="lat">--.--°N</span><span class="lon">---.--°E</span></a>
+</header>
+
+<main>
+  <!-- preview entry: the same pin → zoom the Knurów story uses on the home page's Poland map -->
+  <section class="pass wrap fit" id="amazon">
+    <div class="pass-tag"><b>Preview</b><i></i><span>Not linked from the home page yet</span></div>
+    <div class="pass-head">
+      <h2>Through the clouds</h2>
+      <p class="lede">A story from the Amazon: forest cleared, riverbanks dug up for gold, and a flood draining from under the trees. All of it seen by NISAR in 2026. Click the pin.</p>
+    </div>
+    <div class="poland fit-body">
+      <div class="media-cell"><div class="pl-map am-map" id="am-map"><canvas id="am" aria-label="Shaded relief map of Brazil with the Amazon story"></canvas></div><p class="data muted pl-credit">Relief: Miguel Valenzuela (@mappdoutofficial), from GMTED2010 elevation data</p></div>
+      <div class="regions">
+        <button class="region live am-open" type="button" id="am-open">
+          <span class="name">Amazon Rainforest</span><span class="badge">Story</span>
+          <span class="metric">Novo Progresso · Rio Crepori · Mamirauá · Jun–Oct 2026</span>
+        </button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div><h3>Amazon</h3><p>NASA Space Apps Challenge 2026 · Poznań team · Through NISAR’s Lens · challenge: <a href="https://www.spaceappschallenge.org/2026/challenges/dancing-with-the-sars/">Dancing with the SARs</a>.</p></div>
+  <p class="data">Data: NISAR (NASA/JPL-Caltech, ISRO) via NASA GIBS and ASF DAAC · HLS Sentinel-2 via NASA GIBS · outline: Natural Earth via world-atlas. Products are provisional. <a href="index.html">Back to the main page</a></p>
+</footer>
+
+<script src="js/nisar-now.js?v=2"></script>
+<script src="js/sky.js?v=3"></script>
+<script type="module" src="js/amazon.js?v=7"></script>
+</body>
+</html>

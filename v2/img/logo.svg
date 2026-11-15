@@ -1,0 +1,10 @@
+<svg width="156" height="127" viewBox="0 0 156 127" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!-- Through NISAR’s Lens logo: a planet with an orbit ring and a four-point star, in the site palette
+     (planet: near-white #eef1ff, ring: muted lavender-grey #8a84a8, star: highlight yellow #eeff1a) -->
+<circle cx="86.007" cy="79.1432" r="44" fill="#eef1ff"/>
+<mask id="logo-ring" fill="white">
+<path d="M92.867 24.307C127.28 37.7315 148.336 66.1493 139.898 87.7801C131.46 109.411 96.7222 116.063 62.3096 102.639C27.897 89.2146 6.84052 60.7967 15.2787 39.1659C23.7169 17.5352 58.4544 10.8826 92.867 24.307Z"/>
+</mask>
+<path d="M92.867 24.307C127.28 37.7315 148.336 66.1493 139.898 87.7801C131.46 109.411 96.7222 116.063 62.3096 102.639C27.897 89.2146 6.84052 60.7967 15.2787 39.1659C23.7169 17.5352 58.4544 10.8826 92.867 24.307Z" stroke-width="10" stroke="#8a84a8" mask="url(#logo-ring)"/>
+<path d="M33.507 0.143188L38.5628 22.5874L61.007 27.6432L38.5628 32.699L33.507 55.1432L28.4512 32.699L6.00702 27.6432L28.4512 22.5874L33.507 0.143188Z" fill="#eeff1a"/>
+</svg>

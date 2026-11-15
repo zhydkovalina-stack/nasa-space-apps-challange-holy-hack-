@@ -1,0 +1,211 @@
+{
+ "method": "Quegan multi-temporal filter (5x5) per track, bilinear resampling, per-pass thresholds from nisar_water.json",
+ "lakes": {
+  "passes": 16,
+  "stable_ha": 521.0,
+  "new_ha": 7.1,
+  "lost_ha": 13.3,
+  "series": [
+   {
+    "date": "2026-06-18",
+    "track": "057",
+    "water_ha": 490.9,
+    "good": true
+   },
+   {
+    "date": "2026-06-19",
+    "track": "080",
+    "water_ha": 455.9,
+    "good": true
+   },
+   {
+    "date": "2026-06-30",
+    "track": "057",
+    "water_ha": 482.1,
+    "good": false
+   },
+   {
+    "date": "2026-07-12",
+    "track": "057",
+    "water_ha": 533.4,
+    "good": false
+   },
+   {
+    "date": "2026-07-13",
+    "track": "080",
+    "water_ha": 491.7,
+    "good": false
+   },
+   {
+    "date": "2026-07-24",
+    "track": "057",
+    "water_ha": 539.1,
+    "good": false
+   },
+   {
+    "date": "2026-08-17",
+    "track": "057",
+    "water_ha": 504.3,
+    "good": true
+   },
+   {
+    "date": "2026-08-18",
+    "track": "080",
+    "water_ha": 507.2,
+    "good": false
+   },
+   {
+    "date": "2026-08-30",
+    "track": "080",
+    "water_ha": 525.4,
+    "good": false
+   },
+   {
+    "date": "2026-09-10",
+    "track": "057",
+    "water_ha": 540.5,
+    "good": false
+   },
+   {
+    "date": "2026-09-23",
+    "track": "080",
+    "water_ha": 516.3,
+    "good": false
+   },
+   {
+    "date": "2026-10-04",
+    "track": "057",
+    "water_ha": 499.1,
+    "good": false
+   },
+   {
+    "date": "2026-10-05",
+    "track": "080",
+    "water_ha": 491.7,
+    "good": false
+   },
+   {
+    "date": "2026-10-16",
+    "track": "057",
+    "water_ha": 517.3,
+    "good": false
+   },
+   {
+    "date": "2026-10-28",
+    "track": "057",
+    "water_ha": 517.8,
+    "good": false
+   },
+   {
+    "date": "2026-10-29",
+    "track": "080",
+    "water_ha": 505.3,
+    "good": false
+   }
+  ]
+ },
+ "pit": {
+  "passes": 14,
+  "stable_ha": 149.1,
+  "new_ha": 25.2,
+  "lost_ha": 89.6,
+  "series": [
+   {
+    "date": "2026-06-18",
+    "track": "057",
+    "water_ha": 224.9,
+    "good": true
+   },
+   {
+    "date": "2026-06-19",
+    "track": "080",
+    "water_ha": 266.9,
+    "good": true
+   },
+   {
+    "date": "2026-06-30",
+    "track": "057",
+    "water_ha": 308.5,
+    "good": true
+   },
+   {
+    "date": "2026-07-12",
+    "track": "057",
+    "water_ha": 153.6,
+    "good": true
+   },
+   {
+    "date": "2026-07-13",
+    "track": "080",
+    "water_ha": 409.5,
+    "good": true
+   },
+   {
+    "date": "2026-07-24",
+    "track": "057",
+    "water_ha": 195.1,
+    "good": true
+   },
+   {
+    "date": "2026-08-17",
+    "track": "057",
+    "water_ha": 164.6,
+    "good": true
+   },
+   {
+    "date": "2026-08-18",
+    "track": "080",
+    "water_ha": 356.2,
+    "good": true
+   },
+   {
+    "date": "2026-08-30",
+    "track": "080",
+    "water_ha": 356.5,
+    "good": true
+   },
+   {
+    "date": "2026-09-10",
+    "track": "057",
+    "water_ha": 171.7,
+    "good": true
+   },
+   {
+    "date": "2026-09-23",
+    "track": "080",
+    "water_ha": 428.3,
+    "good": true
+   },
+   {
+    "date": "2026-10-04",
+    "track": "057",
+    "water_ha": 167.3,
+    "good": true
+   },
+   {
+    "date": "2026-10-05",
+    "track": "080",
+    "water_ha": 462.2,
+    "good": true
+   },
+   {
+    "date": "2026-10-16",
+    "track": "057",
+    "water_ha": 170.3,
+    "good": true
+   },
+   {
+    "date": "2026-10-28",
+    "track": "057",
+    "water_ha": 374.0,
+    "good": false
+   },
+   {
+    "date": "2026-10-29",
+    "track": "080",
+    "water_ha": 488.8,
+    "good": false
+   }
+  ]
+ }
+}

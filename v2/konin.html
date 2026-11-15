@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Konin Lakes · Through NISAR’s Lens</title>
+<meta name="description" content="For 40 years a lake district near Konin, Poland, has been drying out. Now the coal mines are closing. How NISAR radar watches the water come back.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/v2.css?v=4">
+<link rel="stylesheet" href="css/konin.css">
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<header class="top wrap">
+  <a class="brand" href="index.html#poland" aria-label="Back to Through NISAR’s Lens"><img class="logo" src="img/logo.svg" alt="" width="156" height="127"></a>
+  <nav class="topnav" aria-label="Pages">
+    <a href="index.html">Main</a>
+    <a href="orbit.html">Orbit</a>
+    <a href="explorer.html">Explorer</a>
+  </nav>
+  <a class="sat-now" id="sat-now" href="orbit.html#now" title="The point under NISAR right now. Opens the live orbit view."><span class="sat-now-tag"><i aria-hidden="true"></i>NISAR</span><span class="lat">--.--°N</span><span class="lon">---.--°E</span></a>
+</header>
+
+<!-- chapter index: ticks on the left edge, labels slide out on hover/focus -->
+<nav class="secnav" aria-label="Chapters">
+  <a href="#past"><i></i><span><b>01</b>Past</span></a>
+  <a href="#lakes"><i></i><span><b>02</b>Lakes</span></a>
+  <a href="#pit"><i></i><span><b>03</b>Pit</span></a>
+  <a href="#next"><i></i><span><b>04</b>Next</span></a>
+</nav>
+
+<main>
+  <!-- HERO -->
+  <section class="kn-hero wrap" id="top">
+    <div class="kn-hero-copy">
+      <a class="kn-back" href="index.html#poland">Back · Through NISAR’s Lens</a>
+      <div class="kicker">Pass 06 · Konin, Wielkopolska · 52.4°N 18.1°E</div>
+      <h1><span class="row">The thirsty</span><span class="row">lakes of</span><span class="row"><span class="sars">Konin</span></span></h1>
+      <p class="intro">Coal mines drained a lake district in central Poland for 40 years. Now the mines are closing and <b>the water is coming back</b>. NISAR watches it every 12 days, through cloud and darkness.</p>
+      <dl class="telemetry">
+        <div><dt>Lakes lost</dt><dd>−34<small>% area · 1986–2025</small></dd></div>
+        <div><dt>New pit lake</dt><dd>+220<small>ha · Jun–Oct 2026</small></dd></div>
+        <div><dt>NISAR</dt><dd>16<small>passes · 2 tracks</small></dd></div>
+      </dl>
+    </div>
+    <figure class="kn-hero-map">
+      <div class="kmap hud" data-src="nisarmt_region_2026-10-05_t080.jpg" data-bbox="17.70,52.15,18.65,52.70" data-markers="region" data-tint="ramp"></div>
+      <figcaption class="kn-hud">NISAR GCOV · L-band<br>Track 80 · 5 Oct 2026<br>65 by 60 km</figcaption>
+    </figure>
+  </section>
+
+  <!-- 1 · PAST -->
+  <section class="pass wrap fit" id="past">
+    <div class="pass-head">
+      <h2>Forty years of drying</h2>
+      <p class="lede">To dig lignite from an open pit, you pump the groundwater away, and the water table drops for kilometres around. Wielkopolska is already Poland's driest region. Between the pumps and the dry climate, the lake chain north of the mines lost a third of its water.</p>
+    </div>
+    <div class="reader fit-body">
+      <div class="media-cell"><div class="kcompare hud" data-a="lakes_landsat_1991_fc.jpg" data-b="lakes_landsat_2024_fc.jpg" data-label="1991  |  2024" data-bbox="17.98,52.43,18.22,52.54" data-markers="lakes" data-tint="ramp" aria-label="Landsat 1991 and 2024 compared: the lake chain north of Kleczew"></div></div>
+      <div class="reader-side">
+        <ul class="key">
+          <li><span class="sw" style="background:#07040d;border:1px solid var(--line-strong)"></span><span><b>Lakes</b><small>Dark: open water. Drag the seam: the lakes get thinner and break apart.</small></span><span class="pct">882 to 576 ha</span></li>
+          <li><span class="sw" style="background:#9aa2d6"></span><span><b>Fields &amp; forest</b><small>Light: land. Landsat infrared, July 1991 vs July 2024, recoloured.</small></span><span class="pct"></span></li>
+        </ul>
+        <ol class="kn-timeline" aria-label="Mine closures">
+          <li><b>2009</b>Lubstów closes</li>
+          <li><b>2021</b>Adamów closes</li>
+          <li><b>2023</b>Jóźwin IIB closes</li>
+          <li><b>2026</b>Tomisławice, the last pit</li>
+        </ol>
+        <p class="data muted">Is the mine to blame? Still disputed: a government report blamed pit dewatering <a href="#refs">[1]</a>, a 2016 study pointed to drought and evaporation too <a href="#refs">[2]</a>. Probably both.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · LAKES -->
+  <section class="pass wrap fit" id="lakes">
+    <div class="pass-head">
+      <h2>NISAR finds the water</h2>
+      <p class="lede">Calm water is a mirror for radar: the pulse bounces away and the lake goes dark. Forests scatter it back and glow. NISAR maps every lake on every pass, cloud or not, so we can count the water.</p>
+    </div>
+    <div class="reader fit-body">
+      <div class="media-cell"><div class="kcompare hud" data-a="nisarmt_lakes_mean_t057.jpg" data-b="nisarmt_lakes_waterfreq.jpg" data-label="Radar  |  Water" data-bbox="17.98,52.43,18.22,52.54" data-markers="lakes" data-tint="ramp" data-tint-b="water" aria-label="NISAR radar average and NISAR water frequency over the lake chain"></div></div>
+      <div class="reader-side">
+        <ul class="key">
+          <li><span class="sw" style="background:#9aa2d6"></span><span><b>Forest</b><small>Bright: branches scatter the L-band pulse back.</small></span><span class="pct"></span></li>
+          <li><span class="sw" style="background:#3a2a63"></span><span><b>Fields</b><small>Mid: rough soil sends some energy back.</small></span><span class="pct"></span></li>
+          <li><span class="sw" style="background:#ffbe0b"></span><span><b>Water</b><small>Right side: how often each spot was water across 16 passes. Brighter = every pass.</small></span><span class="pct" id="kn-stable">521 ha</span></li>
+        </ul>
+        <p class="kn-note">Within one season the lakes hardly move: the decline took decades. That makes 2026 a precise <b>baseline</b>. With a new reading every 12 days, NISAR can show within a year or two whether restoration turns the trend around.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · PIT -->
+  <section class="pass wrap fit" id="pit">
+    <div class="pass-head">
+      <h2>A coal pit becomes a lake</h2>
+      <p class="lede">Mining at Jóźwin IIB stopped in 2023. Now the pumps are off and the pit is filling, on its way to an 840 ha lake. In brightness alone, water and the bare sand on the pit floor both look dark. <b>InSAR coherence</b> tells them apart: water changes between passes, sand stays the same.</p>
+    </div>
+    <div class="reader fit-body">
+      <div class="media-cell"><div class="kcompare hud" data-a="nisarmt_pit_mean_t080.jpg" data-b="insar_coh_pit_t080.jpg" data-label="Brightness  |  Coherence" data-bbox="18.08,52.36,18.26,52.45" data-markers="pit" data-tint="ramp" aria-label="NISAR brightness and InSAR coherence over the Jóźwin pit"></div></div>
+      <div class="reader-side">
+        <div class="kn-read">
+          <span class="data muted">Open water in the pit · each NISAR pass</span>
+          <b id="kn-pit-now">–</b>
+          <span class="data" id="kn-pit-sub">–</span>
+        </div>
+        <div class="kn-spark" id="kn-pit-chart" aria-label="Open water in the Jóźwin pit on each NISAR pass, June to October 2026"></div>
+        <ul class="key">
+          <li><span class="sw" style="background:#07040d;border:1px solid var(--line-strong)"></span><span><b>Dark in both</b><small>Open water: no echo, no coherence.</small></span><span class="pct"></span></li>
+          <li><span class="sw" style="background:#9aa2d6"></span><span><b>Bright on the right</b><small>Sand and town: unchanged between passes.</small></span><span class="pct"></span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · NEXT -->
+  <section class="pass wrap" id="next">
+    <h2>Watching the land heal</h2>
+    <div class="kn-cards">
+      <article class="kn-card"><div class="big">12 days</div><p>A new look at every lake and pit, through clouds, all year, including Polish winters.</p></article>
+      <article class="kn-card"><div class="big" id="kn-soil">68%</div><p>of farmland was drier in autumn than in early summer 2026, from NISAR's 200 m soil-moisture maps.</p></article>
+      <article class="kn-card"><div class="big">mm</div><p>Ground rising as groundwater returns. Four months of InSAR is not enough yet; a full year should show it.</p></article>
+    </div>
+    <p class="data muted kn-caveat">Prototype: NISAR products are provisional; water and soil numbers use simple thresholds. Research and data by team <code>holy@hack:~$</code>.</p>
+    <details class="kn-refs" id="refs">
+      <summary>Sources &amp; data</summary>
+      <ol>
+        <li>Sejm, government reply to MP interpellation (Jóźwin IIB dewatering). <a href="https://orka2.sejm.gov.pl/IZ5.nsf/main/31C4EC6F">link</a></li>
+        <li>Rocznik Ochrona Środowiska (2016). Lake level changes in the Gniezno Lake District. <a href="https://yadda.icm.edu.pl/baztech/element/bwmeta1.element.baztech-bb7aa7ef-b517-4a4f-88dc-14ea949d82db">link</a></li>
+        <li>PIG-PIB, Przegląd Geologiczny (2024). Restoring water resources around Jóźwin IIB. <a href="https://www.pgi.gov.pl/dokumenty-pig-pib-all/publikacje-2/przeglad-geologiczny/2024/11-listopad-4/10696-mozliwosci-odbudowy-zasobow-wodnych-w-rejonie-odkrywek-wegla-brunatnego-jozwin-iib-i-kazimierz-polnoc/file.html">link</a></li>
+        <li>Niezalezna.pl: Jóźwin IIB flooding (840 ha lake). <a href="https://niezalezna.pl/polska/wielkopolska-kopalnia-odbudowa-jezior/575905">link</a></li>
+        <li>Mine closure dates: KWB Konin. <a href="https://pl.wikipedia.org/wiki/Kopalnia_W%C4%99gla_Brunatnego_%E2%80%9EKonin%E2%80%9D">link</a></li>
+        <li>Data: NISAR L2 GCOV, GUNW and L3 SME2 (provisional; NASA/JPL-Caltech, ISRO) via <a href="https://search.asf.alaska.edu/">ASF DAAC</a> · Landsat 5/9 Collection 2 (USGS) via <a href="https://planetarycomputer.microsoft.com/">Microsoft Planetary Computer</a>.</li>
+      </ol>
+      <p class="data muted">The full analysis, with all charts and methods, is in the team's original story: <a href="../site/index.html">Konin lakes StoryMap</a></p>
+    </details>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div><h3>Konin lakes</h3><p>NASA Space Apps Challenge 2026 · Poznań team · Through NISAR’s Lens · challenge: <a href="https://www.spaceappschallenge.org/2026/challenges/dancing-with-the-sars/">Dancing with the SARs</a>.</p></div>
+  <p class="data">Data: NISAR (NASA/JPL-Caltech, ISRO) via ASF DAAC · Landsat (USGS). Images recoloured to the site palette. Products are provisional. <a href="index.html#poland">Back to the main page</a></p>
+</footer>
+
+<script src="js/nisar-now.js?v=2"></script>
+<script src="js/sky.js?v=3"></script>
+<script src="js/banded.js"></script>
+<script src="js/konin.js"></script>
+</body>
+</html>

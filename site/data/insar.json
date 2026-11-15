@@ -1,0 +1,127 @@
+{
+ "method": "ionosphere-corrected, coherence>0.35, plane removed, referenced to median of coherent pixels; LOS mm = phase * 0.2384/(4π) * 1000",
+ "tracks": {
+  "057": {
+   "first": "20260618",
+   "last": "20261016",
+   "pairs": [
+    {
+     "ref": "20260618",
+     "sec": "20260630",
+     "valid_frac": 0.501,
+     "std_mm": 9.65
+    },
+    {
+     "ref": "20260630",
+     "sec": "20260712",
+     "valid_frac": 0.47,
+     "std_mm": 8.11
+    },
+    {
+     "ref": "20260712",
+     "sec": "20260724",
+     "valid_frac": 0.769,
+     "std_mm": 7.57
+    },
+    {
+     "ref": "20260724",
+     "sec": "20260817",
+     "valid_frac": 0.385,
+     "std_mm": 12.0
+    },
+    {
+     "ref": "20260817",
+     "sec": "20260829",
+     "valid_frac": 0.45,
+     "std_mm": 14.76
+    },
+    {
+     "ref": "20260829",
+     "sec": "20260910",
+     "valid_frac": 0.637,
+     "std_mm": 11.39
+    },
+    {
+     "ref": "20260910",
+     "sec": "20260922",
+     "valid_frac": 0.778,
+     "std_mm": 5.19
+    },
+    {
+     "ref": "20260922",
+     "sec": "20261004",
+     "valid_frac": 0.641,
+     "std_mm": 7.24
+    },
+    {
+     "ref": "20261004",
+     "sec": "20261016",
+     "valid_frac": 0.759,
+     "std_mm": 7.31
+    }
+   ],
+   "chain_continuous": true,
+   "valid_frac": 0.122,
+   "p5_p95_mm": [
+    -21.6,
+    15.0
+   ],
+   "places_mm": {
+    "Jóźwin IIB pit rim": -1.8,
+    "Kleczew": -8.2,
+    "Lake Wilczyńskie shore": 19.0,
+    "Konin": -17.5,
+    "Tomisławice pit": 12.4
+   }
+  },
+  "080": {
+   "first": "20260619",
+   "last": "20261005",
+   "pairs": [
+    {
+     "ref": "20260619",
+     "sec": "20260713",
+     "valid_frac": 0.436,
+     "std_mm": 11.33
+    },
+    {
+     "ref": "20260713",
+     "sec": "20260818",
+     "valid_frac": 0.413,
+     "std_mm": 9.64
+    },
+    {
+     "ref": "20260818",
+     "sec": "20260830",
+     "valid_frac": 0.725,
+     "std_mm": 7.59
+    },
+    {
+     "ref": "20260830",
+     "sec": "20260923",
+     "valid_frac": 0.562,
+     "std_mm": 8.35
+    },
+    {
+     "ref": "20260923",
+     "sec": "20261005",
+     "valid_frac": 0.589,
+     "std_mm": 9.42
+    }
+   ],
+   "chain_continuous": true,
+   "valid_frac": 0.255,
+   "p5_p95_mm": [
+    -16.3,
+    15.8
+   ],
+   "places_mm": {
+    "Jóźwin IIB pit rim": 13.6,
+    "Kleczew": 4.7,
+    "Lake Wilczyńskie shore": 3.2,
+    "Konin": -2.6,
+    "Tomisławice pit": 27.0
+   }
+  }
+ }
+}

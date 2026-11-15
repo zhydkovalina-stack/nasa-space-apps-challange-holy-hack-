@@ -1,0 +1,81 @@
+/* Konin lakes subpage. Built on v2.css: same hero, pass tags, reader grid, key lists and HUD frames
+   as the main page. Only the Konin-specific parts live here: recoloured maps (js/konin.js paints the
+   satellite images in the site palette), the swipe compare, the pit sparkline and the closing cards. */
+
+/* ---------- hero: title and numbers on the left, NISAR map on the right ---------- */
+.kn-hero { position: relative; min-height: min(900px, 100svh); display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(28px, 4vw, 64px);
+  align-items: center; padding-block: clamp(96px, 12vh, 140px) 48px; }
+.kn-hero-copy { min-width: 0; }
+.kn-back { display: inline-block; font: 11px var(--data); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); text-decoration: none; margin-bottom: 22px; }
+.kn-back:hover { color: var(--hi); }
+.kn-hero .kicker { font: 11px var(--data); letter-spacing: .3em; color: var(--muted); text-transform: uppercase; }
+.kn-hero h1 { font: 400 clamp(30px, 4.6vw, 76px)/.92 var(--display); margin: 16px 0 0; letter-spacing: -.02em; text-transform: uppercase; }
+.kn-hero h1 .row { display: block; }
+
+.kn-hero .intro { max-width: 48ch; margin-top: 18px; font-size: 14px; color: #cfd2f4; }
+.kn-hero .intro b { color: var(--hi); font-weight: 400; }
+.kn-hero .telemetry { grid-template-columns: repeat(3, auto); margin-top: 32px; }
+.kn-hero-map { margin: 0; min-width: 0; }
+.kn-hud { margin-top: 12px; font: 10px var(--data); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); text-align: right; line-height: 1.8; }
+
+/* ---------- recoloured map + swipe compare (same look as the main page's radar reader) ---------- */
+.kmap, .kcompare { position: relative; overflow: hidden; background: var(--plum); user-select: none; }
+.kmap canvas, .kcompare canvas { display: block; width: 100%; height: auto; }
+.kcompare { cursor: ew-resize; touch-action: pan-y; }
+.kcompare canvas + canvas { position: absolute; inset: 0; height: 100%; clip-path: inset(0 0 0 var(--cut, 50%)); }
+.kcompare .seam { position: absolute; top: 0; bottom: 0; left: var(--cut, 50%); width: 1px; background: var(--cream); box-shadow: 0 0 12px var(--hi); pointer-events: none; z-index: 3; }
+.kcompare .seam::after { content: attr(data-label); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); white-space: nowrap;
+  font: 700 10px var(--data); letter-spacing: .14em; text-transform: uppercase; background: var(--cream); color: var(--void); padding: 7px 10px; }
+.kcompare input[type=range] { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 4; }
+.kmark { position: absolute; z-index: 2; pointer-events: none; transform: translate(-5px, -5px); display: flex; align-items: center; gap: 6px; }
+.kmark.flip { flex-direction: row-reverse; transform: translate(calc(-100% + 5px), -5px); }
+.kmark i { width: 10px; height: 10px; border-radius: 50%; background: var(--cream); box-shadow: 0 0 0 2px var(--void); flex: none; }
+.kmark span { font: 700 10px var(--data); letter-spacing: .1em; text-transform: uppercase; color: var(--cream); background: rgba(7,4,13,.85); padding: 3px 6px; white-space: nowrap; }
+.kmap .loading, .kcompare .loading { position: absolute; inset: 0; display: grid; place-items: center; font: 11px var(--data); color: var(--peri); letter-spacing: .14em; }
+
+/* ---------- side panels ---------- */
+.reader .key .pct { white-space: nowrap; }
+.kn-timeline { list-style: none; margin: 22px 0 18px; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.kn-timeline li { border: 1px solid var(--line); padding: 8px 10px; font: 11px var(--data); color: var(--muted); letter-spacing: .04em; }
+.kn-timeline b { display: block; font: 400 15px var(--display); color: var(--hi); margin-bottom: 2px; }
+.reader a[href="#refs"] { color: var(--peri); text-decoration: none; }
+.kn-note { margin: 18px 0 0; font-size: 13px; color: #b9bbe2; }
+.kn-note b { color: var(--ice); font-weight: 400; }
+.lede b { color: var(--ice); font-weight: 400; }
+.kn-read { display: flex; flex-direction: column; gap: 4px; }
+.kn-read b { font: 400 34px/1.1 var(--display); color: var(--hi); }
+.kn-read .data:last-child { color: var(--peri); }
+.kn-spark { margin: 14px 0 18px; border: 1px solid var(--line); background: rgba(21,10,36,.6); padding: 10px 10px 4px; }
+.kn-spark svg { display: block; width: 100%; height: auto; }
+.kn-spark text { font: 10px var(--data); fill: var(--muted); }
+
+/* ---------- closing cards (same stepped stripe as the anatomy cards) ---------- */
+.kn-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 48px; }
+.kn-card { position: relative; border: 1px solid var(--line); background: rgba(21,10,36,.7); padding: 24px 20px 20px; }
+.kn-card::before { content: ""; position: absolute; left: -1px; right: -1px; top: -1px; height: 4px;
+  background: var(--hi); }   /* solid: no colour gradients for now */
+.kn-card .big { font: 400 clamp(24px, 2.6vw, 34px)/1.1 var(--display); color: var(--hi); text-transform: uppercase; }
+.kn-card p { margin: 10px 0 0; font-size: 13px; color: #b9bbe2; }
+.kn-caveat { margin-top: 22px; }
+code { font-family: var(--data); font-size: .9em; color: var(--hi); }
+.kn-refs { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 14px; font-size: 13px; color: #b9bbe2; max-width: 90ch; }
+.kn-refs summary { cursor: pointer; font: 11px var(--data); letter-spacing: .14em; text-transform: uppercase; color: var(--peri); }
+.kn-refs summary:hover { color: var(--hi); }
+.kn-refs li { margin: 6px 0; }
+.kn-refs a, footer a { color: var(--peri); }
+
+/* one-screen sections (see .fit in v2.css): the map is as large as the leftover height allows, at its own aspect ratio */
+@media (min-width: 961px) {
+  .reader .kcompare { width: min(calc(var(--ar, 1.33) * 100cqh), calc(100cqw - 300px - var(--g))); }
+  #next .kn-cards { margin-top: 32px; }
+}
+@media (max-width: 960px) {
+  .kn-hero { grid-template-columns: 1fr; }
+  .kn-cards { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) { .kn-hero .telemetry { grid-template-columns: repeat(2, auto); } }
+.kmap canvas, .kcompare canvas { filter: saturate(.7); }   /* same notch quieter as the main page data canvases */
+
+/* rounded corners, as on the other pages */
+.kn-card { border-radius: var(--r, 8px); overflow: hidden; }
+.kn-timeline li, .kn-spark { border-radius: var(--r-sm, 5px); }

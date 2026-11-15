@@ -1,0 +1,298 @@
+{
+ "product": "NISAR L2 GCOV (PROVISIONAL/V1), frequency A, 20 m, 5x5 boxcar",
+ "water_rule": "per pass: HH and HV below the midpoint between permanent-lake core and far-from-water land medians; passes with HH contrast < 3.0 dB skipped",
+ "flooded_veg_rule": "in lake mask, HH > -7.0 dB and HH-HV > 9.0 dB",
+ "lake_mask": "JRC occurrence>0 dilated 2px (same as Landsat series)",
+ "pit_mask": "excavation footprint (bright sand 2016/2024 or JRC water) inside (18.12, 52.4, 18.22, 52.445)",
+ "rgb": "R=HH, G=HV, B=HH; per pass, black = permanent-lake core median, white = +16 dB (HH) / +12 dB (HV)",
+ "series": [
+  {
+   "date": "2026-06-18",
+   "track": "057",
+   "dir": "A",
+   "views": [
+    "lakes",
+    "region",
+    "pit"
+   ],
+   "contrast_db": 8.13,
+   "thr_hh": -17.0,
+   "thr_hv": -20.64,
+   "lakes_water_ha": 369.8,
+   "lakes_flooded_veg_ha": 3.3,
+   "false_water_outside_ha": 113.5,
+   "good": true,
+   "pit_water_ha": 273.8
+  },
+  {
+   "date": "2026-06-19",
+   "track": "080",
+   "dir": "D",
+   "views": [
+    "lakes",
+    "region",
+    "pit"
+   ],
+   "contrast_db": 6.78,
+   "thr_hh": -15.57,
+   "thr_hv": -17.99,
+   "lakes_water_ha": 362.2,
+   "lakes_flooded_veg_ha": 2.7,
+   "false_water_outside_ha": 419.8,
+   "good": true,
+   "pit_water_ha": 341.1
+  },
+  {
+   "date": "2026-06-30",
+   "track": "057",
+   "dir": "A",
+   "views": [
+    "lakes",
+    "region",
+    "pit"
+   ],
+   "contrast_db": 5.61,
+   "thr_hh": -16.66,
+   "thr_hv": -20.35,
+   "lakes_water_ha": 354.1,
+   "lakes_flooded_veg_ha": 1.0,
+   "false_water_outside_ha": 1904.7,
+   "good": false,
+   "pit_water_ha": 634.9
+  },
+  {
+   "date": "2026-07-12",
+   "track": "057",
+   "dir": "A",
+   "views": [
+    "lakes",
+    "region",
+    "pit"
+   ],
+   "contrast_db": 7.33,
+   "thr_hh": -14.89,
+   "thr_hv": -19.93,
+   "lakes_water_ha": 392.5,
+   "lakes_flooded_veg_ha": 2.7,
+   "false_water_outside_ha": 522.5,
+   "good": false,
+   "pit_water_ha": 296.7
+  },
+  {
+   "date": "2026-07-13",
+   "track": "080",
+   "dir": "D",
+   "views": [
+    "lakes",
+    "region",
+    "pit"
+   ],
+   "contrast_db": 6.69,
+   "thr_hh": -14.81,
+   "thr_hv": -17.48,
+   "lakes_water_ha": 376.7,
+   "lakes_flooded_veg_ha": 2.6,
+   "false_water_outside_ha": 1681.5,
+   "good": false,
+   "pit_water_ha": 579.3
+  },
+  {
+   "date": "2026-07-24",
+   "track": "057",
+   "dir": "A",
+   "views": [
+    "lakes",
+    "region",
+    "pit"
+   ],
+   "contrast_db": 8.28,
+   "thr_hh": -15.2,
+   "thr_hv": -19.69,
+   "lakes_water_ha": 403.8,
+   "lakes_flooded_veg_ha": 4.0,
+   "false_water_outside_ha": 1012.7,
+   "good": false,
+   "pit_water_ha": 471.6
+  },
+  {
+   "date": "2026-08-17",
+   "track": "057",
+   "dir": "A",
+   "views": [
+    "lakes",
+    "region",
+    "pit"
+   ],
+   "contrast_db": 8.81,
+   "thr_hh": -16.83,
+   "thr_hv": -20.49,
+   "lakes_water_ha": 374.0,
+   "lakes_flooded_veg_ha": 3.0,
+   "false_water_outside_ha": 368.5,
+   "good": true,
+   "pit_water_ha": 308.6
+  },
+  {
+   "date": "2026-08-18",
+   "track": "080",
+   "dir": "D",
+   "views": [
+    "lakes",
+    "region",
+    "pit"
+   ],
+   "contrast_db": 8.64,
+   "thr_hh": -14.44,
+   "thr_hv": -17.79,
+   "lakes_water_ha": 391.0,
+   "lakes_flooded_veg_ha": 4.2,
+   "false_water_outside_ha": 871.8,
+   "good": false,
+   "pit_water_ha": 494.4
+  },
+  {
+   "date": "2026-08-30",
+   "track": "080",
+   "dir": "D",
+   "views": [
+    "lakes",
+    "region",
+    "pit"
+   ],
+   "contrast_db": 8.11,
+   "thr_hh": -13.78,
+   "thr_hv": -16.49,
+   "lakes_water_ha": 392.3,
+   "lakes_flooded_veg_ha": 3.7,
+   "false_water_outside_ha": 1540.8,
+   "good": false,
+   "pit_water_ha": 436.9
+  },
+  {
+   "date": "2026-09-10",
+   "track": "057",
+   "dir": "A",
+   "views": [
+    "lakes",
+    "region",
+    "pit"
+   ],
+   "contrast_db": 7.94,
+   "thr_hh": -14.49,
+   "thr_hv": -20.03,
+   "lakes_water_ha": 403.6,
+   "lakes_flooded_veg_ha": 7.0,
+   "false_water_outside_ha": 1684.4,
+   "good": false,
+   "pit_water_ha": 477.4
+  },
+  {
+   "date": "2026-09-23",
+   "track": "080",
+   "dir": "D",
+   "views": [
+    "lakes",
+    "region",
+    "pit"
+   ],
+   "contrast_db": 8.57,
+   "thr_hh": -13.88,
+   "thr_hv": -16.93,
+   "lakes_water_ha": 392.9,
+   "lakes_flooded_veg_ha": 3.5,
+   "false_water_outside_ha": 1016.1,
+   "good": false,
+   "pit_water_ha": 452.8
+  },
+  {
+   "date": "2026-10-04",
+   "track": "057",
+   "dir": "A",
+   "views": [
+    "lakes",
+    "region",
+    "pit"
+   ],
+   "contrast_db": 8.83,
+   "thr_hh": -16.41,
+   "thr_hv": -20.24,
+   "lakes_water_ha": 376.1,
+   "lakes_flooded_veg_ha": 4.1,
+   "false_water_outside_ha": 1030.1,
+   "good": false,
+   "pit_water_ha": 290.7
+  },
+  {
+   "date": "2026-10-05",
+   "track": "080",
+   "dir": "D",
+   "views": [
+    "lakes",
+    "region",
+    "pit"
+   ],
+   "contrast_db": 7.38,
+   "thr_hh": -14.4,
+   "thr_hv": -17.4,
+   "lakes_water_ha": 380.1,
+   "lakes_flooded_veg_ha": 3.6,
+   "false_water_outside_ha": 1441.8,
+   "good": false,
+   "pit_water_ha": 523.6
+  },
+  {
+   "date": "2026-10-16",
+   "track": "057",
+   "dir": "A",
+   "views": [
+    "lakes",
+    "region",
+    "pit"
+   ],
+   "contrast_db": 8.13,
+   "thr_hh": -16.21,
+   "thr_hv": -20.08,
+   "lakes_water_ha": 383.5,
+   "lakes_flooded_veg_ha": 4.4,
+   "false_water_outside_ha": 1089.8,
+   "good": false,
+   "pit_water_ha": 367.7
+  },
+  {
+   "date": "2026-10-28",
+   "track": "057",
+   "dir": "A",
+   "views": [
+    "lakes",
+    "region",
+    "pit"
+   ],
+   "contrast_db": 8.4,
+   "thr_hh": -16.14,
+   "thr_hv": -20.05,
+   "lakes_water_ha": 384.2,
+   "lakes_flooded_veg_ha": 4.5,
+   "false_water_outside_ha": 965.7,
+   "good": false,
+   "pit_water_ha": 313.2
+  },
+  {
+   "date": "2026-10-29",
+   "track": "080",
+   "dir": "D",
+   "views": [
+    "lakes",
+    "region",
+    "pit"
+   ],
+   "contrast_db": 7.36,
+   "thr_hh": -14.4,
+   "thr_hv": -17.08,
+   "lakes_water_ha": 382.0,
+   "lakes_flooded_veg_ha": 3.1,
+   "false_water_outside_ha": 999.3,
+   "good": false,
+   "pit_water_ha": 454.9
+  }
+ ]
+}
