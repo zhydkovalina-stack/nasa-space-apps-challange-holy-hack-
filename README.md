@@ -13,5 +13,8 @@ Pages:
 - `v2/orbit.html`: NISAR's orbit, live in 3D
 - `v2/explorer.html`: search NASA's real NISAR archive on a map
 - `v2/konin.html`: Konin lakes case study
+- `presentation/index.html`: the pitch presentation (arrow keys to move between slides)
+
+**Presentation:** https://zhydkovalina-stack.github.io/nasa-space-apps-challange-holy-hack-/presentation/
 
 It is a static site: no build step. To run it locally, serve this folder with any static server and open `v2/index.html`.

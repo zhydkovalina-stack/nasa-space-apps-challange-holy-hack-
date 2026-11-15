@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Through NISAR’s Lens · team holy@hack</title>
+<meta name="description" content="NASA Space Apps 2026 · Challenge: Dancing with the Sars · team holy@hack">
+<link rel="preload" href="fonts/Nasalization.otf" as="font" type="font/otf" crossorigin>
+<style>
+@font-face { font-family: 'Nasalization'; src: url('fonts/Nasalization.otf') format('opentype'); font-display: block; }
+:root { --void:#07040d; --plum:#150a24; --ice:#e6e9ff; --soft:#c3c5ea; --muted:#9a94bc; --peri:#8f9cf2; --hi:#eeff1a; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; background:#000; overflow:hidden; font-family:'Nasalization', Arial, sans-serif; color:var(--ice); }
+#stage { position:absolute; left:50%; top:50%; width:1920px; height:1080px; transform-origin:0 0; }
+.slide { position:absolute; inset:0; padding:128px 128px 160px; background:var(--void); opacity:0; visibility:hidden; transition:opacity .45s ease, visibility 0s .45s; }
+.slide.alt { background:var(--plum); }
+.slide.active { opacity:1; visibility:visible; transition:opacity .45s ease; }
+h1, h2 { font-weight:400; text-transform:uppercase; color:#f4f6ff; }
+.eyebrow { font-size:24px; letter-spacing:.2em; text-transform:uppercase; color:var(--hi); }
+.row { display:flex; gap:64px; align-items:center; margin-top:28px; }
+.gif { width:1040px; height:650px; object-fit:contain; border-radius:12px; border:1px solid rgba(143,156,242,.35); background:#000; flex:none; }
+.side { width:560px; display:flex; flex-direction:column; gap:22px; }
+.side h2 { font-size:50px; line-height:1.1; }
+.lead { font-size:28px; line-height:1.45; color:var(--soft); }
+.pts { font-size:25px; line-height:1.45; padding-left:1.1em; display:flex; flex-direction:column; gap:10px; }
+.src { font-size:24px; line-height:1.4; color:var(--peri); padding-top:16px; border-top:1px solid rgba(143,156,242,.35); }
+.cover-row { display:flex; gap:64px; align-items:center; height:100%; }
+.cover-text { width:600px; display:flex; flex-direction:column; gap:24px; flex:none; }
+.cover-text h1 { font-size:80px; line-height:1.05; }
+.cover-text .lead { font-size:27px; }
+.challenge { font-size:24px; letter-spacing:.06em; text-transform:uppercase; color:var(--void); background:var(--hi); padding:10px 18px; border-radius:6px; align-self:flex-start; }
+.made { font-size:21px; letter-spacing:.12em; text-transform:uppercase; color:var(--peri); }
+.crew { display:flex; flex-direction:column; gap:10px; padding-top:18px; border-top:1px solid rgba(143,156,242,.35); }
+.team { font-size:24px; letter-spacing:.04em; }
+.names { font-size:22px; line-height:1.5; color:var(--soft); }
+.cover-gif { width:1000px; height:625px; object-fit:contain; border-radius:12px; border:1px solid rgba(143,156,242,.35); background:#000; }
+.slide.active .side, .slide.active .cover-text { animation:rise .7s ease-out .15s both; }
+@keyframes rise { from { opacity:0; transform:translateY(18px); } }
+#nav { position:fixed; right:16px; bottom:16px; display:flex; gap:8px; align-items:center; z-index:2; font-size:14px; color:var(--muted); }
+#nav button { font:inherit; font-size:18px; width:40px; height:40px; border-radius:8px; border:1px solid rgba(143,156,242,.45); background:rgba(7,4,13,.8); color:var(--ice); cursor:pointer; }
+#nav button:hover { border-color:var(--hi); color:var(--hi); }
+#count { min-width:48px; text-align:center; }
+#bar { position:fixed; left:0; bottom:0; height:3px; background:var(--hi); transition:width .3s; z-index:2; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+<section class="slide">
+<div class="cover-row">
+<div class="cover-text">
+<p class="eyebrow">NASA Space Apps 2026 · Poznań</p>
+<p class="challenge">Challenge: Dancing with the Sars</p>
+<h1>Through NISAR’s Lens</h1>
+<p class="lead">NISAR’s radar, made readable for anyone. Built entirely on open NASA and space-agency data.</p>
+<p class="made">Hand-drawn · deeply researched</p>
+<div class="crew">
+<p class="team">team holy@hack:~$</p>
+<p class="names">Alina Zhydkova · Obada Alabbadi · Omar Hemid · Shady Hemid · Zeyad Al-Najjar</p>
+</div>
+</div>
+<img class="cover-gif" src="gifs/cover.gif" alt="Scrolling down the main page: the title Through NISAR’s Lens over a grainy photo of NISAR, the Take NISAR apart model and globe, down to the mission-control photo Unfolding the reflector">
+</div>
+</section>
+
+<section class="slide alt">
+<p class="eyebrow">Main page · 01</p>
+<div class="row">
+<img class="gif" src="gifs/take-apart.gif" alt="The white wireframe NISAR model coming apart into its modules, then a card opening for the radar antenna reflector" loading="lazy">
+<div class="side">
+<h2>Take NISAR apart</h2>
+<p class="lead">You learn the satellite by playing with it.</p>
+<ul class="pts">
+<li>“Take apart” flies the modules out</li>
+<li>Click a part: what it does, how big it is</li>
+<li>Drag the modules back to rebuild it</li>
+</ul>
+<p class="src">Open data: NASA/JPL spacecraft drawings and specs</p>
+</div>
+</div>
+</section>
+
+<section class="slide">
+<p class="eyebrow">Main page · 02</p>
+<div class="row">
+<img class="gif" src="gifs/radar.gif" alt="Scrolling from the clouds illustration, where the radar beam passes through a cloud layer, to the four surface drawings: lake, bare field, forest and city" loading="lazy">
+<div class="side">
+<h2>How radar sees</h2>
+<p class="lead">Physics without formulas, drawn by hand.</p>
+<ul class="pts">
+<li>The beam passes through clouds and darkness</li>
+<li>Four surfaces, four echoes: lake, field, forest, city</li>
+<li>Pulse in red, echo back in cyan</li>
+</ul>
+<p class="src">Open data: NISAR’s L- and S-band specs, NASA and ISRO</p>
+</div>
+</div>
+</section>
+
+<section class="slide alt">
+<p class="eyebrow">Main page · 03</p>
+<div class="row">
+<img class="gif" src="gifs/colours.gif" alt="A seam sliding left and right across a radar image of the flooded Amazon, revealing a colour map of water, forest, floating plants and flooded forest" loading="lazy">
+<div class="side">
+<h2>Radar colours, translated</h2>
+<p class="lead">Drag the seam: radar on one side, meaning on the other.</p>
+<ul class="pts">
+<li>Water, forest, floating plants, flooded forest</li>
+<li>Hover any pixel for a tip</li>
+<li>The key shows each one’s share</li>
+</ul>
+<p class="src">Open data: NASA image PIA26112 and its colour legend</p>
+</div>
+</div>
+</section>
+
+<section class="slide">
+<p class="eyebrow">Main page · 04</p>
+<div class="row">
+<img class="gif" src="gifs/knurow.gif" alt="The relief map of Poland with the Knurów pin, then the Knurów story scrolling sideways: the first mine shafts of 1903, a 1933 military map beside a 1997 aerial photo, the coal-removed versus ground-dropped chart, the hollows filling with water, and the 2026 NISAR radar showing where the town is sinking now" loading="lazy">
+<div class="side">
+<h2>Under our feet: Knurów</h2>
+<p class="lead">Pick a pin, scroll a researched story sideways.</p>
+<ul class="pts">
+<li>Coal mining since 1903: up to 18 m sunk</li>
+<li>1933 map vs today: 9 m lower</li>
+<li>NISAR 2026: where it sinks now, every 12 days</li>
+</ul>
+<p class="src">Open data: NISAR radar, Polish archive maps, aerial photos and laser-scanned terrain</p>
+</div>
+</div>
+</section>
+
+<section class="slide alt">
+<p class="eyebrow">Orbit page</p>
+<div class="row">
+<img class="gif" src="gifs/orbit.gif" alt="A 3D globe with NISAR flying along its orbit at 5 minutes per second, with the live panel updating the time, track and the point below the satellite" loading="lazy">
+<div class="side">
+<h2>NISAR’s orbit, live</h2>
+<p class="lead">See where NISAR is right now.</p>
+<ul class="pts">
+<li>Play at real speed, 2 or 5 min per second</li>
+<li>The strip it images glows behind it</li>
+<li>“Now” flies the camera to NISAR</li>
+</ul>
+<p class="src">Open data: NASA’s NISAR orbit data</p>
+</div>
+</div>
+</section>
+
+<section class="slide">
+<p class="eyebrow">Explorer page</p>
+<div class="row">
+<img class="gif" src="gifs/explorer.gif" alt="The Explorer over Poznań: the next-pass box, the NISAR image areas over western Poland, a click listing the frames over that spot, then frame T158 F028 highlighted and its real radar image laid on the map" loading="lazy">
+<div class="side">
+<h2>The Explorer</h2>
+<p class="lead">Search NASA’s real NISAR archive on a 3D globe.</p>
+<ul class="pts">
+<li>Pick a place: see the next pass</li>
+<li>Open a frame: its radar image on the map</li>
+<li>Download exactly that product</li>
+</ul>
+<p class="src">Open data: NASA archive at the Alaska Satellite Facility, NISAR observation plan</p>
+</div>
+</div>
+</section>
+
+</div>
+<div id="nav"><button id="prev" aria-label="Previous slide">‹</button><span id="count"></span><button id="next" aria-label="Next slide">›</button><button id="fs" aria-label="Fullscreen">⛶</button></div>
+<div id="bar"></div>
+<script>
+const stage = document.getElementById('stage'), slides = [...document.querySelectorAll('.slide')];
+let i = Math.max(0, Math.min(slides.length - 1, (parseInt(location.hash.slice(1)) || 1) - 1));
+function fit() { const s = Math.min(innerWidth / 1920, innerHeight / 1080); stage.style.transform = `scale(${s}) translate(-50%,-50%)`; }
+function show(n) {
+  i = Math.max(0, Math.min(slides.length - 1, n));
+  slides.forEach((s, k) => s.classList.toggle('active', k === i));
+  document.getElementById('count').textContent = `${i + 1} / ${slides.length}`;
+  document.getElementById('bar').style.width = `${(i + 1) / slides.length * 100}%`;
+  history.replaceState(null, '', '#' + (i + 1));
+}
+addEventListener('resize', fit);
+addEventListener('keydown', e => {
+  if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); show(i + 1); }
+  if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); show(i - 1); }
+  if (e.key === 'Home') show(0); if (e.key === 'End') show(slides.length - 1);
+});
+document.getElementById('next').onclick = () => show(i + 1);
+document.getElementById('prev').onclick = () => show(i - 1);
+document.getElementById('fs').onclick = () => document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.();
+stage.addEventListener('click', e => show(e.clientX > innerWidth / 3 ? i + 1 : i - 1));
+let x0 = null;
+addEventListener('touchstart', e => x0 = e.touches[0].clientX, { passive: true });
+addEventListener('touchend', e => { if (x0 === null) return; const d = e.changedTouches[0].clientX - x0; if (Math.abs(d) > 40) show(d < 0 ? i + 1 : i - 1); x0 = null; });
+fit(); show(i);
+</script>
+</body>
+</html>
