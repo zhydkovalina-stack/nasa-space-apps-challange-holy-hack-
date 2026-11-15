@@ -42,7 +42,7 @@ Our team designed, researched and built *Through NISAR's Lens*. We chose the sto
 - **Debugging:** tracking down broken image and data paths and rendering issues, and checking that every link on the site resolves correctly.
 - **Deployment:** setting up GitHub Pages hosting and publishing the website and the pitch presentation.
 
-The team reviewed and tested all AI-assisted changes before including them.
+The team reviewed and tested all AI-assisted changes before including them. 
 
 ```yaml
 project: Through NISAR's Lens
