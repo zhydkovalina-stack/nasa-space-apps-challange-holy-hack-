@@ -33,3 +33,27 @@ Controls: ← / → (or Space, Page Up / Page Down) to move between slides, Home
 ## Running locally
 
 It is a static site: no build step. To run it locally, serve this folder with any static server and open `v2/index.html`.
+
+## Use of AI tools
+
+Our team designed, researched and built *Through NISAR's Lens*. We chose the story, gathered and processed the NISAR and Sentinel data, created the visuals and wrote the content. We used Claude (Anthropic) as a coding assistant for a few specific tasks:
+
+- **Code support:** help writing and tidying parts of the front-end JavaScript and CSS for the interactive pages.
+- **Debugging:** tracking down broken image and data paths and rendering issues, and checking that every link on the site resolves correctly.
+- **Deployment:** setting up GitHub Pages hosting and publishing the website and the pitch presentation.
+
+The team reviewed and tested all AI-assisted changes before including them.
+
+```yaml
+project: Through NISAR's Lens
+event: NASA Space Apps Challenge 2026, Poznań
+challenge: Dancing with the SARs
+team: holy@hack
+authors: [Alina Zhydkova, Obada Alabbadi, Omar Hemid, Shady Hemid, Zeyad Al-Najjar]
+ai_assistance:
+  tool: Claude (Anthropic), via Claude Code
+  role: coding assistant
+  used_for: [front-end code support, debugging, GitHub Pages deployment]
+  not_used_for: [concept, research, data processing, visual design, written content]
+  human_review: all AI-assisted changes reviewed and tested by the team
+```
